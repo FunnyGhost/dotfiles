@@ -13,3 +13,4 @@ I'm learning how to automate and restore my environment using dotfiles [dotfiles
  - Trackpad(Three Finger Drag and Tap to Click)
  - .zshrc
  - Git (config and SSH)
+ - Homebrew install
