@@ -9,7 +9,14 @@
     ~/.gitconfig:
 
 - create:
-    - ~/Work
+    - ~/SnappCar Project
+    - ~/Sandbox Projects
+    - ~/External Clients
 
-#- shell:
-#  - [git submodule update --init --recursive, Installing submodules]
+- shell:
+  - [git submodule update --init --recursive, Installing submodules]
+  - echo "ELO!"
+  - 
+    command: ./test.zsh
+    stdout: true
+    stderr: true
