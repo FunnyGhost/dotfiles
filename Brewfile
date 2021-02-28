@@ -1,16 +1,13 @@
-# Taps(repositories)
 tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/cask-versions"
 tap "homebrew/core"
-
-# Brews(Packages)
 brew "bat"
 brew "exa"
+brew "git"
 brew "httpie"
-
-# Casks(Applications)
 cask "alfred"
 cask "firefox-developer-edition"
+cask "gitkraken"
 cask "visual-studio-code"
 cask "webstorm"
