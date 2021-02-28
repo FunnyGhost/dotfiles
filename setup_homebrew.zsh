@@ -10,3 +10,4 @@ brew install bat
 brew install --no-quarantine firefox-developer-edition
 brew install --no-quarantine visual-studio-code
 brew install --no-quarantine alfred
+brew install --no-quarantine webstorm
