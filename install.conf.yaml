@@ -14,9 +14,7 @@
     - ~/External Clients
 
 - shell:
-  - [git submodule update --init --recursive, Installing submodules]
-  - echo "ELO!"
   - 
-    command: ./test.zsh
+    command: ./setup_homebrew.zsh
     stdout: true
     stderr: true
