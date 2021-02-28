@@ -7,5 +7,6 @@ echo "\n<<< Starting Homebrew Setup >>>\n"
 brew install httpie
 brew install bat
 
-brew install firefox-developer-edition
-brew install visual-studio-code
+brew install --no-quarantine firefox-developer-edition
+brew install --no-quarantine visual-studio-code
+brew install --no-quarantine alfred
