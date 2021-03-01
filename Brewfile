@@ -10,6 +10,8 @@ brew "exa"
 brew "git"
 # User-friendly cURL replacement (command-line HTTP client)
 brew "httpie"
+# Platform built on V8 to build network applications
+brew "node"
 # Application launcher and productivity software
 cask "alfred"
 # Web browser
