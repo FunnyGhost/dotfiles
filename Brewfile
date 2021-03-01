@@ -19,11 +19,8 @@ brew "node"
 brew "eth-p/software/bat-extras"
 # Password manager that keeps all passwords secure behind one password
 cask "1password"
-# Prebuilt OpenJDK binaries
-cask "adoptopenjdk8"
 # Application launcher and productivity software
 cask "alfred"
-cask "android-sdk"
 # Application uninstaller
 cask "appcleaner"
 cask "fantastical"
