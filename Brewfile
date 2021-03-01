@@ -17,27 +17,33 @@ brew "mas"
 brew "node"
 # Bash scripts that integrate bat with various command-line tools
 brew "eth-p/software/bat-extras"
+# Password manager that keeps all passwords secure behind one password
+cask "1password"
+# Prebuilt OpenJDK binaries
+cask "adoptopenjdk8"
 # Application launcher and productivity software
 cask "alfred"
+cask "android-sdk"
+# Application uninstaller
+cask "appcleaner"
+cask "fantastical"
 # Web browser
 cask "firefox-developer-edition"
 # Git client focusing on productivity
 cask "gitkraken"
+# VPN client for secure internet access and private browsing
+cask "nordvpn"
+# Emoji picker optimized for blind people
+cask "rocket"
+# Team communication and collaboration software
+cask "slack"
+# Music streaming service
+cask "spotify"
 # Open-source code editor
 cask "visual-studio-code"
 # JavaScript IDE
 cask "webstorm"
-mas "1Password 7", id: 1333542190
-mas "Amphetamine", id: 937984704
-mas "Fantastical", id: 975937182
-mas "GIF Keyboard", id: 1043270657
-mas "Grammarly for Safari", id: 1462114288
-mas "Magnet", id: 441258766
-mas "NordVPN IKE", id: 1116599239
-mas "Slack", id: 803453959
 mas "Snappy", id: 512617038
 mas "Spark", id: 1176895641
-mas "Speedtest", id: 1153157709
-mas "The Unarchiver", id: 425424353
 mas "Things", id: 904280696
 mas "Xcode", id: 497799835
