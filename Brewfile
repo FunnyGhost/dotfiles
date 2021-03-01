@@ -24,3 +24,17 @@ cask "gitkraken"
 cask "visual-studio-code"
 # JavaScript IDE
 cask "webstorm"
+mas "1Password 7", id: 1333542190
+mas "Amphetamine", id: 937984704
+mas "Fantastical", id: 975937182
+mas "GIF Keyboard", id: 1043270657
+mas "Grammarly for Safari", id: 1462114288
+mas "Magnet", id: 441258766
+mas "NordVPN IKE", id: 1116599239
+mas "Slack", id: 803453959
+mas "Snappy", id: 512617038
+mas "Spark", id: 1176895641
+mas "Speedtest", id: 1153157709
+mas "The Unarchiver", id: 425424353
+mas "Things", id: 904280696
+mas "Xcode", id: 497799835
