@@ -1,3 +1,4 @@
+tap "eth-p/software"
 tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/cask-versions"
@@ -14,6 +15,8 @@ brew "httpie"
 brew "mas"
 # Platform built on V8 to build network applications
 brew "node"
+# Bash scripts that integrate bat with various command-line tools
+brew "eth-p/software/bat-extras"
 # Application launcher and productivity software
 cask "alfred"
 # Web browser
