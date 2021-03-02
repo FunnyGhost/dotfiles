@@ -23,7 +23,6 @@ cask "1password"
 cask "alfred"
 # Application uninstaller
 cask "appcleaner"
-cask "fantastical"
 # Web browser
 cask "firefox-developer-edition"
 # Git client focusing on productivity
@@ -40,6 +39,7 @@ cask "spotify"
 cask "visual-studio-code"
 # JavaScript IDE
 cask "webstorm"
+mas "Fantastical", id: 975937182
 mas "Snappy", id: 512617038
 mas "Spark", id: 1176895641
 mas "Things", id: 904280696
