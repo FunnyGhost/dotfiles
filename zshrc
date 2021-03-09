@@ -1,7 +1,7 @@
-echo 'Hello from .zshrc'
-
 # Set Variables
 export HOMEBREW_CASK_OPTS="--no-quarantine"
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home
+export ANDROID_HOME=/Users/utukku/Library/Android/sdk
 
 # Change ZSH Options
 
@@ -9,6 +9,9 @@ export HOMEBREW_CASK_OPTS="--no-quarantine"
 alias exa='exa -laFh --git'
 alias ls='exa -laFh --git'
 alias man=batman
+alias go2Hell="cd SnappCar\ Projects/frontend-app/projects/mobile"
+alias runiOS="ns run ios --device 'iPhone 11 Pro'"
+alias listDevices="ns device ios --available-devices"
 
 # Customize Prompt(s)
 PROMPT='
@@ -18,7 +21,7 @@ RPROMPT='%*'
 
 # Add Locations to PATH Variable
 # Add Visual Studio Code (code)
-export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin:Library/Python/2.7/bin"
 
 # Write Handy Functions
 function mkcd() {
