@@ -25,6 +25,8 @@ cask "alfred"
 cask "appcleaner"
 # Web browser
 cask "firefox-developer-edition"
+# GIT client
+cask "fork"
 # Git client focusing on productivity
 cask "gitkraken"
 # VPN client for secure internet access and private browsing
