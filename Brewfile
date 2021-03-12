@@ -29,6 +29,8 @@ cask "firefox-developer-edition"
 cask "fork"
 # Git client focusing on productivity
 cask "gitkraken"
+# HTTP and GraphQL Client
+cask "insomnia"
 # VPN client for secure internet access and private browsing
 cask "nordvpn"
 # Emoji picker optimized for blind people
