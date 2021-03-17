@@ -44,6 +44,7 @@ cask "visual-studio-code"
 # JavaScript IDE
 cask "webstorm"
 mas "Fantastical", id: 975937182
+mas "Notability", id: 360593530
 mas "Snappy", id: 512617038
 mas "Spark", id: 1176895641
 mas "Things", id: 904280696
