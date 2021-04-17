@@ -27,24 +27,19 @@ cask "appcleaner"
 cask "firefox-developer-edition"
 # GIT client
 cask "fork"
-# Git client focusing on productivity
-cask "gitkraken"
 # HTTP and GraphQL Client
 cask "insomnia"
 # VPN client for secure internet access and private browsing
 cask "nordvpn"
 # Emoji picker optimized for blind people
 cask "rocket"
-# Team communication and collaboration software
-cask "slack"
+# Tool to simulate responsive designs on multiple devices
+cask "sizzy"
 # Music streaming service
 cask "spotify"
-# Open-source code editor
-cask "visual-studio-code"
-# JavaScript IDE
-cask "webstorm"
 mas "Fantastical", id: 975937182
 mas "Notability", id: 360593530
+mas "Slack", id: 803453959
 mas "Spark", id: 1176895641
 mas "Things", id: 904280696
 mas "Xcode", id: 497799835
