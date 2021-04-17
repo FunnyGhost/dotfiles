@@ -33,11 +33,14 @@ cask "insomnia"
 cask "nordvpn"
 # Emoji picker optimized for blind people
 cask "rocket"
-# Tool to simulate responsive designs on multiple devices
-cask "sizzy"
 # Music streaming service
 cask "spotify"
+# Open-source code editor
+cask "visual-studio-code"
+# JavaScript IDE
+cask "webstorm"
 mas "Fantastical", id: 975937182
+mas "Honey", id: 1472777122
 mas "Notability", id: 360593530
 mas "Slack", id: 803453959
 mas "Spark", id: 1176895641
