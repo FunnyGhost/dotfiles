@@ -9,7 +9,7 @@ export ANDROID_HOME=/Users/utukku/Library/Android/sdk
 alias exa='exa -laFh --git'
 alias ls='exa -laFh --git'
 alias man=batman
-alias go2Hell="cd SnappCar\ Projects/frontend-app/projects/mobile"
+alias go2Hell="cd SnappCar\ Projects/frontend-app/"
 alias runiOS="ns run ios --device 'iPhone 11 Pro'"
 alias listDevices="ns device ios --available-devices"
 
