@@ -8,6 +8,7 @@ export ANDROID_HOME=/Users/utukku/Library/Android/sdk
 # Create Aliases
 alias exa='exa -laFh --git'
 alias ls='exa -laFh --git'
+alias bbd='brew bundle dump --force --describe'
 alias man=batman
 alias go2Hell="cd SnappCar\ Projects/frontend-app/"
 alias runiOS="ns run ios --device 'iPhone 11 Pro'"
