@@ -13,6 +13,8 @@ brew "git"
 brew "httpie"
 # Mac App Store command-line interface
 brew "mas"
+# Free (GNU) replacement for the Pico text editor
+brew "nano"
 # Platform built on V8 to build network applications
 brew "node"
 # Bash scripts that integrate bat with various command-line tools
@@ -23,6 +25,8 @@ cask "1password"
 cask "alfred"
 # Application uninstaller
 cask "appcleaner"
+# Web browser focusing on privacy
+cask "brave-browser"
 # Web browser
 cask "firefox-developer-edition"
 # GIT client
