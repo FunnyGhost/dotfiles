@@ -1,5 +1,6 @@
 # Set Variables
 export HOMEBREW_CASK_OPTS="--no-quarantine"
+export NULLCMD=bat
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home
 export ANDROID_HOME=/Users/utukku/Library/Android/sdk
 
