@@ -19,6 +19,8 @@ brew "mas"
 brew "nano"
 # Platform built on V8 to build network applications
 brew "node"
+# UNIX shell (command interpreter)
+brew "zsh"
 # Bash scripts that integrate bat with various command-line tools
 brew "eth-p/software/bat-extras"
 # Password manager that keeps all passwords secure behind one password
@@ -47,6 +49,7 @@ cask "spotify"
 cask "visual-studio-code"
 # JavaScript IDE
 cask "webstorm"
+mas "Day One", id: 1055511498
 mas "Fantastical", id: 975937182
 mas "Honey", id: 1472777122
 mas "Notability", id: 360593530
