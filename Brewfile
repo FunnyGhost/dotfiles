@@ -17,16 +17,12 @@ brew "less"
 brew "mas"
 # Free (GNU) replacement for the Pico text editor
 brew "nano"
-# Platform built on V8 to build network applications
-brew "node"
 # UNIX shell (command interpreter)
 brew "zsh"
 # Bash scripts that integrate bat with various command-line tools
 brew "eth-p/software/bat-extras"
 # Password manager that keeps all passwords secure behind one password
 cask "1password"
-# JDK from the Java User Group (JUG)
-cask "adoptopenjdk"
 # Application launcher and productivity software
 cask "alfred"
 # Application uninstaller
