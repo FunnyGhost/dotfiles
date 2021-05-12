@@ -25,6 +25,8 @@ brew "zsh"
 brew "eth-p/software/bat-extras"
 # Password manager that keeps all passwords secure behind one password
 cask "1password"
+# JDK from the Java User Group (JUG)
+cask "adoptopenjdk"
 # Application launcher and productivity software
 cask "alfred"
 # Application uninstaller
