@@ -9,6 +9,8 @@ brew "bat"
 brew "exa"
 # Distributed revision control system
 brew "git"
+# Improved top (interactive process viewer)
+brew "htop"
 # User-friendly cURL replacement (command-line HTTP client)
 brew "httpie"
 # Pager program similar to more
@@ -17,6 +19,10 @@ brew "less"
 brew "mas"
 # Free (GNU) replacement for the Pico text editor
 brew "nano"
+# Fast, highly customisable system info script
+brew "neofetch"
+# File browser
+brew "ranger"
 # UNIX shell (command interpreter)
 brew "zsh"
 # Bash scripts that integrate bat with various command-line tools
