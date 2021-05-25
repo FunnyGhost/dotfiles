@@ -6,7 +6,6 @@ I'm learning how to automate and restore my environment using dotfiles [dotfiles
 
 ## TODO
  - Terminal Preferences(and make it pretty)
- - Changed Shell to ZSH
  - Dock Preferences
  - Mision Control Preferences(don't rearange spaces)
  - Finder Show Path Bar
