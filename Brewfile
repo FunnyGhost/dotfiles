@@ -47,6 +47,7 @@ cask "spotify"
 cask "visual-studio-code"
 # JavaScript IDE
 cask "webstorm"
+mas "DaisyDisk", id: 411643860
 mas "Day One", id: 1055511498
 mas "Fantastical", id: 975937182
 mas "Honey", id: 1472777122
