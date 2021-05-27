@@ -18,9 +18,10 @@ else
   chsh -s '/opt/homebrew/bin/zsh'
 fi
 
-if sh --version | grep -q zsh; then
-  echo '/private/var/select/sh already linked to /bin/zsh'
-else
-  echo "Enter superuser (sudo) password to symlink sh to zsh"
-  sudo ln -sfv /bin/zsh /private/var/select/sh
-fi
+# This breaks NativeScript on M1
+# if sh --version | grep -q zsh; then
+#   echo '/private/var/select/sh already linked to /bin/zsh'
+# else
+#   echo "Enter superuser (sudo) password to symlink sh to zsh"
+#   sudo ln -sfv /bin/zsh /private/var/select/sh
+# fi
