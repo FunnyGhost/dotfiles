@@ -27,13 +27,16 @@ PROMPT='
 
 RPROMPT='%*'
 
-# Add Locations to PATH Variable
-# Add n(node version maneger) to path
-export PATH="$N_PREFIX/bin:$PATH"
-# Add Android Platform Tools for NativeScript
-export PATH=$PATH:$ANDROID_HOME/platform-tools
-# Add Visual Studio Code (code)
-export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin:Library/Python/2.7/bin"
+# Add Locations to $path array Variable
+typeset -U path
+
+path=(
+    "$N_PREFIX/bin"
+    $path
+    "/Applications/Visual Studio Code.app/Contents/Resources/app/bin:Library/Python/2.7/bin"
+    "$ANDROID_HOME/platform-tools"
+    "Library/Python/2.7/bin"
+)
 
 # Write Handy Functions
 function mkcd() {
