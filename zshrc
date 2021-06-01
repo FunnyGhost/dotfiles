@@ -42,3 +42,9 @@ function mkcd() {
 # Use ZSH Plugins
 
 # ...and Other Surprises
+
+###-tns-completion-start-###
+if [ -f /Users/utukku/.tnsrc ]; then 
+    source /Users/utukku/.tnsrc 
+fi
+###-tns-completion-end-###
