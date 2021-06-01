@@ -3,9 +3,7 @@ export HOMEBREW_CASK_OPTS="--no-quarantine"
 export NULLCMD=bat
 export JAVA_HOME='/Applications/Android Studio.app/Contents/jre/jdk/Contents/Home'
 export ANDROID_HOME=/Users/utukku/Library/Android/sdk
-export PATH=$PATH:$ANDROID_HOME/platform-tools
 export N_PREFIX="$HOME/.n"
-
 
 # Change ZSH Options
 
@@ -30,6 +28,8 @@ PROMPT='
 RPROMPT='%*'
 
 # Add Locations to PATH Variable
+# Add Android Platform Tools for NativeScript
+export PATH=$PATH:$ANDROID_HOME/platform-tools
 # Add Visual Studio Code (code)
 export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin:Library/Python/2.7/bin"
 # Add n(node version maneger) to path
