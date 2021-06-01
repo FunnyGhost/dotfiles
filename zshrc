@@ -15,6 +15,7 @@ alias ls='exa -laFh --git'
 alias bbd='brew bundle dump --force --describe'
 alias man=batman
 alias trail='<<<${(F)path}'
+alias rm=trash
 
 # SnappCar aliases
 alias go2Hell="cd SnappCar\ Projects/frontend-app/"
