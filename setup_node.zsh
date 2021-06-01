@@ -11,3 +11,13 @@ else
   echo "Installing Node & NPM with n..."
   n lts
 fi
+
+
+# Install npm packages
+npm install --global nativescript
+npm install --global @angular/cli
+npm install --global typescript
+npm install --global http-server
+
+echo "Global npm packages installed:"
+npm list --global --depth=0
