@@ -47,6 +47,8 @@ cask "insomnia"
 cask "istat-menus"
 # VPN client for secure internet access and private browsing
 cask "nordvpn"
+# App to write, plan, collaborate, and get organized
+cask "notion"
 # Emoji picker optimized for blind people
 cask "rocket"
 # Music streaming service
