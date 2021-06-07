@@ -37,6 +37,8 @@ cask "alfred"
 cask "appcleaner"
 # Web browser focusing on privacy
 cask "brave-browser"
+# Tool to list all active shortcuts of the current application
+cask "cheatsheet"
 # Web browser
 cask "firefox-developer-edition"
 # GIT client
@@ -47,8 +49,6 @@ cask "insomnia"
 cask "istat-menus"
 # VPN client for secure internet access and private browsing
 cask "nordvpn"
-# App to write, plan, collaborate, and get organized
-cask "notion"
 # Emoji picker optimized for blind people
 cask "rocket"
 # Music streaming service
