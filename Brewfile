@@ -39,6 +39,8 @@ cask "appcleaner"
 cask "brave-browser"
 # Tool to list all active shortcuts of the current application
 cask "cheatsheet"
+# Screen capturing tool
+cask "cleanshot"
 # Web browser
 cask "firefox-developer-edition"
 # GIT client
@@ -49,6 +51,8 @@ cask "insomnia"
 cask "istat-menus"
 # VPN client for secure internet access and private browsing
 cask "nordvpn"
+# Move and resize windows using keyboard shortcuts or snap areas
+cask "rectangle"
 # Emoji picker optimized for blind people
 cask "rocket"
 # Music streaming service
