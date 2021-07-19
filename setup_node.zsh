@@ -19,6 +19,7 @@ npm install --global @angular/cli
 npm install --global typescript
 npm install --global http-server
 npm install --global trash-cli
+npm install --global nx
 
 echo "Global npm packages installed:"
 npm list --global --depth=0
