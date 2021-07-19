@@ -1,3 +1,6 @@
 [user]
 	name = Catalin Ciubotaru
 	email = 6450559+FunnyGhost@users.noreply.github.com
+	signingkey = B6F33E5442EFF5E4
+[commit]
+	gpgsign = true
