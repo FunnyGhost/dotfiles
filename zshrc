@@ -16,7 +16,7 @@ alias trail='<<<${(F)path}'
 alias rm=trash
 
 # SnappCar aliases
-alias go2Hell="cd SnappCar\ Projects/frontend-app/"
+alias go2Work="cd SnappCar\ Projects/frontend-app/"
 alias runiOS="ns run ios --device 'iPhone 11 Pro'"
 alias listDevices="ns device ios --available-devices"
 alias generateTypings='TNS_DEBUG_METADATA_PATH="$(pwd)/metadata" ns build ios && TNS_TYPESCRIPT_DECLARATIONS_PATH="$(pwd)/typings" ns build ios'
