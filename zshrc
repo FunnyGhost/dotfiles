@@ -1,7 +1,7 @@
 # Set Variables
 export HOMEBREW_CASK_OPTS="--no-quarantine"
 export NULLCMD=bat
-export JAVA_HOME='/Applications/Android Studio.app/Contents/jre/jdk/Contents/Home'
+export JAVA_HOME='/Applications/Android Studio.app/Contents/jre/Contents/Home'
 export ANDROID_HOME=/Users/utukku/Library/Android/sdk
 export N_PREFIX="$HOME/.n"
 
