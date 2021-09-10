@@ -45,6 +45,8 @@ cask "brave-browser"
 cask "cheatsheet"
 # Screen capturing tool
 cask "cleanshot"
+# Desktop wallet for cryptocurrency assets
+cask "exodus"
 # Web browser
 cask "firefox-developer-edition"
 # GIT client
