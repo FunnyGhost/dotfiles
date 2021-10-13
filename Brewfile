@@ -69,15 +69,14 @@ cask "signal"
 cask "spotify"
 # Open-source code editor
 cask "visual-studio-code"
-# JavaScript IDE
-cask "webstorm"
 mas "DaisyDisk", id: 411643860
 mas "Day One", id: 1055511498
 mas "Fantastical", id: 975937182
+mas "Grammarly for Safari", id: 1462114288
 mas "Honey", id: 1472777122
 mas "Notability", id: 360593530
 mas "Save to Raindrop.io", id: 1549370672
 mas "Slack", id: 803453959
-mas "Spark", id: 1176895641
+mas "Super Agent", id: 1568262835
 mas "Things", id: 904280696
 mas "Xcode", id: 497799835
