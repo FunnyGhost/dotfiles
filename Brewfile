@@ -35,8 +35,6 @@ brew "zsh"
 brew "eth-p/software/bat-extras"
 # Password manager that keeps all passwords secure behind one password
 cask "1password"
-# Application launcher and productivity software
-cask "alfred"
 # Application uninstaller
 cask "appcleaner"
 # Web browser focusing on privacy
@@ -59,21 +57,14 @@ cask "istat-menus"
 cask "nordvpn"
 # Control your tools with a few keystrokes
 cask "raycast"
-# Move and resize windows using keyboard shortcuts or snap areas
-cask "rectangle"
 # Emoji picker optimized for blind people
 cask "rocket"
-# Instant messaging application focusing on security
-cask "signal"
-# Music streaming service
-cask "spotify"
 # Open-source code editor
 cask "visual-studio-code"
 mas "DaisyDisk", id: 411643860
 mas "Day One", id: 1055511498
 mas "Fantastical", id: 975937182
 mas "Grammarly for Safari", id: 1462114288
-mas "Honey", id: 1472777122
 mas "Notability", id: 360593530
 mas "Save to Raindrop.io", id: 1549370672
 mas "Slack", id: 803453959
