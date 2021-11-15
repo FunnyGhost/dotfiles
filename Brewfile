@@ -11,10 +11,18 @@ brew "coreutils"
 brew "exa"
 # Distributed revision control system
 brew "git"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.9"
+# Core application library for C
+brew "glib"
 # Improved top (interactive process viewer)
 brew "htop"
 # User-friendly cURL replacement (command-line HTTP client)
 brew "httpie"
+# ISO/IEC 23008-12:2017 HEIF file format decoder and encoder
+brew "libheif"
+# Tools and libraries to manipulate images in many formats
+brew "imagemagick"
 # Pager program similar to more
 brew "less"
 # Mac App Store command-line interface
@@ -25,8 +33,14 @@ brew "n"
 brew "nano"
 # Fast, highly customisable system info script
 brew "neofetch"
+# HTTP/2 C Library
+brew "nghttp2"
+# Code formatter for JavaScript, CSS, JSON, GraphQL, Markdown, YAML
+brew "prettier"
 # File browser
 brew "ranger"
+# Persistent key-value database, with built-in net interface
+brew "redis"
 # HTTP regression testing and benchmarking utility
 brew "siege"
 # UNIX shell (command interpreter)

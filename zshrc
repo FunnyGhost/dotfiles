@@ -53,8 +53,8 @@ function mkcd() {
 # ...and Other Surprises
 
 ###-tns-completion-start-###
-if [ -f /Users/utukku/.tnsrc ]; then 
-    source /Users/utukku/.tnsrc 
+if [ -f /Users/utukku/.tnsrc ]; then
+    source /Users/utukku/.tnsrc
 fi
 ###-tns-completion-end-###
 
