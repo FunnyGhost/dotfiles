@@ -1,13 +1,13 @@
 
 #### FIG ENV VARIABLES ####
 # Please make sure this block is at the start of this file.
-[ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
+# [ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
 #### END FIG ENV VARIABLES ####
 # Set Variables
 export HOMEBREW_CASK_OPTS="--no-quarantine"
 export NULLCMD=bat
 export JAVA_HOME='/Applications/Android Studio.app/Contents/jre/Contents/Home'
-export ANDROID_HOME=/Users/utukku/Library/Android/sdk
+export ANDROID_HOME=/Users/cthulhu/Library/Android/sdk
 export N_PREFIX="$HOME/.n"
 
 # Change ZSH Options
@@ -53,12 +53,13 @@ function mkcd() {
 # ...and Other Surprises
 
 ###-tns-completion-start-###
-if [ -f /Users/utukku/.tnsrc ]; then
-    source /Users/utukku/.tnsrc
+if [ -f /Users/cthulhu/.tnsrc ]; then
+    source /Users/cthulhu/.tnsrc
 fi
 ###-tns-completion-end-###
 
 #### FIG ENV VARIABLES ####
 # Please make sure this block is at the end of this file.
-[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
+# [ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
 #### END FIG ENV VARIABLES ####
+export GPG_TTY=$(tty)

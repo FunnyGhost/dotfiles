@@ -15,6 +15,8 @@ brew "git"
 brew "python@3.9"
 # Core application library for C
 brew "glib"
+# GNU Pretty Good Privacy (PGP) package
+brew "gnupg"
 # Improved top (interactive process viewer)
 brew "htop"
 # User-friendly cURL replacement (command-line HTTP client)
@@ -23,6 +25,8 @@ brew "httpie"
 brew "libheif"
 # Tools and libraries to manipulate images in many formats
 brew "imagemagick"
+# User-friendly front-end to ssh-agent(1)
+brew "keychain"
 # Pager program similar to more
 brew "less"
 # Mac App Store command-line interface
@@ -35,6 +39,8 @@ brew "nano"
 brew "neofetch"
 # HTTP/2 C Library
 brew "nghttp2"
+# Pinentry for GPG on Mac
+brew "pinentry-mac"
 # Code formatter for JavaScript, CSS, JSON, GraphQL, Markdown, YAML
 brew "prettier"
 # File browser
@@ -49,6 +55,8 @@ brew "zsh"
 brew "eth-p/software/bat-extras"
 # Password manager that keeps all passwords secure behind one password
 cask "1password"
+# Tools for building Android applications
+cask "android-studio"
 # Application uninstaller
 cask "appcleaner"
 # Web browser focusing on privacy
@@ -67,14 +75,28 @@ cask "fork"
 cask "insomnia"
 # System monitoring app
 cask "istat-menus"
+# Terminal emulator as alternative to Apple's Terminal app
+cask "iterm2"
+# Wallet desktop application to maintain multiple cryptocurrencies
+cask "ledger-live"
 # VPN client for secure internet access and private browsing
 cask "nordvpn"
+# Client program for the OpenVPN Access Server
+cask "openvpn-connect"
 # Control your tools with a few keystrokes
 cask "raycast"
 # Emoji picker optimized for blind people
 cask "rocket"
+# Identify Intel-only apps
+cask "silicon"
+# Music streaming service
+cask "spotify"
+# Video game digital distribution service
+cask "steam"
 # Open-source code editor
 cask "visual-studio-code"
+# JavaScript IDE
+cask "webstorm"
 mas "DaisyDisk", id: 411643860
 mas "Day One", id: 1055511498
 mas "Fantastical", id: 975937182
