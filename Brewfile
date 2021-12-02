@@ -83,6 +83,8 @@ cask "ledger-live"
 cask "nordvpn"
 # Client program for the OpenVPN Access Server
 cask "openvpn-connect"
+# HTTP client that helps testing and describing APIs
+cask "paw"
 # Control your tools with a few keystrokes
 cask "raycast"
 # Emoji picker optimized for blind people
@@ -103,6 +105,7 @@ mas "Fantastical", id: 975937182
 mas "Grammarly for Safari", id: 1462114288
 mas "Notability", id: 360593530
 mas "Save to Raindrop.io", id: 1549370672
+mas "Session", id: 1521432881
 mas "Slack", id: 803453959
 mas "Super Agent", id: 1568262835
 mas "Things", id: 904280696
