@@ -77,6 +77,8 @@ cask "insomnia"
 cask "istat-menus"
 # Terminal emulator as alternative to Apple's Terminal app
 cask "iterm2"
+# Keyboard customizer
+cask "karabiner-elements"
 # Wallet desktop application to maintain multiple cryptocurrencies
 cask "ledger-live"
 # VPN client for secure internet access and private browsing

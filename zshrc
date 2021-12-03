@@ -63,3 +63,9 @@ fi
 # [ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
 #### END FIG ENV VARIABLES ####
 export GPG_TTY=$(tty)
+
+###-tns-completion-start-###
+if [ -f /Users/cthulhu/.tnsrc ]; then 
+    source /Users/cthulhu/.tnsrc 
+fi
+###-tns-completion-end-###
