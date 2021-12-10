@@ -19,6 +19,7 @@ alias bbd='brew bundle dump --force --describe'
 alias man=batman
 alias trail='<<<${(F)path}'
 alias rm=trash
+alias go2Personal=" cd Sandbox\ Projects/keepadoo-monorepo/"
 
 # SnappCar aliases
 alias go2Work="cd SnappCar\ Projects/frontend-app/"
@@ -65,7 +66,7 @@ fi
 export GPG_TTY=$(tty)
 
 ###-tns-completion-start-###
-if [ -f /Users/cthulhu/.tnsrc ]; then 
-    source /Users/cthulhu/.tnsrc 
+if [ -f /Users/cthulhu/.tnsrc ]; then
+    source /Users/cthulhu/.tnsrc
 fi
 ###-tns-completion-end-###
