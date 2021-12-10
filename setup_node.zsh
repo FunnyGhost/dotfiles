@@ -14,6 +14,7 @@ fi
 
 
 # Install npm packages
+npm config set save-exact true -g
 npm install --global nativescript
 npm install --global @angular/cli
 npm install --global typescript
