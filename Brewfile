@@ -71,6 +71,8 @@ cask "exodus"
 cask "firefox-developer-edition"
 # GIT client
 cask "fork"
+# Utility to hide menu bar items
+cask "hiddenbar"
 # HTTP and GraphQL Client
 cask "insomnia"
 # System monitoring app
@@ -101,13 +103,13 @@ cask "steam"
 cask "visual-studio-code"
 # JavaScript IDE
 cask "webstorm"
+mas "Cloud Battery", id: 1481005137
 mas "DaisyDisk", id: 411643860
 mas "Day One", id: 1055511498
 mas "Fantastical", id: 975937182
 mas "Grammarly for Safari", id: 1462114288
 mas "Notability", id: 360593530
 mas "Save to Raindrop.io", id: 1549370672
-mas "Session", id: 1521432881
 mas "Slack", id: 803453959
 mas "Super Agent", id: 1568262835
 mas "Things", id: 904280696
