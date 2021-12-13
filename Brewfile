@@ -65,6 +65,8 @@ cask "brave-browser"
 cask "cheatsheet"
 # Screen capturing tool
 cask "cleanshot"
+# Voice and text chat software
+cask "discord"
 # Desktop wallet for cryptocurrency assets
 cask "exodus"
 # Web browser
