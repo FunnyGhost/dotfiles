@@ -69,6 +69,8 @@ cask "cleanshot"
 cask "discord"
 # Desktop wallet for cryptocurrency assets
 cask "exodus"
+# Reimagine your terminal
+cask "fig"
 # Web browser
 cask "firefox-developer-edition"
 # GIT client
@@ -101,6 +103,8 @@ cask "silicon"
 cask "spotify"
 # Video game digital distribution service
 cask "steam"
+# Messaging app with a focus on speed and security
+cask "telegram"
 # Open-source code editor
 cask "visual-studio-code"
 # JavaScript IDE
@@ -115,4 +119,5 @@ mas "Save to Raindrop.io", id: 1549370672
 mas "Slack", id: 803453959
 mas "Super Agent", id: 1568262835
 mas "Things", id: 904280696
+mas "Vinegar", id: 1591303229
 mas "Xcode", id: 497799835

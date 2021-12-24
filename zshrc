@@ -1,7 +1,7 @@
 
 #### FIG ENV VARIABLES ####
 # Please make sure this block is at the start of this file.
-# [ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
+[ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
 #### END FIG ENV VARIABLES ####
 # Set Variables
 export HOMEBREW_CASK_OPTS="--no-quarantine"
@@ -59,14 +59,9 @@ if [ -f /Users/cthulhu/.tnsrc ]; then
 fi
 ###-tns-completion-end-###
 
-#### FIG ENV VARIABLES ####
-# Please make sure this block is at the end of this file.
-# [ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
-#### END FIG ENV VARIABLES ####
 export GPG_TTY=$(tty)
 
-###-tns-completion-start-###
-if [ -f /Users/cthulhu/.tnsrc ]; then
-    source /Users/cthulhu/.tnsrc
-fi
-###-tns-completion-end-###
+#### FIG ENV VARIABLES ####
+# Please make sure this block is at the end of this file.
+[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
+#### END FIG ENV VARIABLES ####
