@@ -1,30 +1,16 @@
+# Fig pre block. Keep at the top of this file.
+export PATH="${PATH}:${HOME}/.local/bin"
+eval "$(fig init zsh pre)"
+
 # OLD SETUP
 
-#### FIG ENV VARIABLES ####
-# Please make sure this block is at the start of this file.
-[ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
-#### END FIG ENV VARIABLES ####
+
 # Set Variables
 export HOMEBREW_CASK_OPTS="--no-quarantine"
 export NULLCMD=bat
 export JAVA_HOME='/Applications/Android Studio.app/Contents/jre/Contents/Home'
 export ANDROID_HOME=/Users/cthulhu/Library/Android/sdk
 export N_PREFIX="$HOME/.n"
-
-# Create Aliases
-alias exa='exa -laFh --git'
-alias ls='exa -laFh --git'
-alias bbd='brew bundle dump --force --describe'
-alias man=batman
-alias trail='<<<${(F)path}'
-alias rm=trash
-alias go2Personal=" cd Sandbox\ Projects/keepadoo-monorepo/"
-
-# SnappCar aliases
-alias go2Work="cd SnappCar\ Projects/frontend-app/"
-alias runiOS="ns run ios --device 'iPhone 11 Pro'"
-alias listDevices="ns device ios --available-devices"
-alias generateTypings='TNS_DEBUG_METADATA_PATH="$(pwd)/metadata" ns build ios && TNS_TYPESCRIPT_DECLARATIONS_PATH="$(pwd)/typings" ns build ios'
 
 # Add Locations to $path array Variable
 typeset -U path
@@ -50,10 +36,7 @@ fi
 
 export GPG_TTY=$(tty)
 
-#### FIG ENV VARIABLES ####
-# Please make sure this block is at the end of this file.
-[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
-#### END FIG ENV VARIABLES ####
+
 
 # END OF OLD SETUP
 
@@ -155,6 +138,23 @@ source $ZSH/oh-my-zsh.sh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+alias exa='exa -laFh --git'
+alias ls='exa -laFh --git'
+alias bbd='brew bundle dump --force --describe'
+alias man=batman
+alias trail='<<<${(F)path}'
+alias rm=trash
+alias go2Personal=" cd Sandbox\ Projects/keepadoo-monorepo/"
+
+# SnappCar aliases
+alias go2Work="cd SnappCar\ Projects/frontend-app/"
+alias runiOS="ns run ios --device 'iPhone 11 Pro'"
+alias listDevices="ns device ios --available-devices"
+alias generateTypings='TNS_DEBUG_METADATA_PATH="$(pwd)/metadata" ns build ios && TNS_TYPESCRIPT_DECLARATIONS_PATH="$(pwd)/typings" ns build ios'
+
+# Starship setup
+eval "$(starship init zsh)"
+
+# Fig post block. Keep at the bottom of this file.
+eval "$(fig init zsh post)"
+

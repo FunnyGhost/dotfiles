@@ -1,6 +1,7 @@
 tap "eth-p/software"
 tap "homebrew/bundle"
 tap "homebrew/cask"
+tap "homebrew/cask-fonts"
 tap "homebrew/cask-versions"
 tap "homebrew/core"
 # Clone of cat(1) with syntax highlighting and Git integration
@@ -19,6 +20,8 @@ brew "glib"
 brew "gnupg"
 # Improved top (interactive process viewer)
 brew "htop"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.10"
 # User-friendly cURL replacement (command-line HTTP client)
 brew "httpie"
 # ISO/IEC 23008-12:2017 HEIF file format decoder and encoder
@@ -49,6 +52,8 @@ brew "ranger"
 brew "redis"
 # HTTP regression testing and benchmarking utility
 brew "siege"
+# Cross-shell prompt for astronauts
+brew "starship"
 # UNIX shell (command interpreter)
 brew "zsh"
 # Bash scripts that integrate bat with various command-line tools
@@ -73,6 +78,7 @@ cask "exodus"
 cask "fig"
 # Web browser
 cask "firefox-developer-edition"
+cask "font-anonymice-nerd-font"
 # GIT client
 cask "fork"
 # Utility to hide menu bar items
@@ -87,6 +93,8 @@ cask "iterm2"
 cask "karabiner-elements"
 # Wallet desktop application to maintain multiple cryptocurrencies
 cask "ledger-live"
+# Reverse proxy, secure introspectable tunnels to localhost
+cask "ngrok"
 # VPN client for secure internet access and private browsing
 cask "nordvpn"
 # Client program for the OpenVPN Access Server
@@ -119,5 +127,4 @@ mas "Save to Raindrop.io", id: 1549370672
 mas "Slack", id: 803453959
 mas "Super Agent", id: 1568262835
 mas "Things", id: 904280696
-mas "Vinegar", id: 1591303229
 mas "Xcode", id: 497799835
