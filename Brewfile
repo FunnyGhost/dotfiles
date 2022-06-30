@@ -60,8 +60,6 @@ brew "zsh"
 brew "eth-p/software/bat-extras"
 # Password manager that keeps all passwords secure behind one password
 cask "1password"
-# Tools for building Android applications
-cask "android-studio"
 # Application uninstaller
 cask "appcleaner"
 # Web browser focusing on privacy
@@ -72,19 +70,15 @@ cask "cheatsheet"
 cask "cleanshot"
 # Voice and text chat software
 cask "discord"
-# Desktop wallet for cryptocurrency assets
-cask "exodus"
 # Reimagine your terminal
 cask "fig"
-# Web browser
-cask "firefox-developer-edition"
 cask "font-anonymice-nerd-font"
 # GIT client
 cask "fork"
 # Utility to hide menu bar items
 cask "hiddenbar"
-# HTTP and GraphQL Client
-cask "insomnia"
+# Terminal built on web technologies
+cask "hyper"
 # System monitoring app
 cask "istat-menus"
 # Terminal emulator as alternative to Apple's Terminal app
@@ -105,8 +99,8 @@ cask "paw"
 cask "raycast"
 # Emoji picker optimized for blind people
 cask "rocket"
-# Identify Intel-only apps
-cask "silicon"
+# Tool to simulate responsive designs on multiple devices
+cask "sizzy"
 # Music streaming service
 cask "spotify"
 # Video game digital distribution service
@@ -117,14 +111,15 @@ cask "telegram"
 cask "visual-studio-code"
 # JavaScript IDE
 cask "webstorm"
-mas "Cloud Battery", id: 1481005137
+mas "1Password for Safari", id: 1569813296
+mas "Craft", id: 1487937127
 mas "DaisyDisk", id: 411643860
 mas "Day One", id: 1055511498
-mas "Fantastical", id: 975937182
 mas "Grammarly for Safari", id: 1462114288
 mas "Notability", id: 360593530
 mas "Save to Raindrop.io", id: 1549370672
 mas "Slack", id: 803453959
 mas "Super Agent", id: 1568262835
 mas "Things", id: 904280696
+mas "Vinegar", id: 1591303229
 mas "Xcode", id: 497799835
