@@ -5,6 +5,7 @@ tap "homebrew/cask"
 tap "homebrew/cask-fonts"
 tap "homebrew/cask-versions"
 tap "homebrew/core"
+tap "jandedobbeleer/oh-my-posh"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
 # GNU File, Shell, and Text utilities
@@ -22,7 +23,7 @@ brew "gnupg"
 # Improved top (interactive process viewer)
 brew "htop"
 # Interpreted, interactive, object-oriented programming language
-brew "python@3.10"
+brew "python@3.10", link: false
 # User-friendly cURL replacement (command-line HTTP client)
 brew "httpie"
 # ISO/IEC 23008-12:2017 HEIF file format decoder and encoder
@@ -59,6 +60,8 @@ brew "starship"
 brew "zsh"
 # Bash scripts that integrate bat with various command-line tools
 brew "eth-p/software/bat-extras"
+# Prompt theme engine for any shell
+brew "jandedobbeleer/oh-my-posh/oh-my-posh"
 # Password manager that keeps all passwords secure behind one password
 cask "1password"
 # Command-line helper for the 1Password password manager
@@ -75,6 +78,7 @@ cask "cleanshot"
 cask "discord"
 # Reimagine your terminal
 cask "fig"
+# Developer targeted fonts with a high number of glyphs
 cask "font-anonymice-nerd-font"
 # GIT client
 cask "fork"
@@ -98,6 +102,8 @@ cask "nordvpn"
 cask "openvpn-connect"
 # HTTP client that helps testing and describing APIs
 cask "paw"
+# Control your tools with a few keystrokes
+cask "raycast"
 # Move and resize windows using keyboard shortcuts or snap areas
 cask "rectangle"
 # Emoji picker optimized for blind people
@@ -116,3 +122,55 @@ cask "visual-studio-code"
 cask "warp"
 # JavaScript IDE
 cask "webstorm"
+# Desktop client for WhatsApp
+cask "whatsapp"
+mas "1Password for Safari", id: 1569813296
+mas "Controller", id: 1198176727
+mas "Craft", id: 1487937127
+mas "DaisyDisk", id: 411643860
+mas "Grammarly for Safari", id: 1462114288
+mas "Keynote", id: 409183694
+mas "MusicHarbor", id: 1440405750
+mas "Notability", id: 360593530
+mas "Save to Raindrop.io", id: 1549370672
+mas "Slack", id: 803453959
+mas "Speediness", id: 1596706466
+mas "Super Agent", id: 1568262835
+mas "Things", id: 904280696
+mas "Ulysses", id: 1225570693
+mas "Vinegar", id: 1591303229
+mas "Xcode", id: 497799835
+vscode "alexperronnet.spectrum-vscode-icons"
+vscode "Angular.ng-template"
+vscode "antfu.file-nesting"
+vscode "BeardedBear.beardedicons"
+vscode "benjaminbenais.copilot-theme"
+vscode "cdonohue.quill-icons"
+vscode "christian-kohler.npm-intellisense"
+vscode "dbaeumer.vscode-eslint"
+vscode "dracula-theme.theme-dracula"
+vscode "EliverLara.sweet-vscode-icons"
+vscode "Equinusocio.vsc-community-material-theme"
+vscode "Equinusocio.vsc-material-theme"
+vscode "equinusocio.vsc-material-theme-icons"
+vscode "esbenp.prettier-vscode"
+vscode "GitHub.copilot"
+vscode "GitHub.copilot-labs"
+vscode "Gruntfuggly.todo-tree"
+vscode "johnpapa.Angular2"
+vscode "Orta.vscode-jest"
+vscode "prazdevs.zarp-icons"
+vscode "Prisma.prisma"
+vscode "PulkitGangwar.nextjs-snippets"
+vscode "sdras.fortnite-vscode-theme"
+vscode "sdras.night-owl"
+vscode "sldobri.bunker"
+vscode "streetsidesoftware.code-spell-checker"
+vscode "styled-components.vscode-styled-components"
+vscode "tamj0rd2.ts-quickfixes-extension"
+vscode "unifiedjs.vscode-mdx"
+vscode "VisualStudioExptTeam.intellicode-api-usage-examples"
+vscode "VisualStudioExptTeam.vscodeintellicode"
+vscode "vscode-icons-team.vscode-icons"
+vscode "wesbos.theme-cobalt2"
+vscode "withfig.fig"
