@@ -1,5 +1,5 @@
 # Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && . "$HOME/.fig/shell/zshrc.pre.zsh"
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
 # OLD SETUP
 
 
@@ -153,5 +153,13 @@ alias generateTypings='TNS_DEBUG_METADATA_PATH="$(pwd)/metadata" ns build ios &&
 # Starship setup
 eval "$(starship init zsh)"
 
+# Oh-my-posh setup
+# eval "$(oh-my-posh init zsh)"
+#  eval "$(oh-my-posh init zsh --config $(brew --prefix oh-my-posh)/themes/bubbles.omp.json)"
+
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)
+
 # Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && . "$HOME/.fig/shell/zshrc.post.zsh"
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"

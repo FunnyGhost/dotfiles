@@ -1,3 +1,4 @@
+tap "1password/tap"
 tap "eth-p/software"
 tap "homebrew/bundle"
 tap "homebrew/cask"
@@ -60,6 +61,8 @@ brew "zsh"
 brew "eth-p/software/bat-extras"
 # Password manager that keeps all passwords secure behind one password
 cask "1password"
+# Command-line helper for the 1Password password manager
+cask "1password-cli"
 # Application uninstaller
 cask "appcleaner"
 # Web browser focusing on privacy
@@ -95,8 +98,8 @@ cask "nordvpn"
 cask "openvpn-connect"
 # HTTP client that helps testing and describing APIs
 cask "paw"
-# Control your tools with a few keystrokes
-cask "raycast"
+# Move and resize windows using keyboard shortcuts or snap areas
+cask "rectangle"
 # Emoji picker optimized for blind people
 cask "rocket"
 # Tool to simulate responsive designs on multiple devices
@@ -109,17 +112,7 @@ cask "steam"
 cask "telegram"
 # Open-source code editor
 cask "visual-studio-code"
+# Rust-based terminal
+cask "warp"
 # JavaScript IDE
 cask "webstorm"
-mas "1Password for Safari", id: 1569813296
-mas "Craft", id: 1487937127
-mas "DaisyDisk", id: 411643860
-mas "Day One", id: 1055511498
-mas "Grammarly for Safari", id: 1462114288
-mas "Notability", id: 360593530
-mas "Save to Raindrop.io", id: 1549370672
-mas "Slack", id: 803453959
-mas "Super Agent", id: 1568262835
-mas "Things", id: 904280696
-mas "Vinegar", id: 1591303229
-mas "Xcode", id: 497799835

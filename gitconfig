@@ -8,3 +8,5 @@
 	program = gpg
 [tag]
 	gpgsign = true
+[core]
+	autocrlf = input
