@@ -84,10 +84,6 @@ cask "font-anonymice-nerd-font"
 cask "fork"
 # Utility to hide menu bar items
 cask "hiddenbar"
-# Terminal built on web technologies
-cask "hyper"
-# System monitoring app
-cask "istat-menus"
 # Terminal emulator as alternative to Apple's Terminal app
 cask "iterm2"
 # Keyboard customizer
@@ -98,8 +94,8 @@ cask "ledger-live"
 cask "ngrok"
 # VPN client for secure internet access and private browsing
 cask "nordvpn"
-# Client program for the OpenVPN Access Server
-cask "openvpn-connect"
+# Visual diff and merge tool
+cask "meld"
 # HTTP client that helps testing and describing APIs
 cask "paw"
 # Control your tools with a few keystrokes
@@ -110,8 +106,6 @@ cask "rectangle"
 cask "rocket"
 # Tool to simulate responsive designs on multiple devices
 cask "sizzy"
-# Music streaming service
-cask "spotify"
 # Video game digital distribution service
 cask "steam"
 # Messaging app with a focus on speed and security
@@ -120,8 +114,6 @@ cask "telegram"
 cask "visual-studio-code"
 # Rust-based terminal
 cask "warp"
-# JavaScript IDE
-cask "webstorm"
 # Desktop client for WhatsApp
 cask "whatsapp"
 mas "1Password for Safari", id: 1569813296
@@ -135,15 +127,14 @@ mas "Notability", id: 360593530
 mas "Save to Raindrop.io", id: 1549370672
 mas "Slack", id: 803453959
 mas "Speediness", id: 1596706466
-mas "Super Agent", id: 1568262835
 mas "Things", id: 904280696
 mas "Ulysses", id: 1225570693
 mas "Vinegar", id: 1591303229
-mas "Xcode", id: 497799835
 vscode "alexperronnet.spectrum-vscode-icons"
 vscode "Angular.ng-template"
 vscode "antfu.file-nesting"
 vscode "BeardedBear.beardedicons"
+vscode "BeardedBear.beardedtheme"
 vscode "benjaminbenais.copilot-theme"
 vscode "cdonohue.quill-icons"
 vscode "christian-kohler.npm-intellisense"
@@ -157,6 +148,7 @@ vscode "esbenp.prettier-vscode"
 vscode "GitHub.copilot"
 vscode "GitHub.copilot-labs"
 vscode "Gruntfuggly.todo-tree"
+vscode "jasonnutter.vscode-codeowners"
 vscode "johnpapa.Angular2"
 vscode "Orta.vscode-jest"
 vscode "prazdevs.zarp-icons"

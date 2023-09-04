@@ -1,12 +1,16 @@
 [user]
 	name = Catalin Ciubotaru
 	email = 6450559+FunnyGhost@users.noreply.github.com
-	signingkey = BFCE5224E53E79CD
-[commit]
-	gpgsign = true
-[gpg]
-	program = gpg
-[tag]
-	gpgsign = true
 [core]
 	autocrlf = input
+[alias]
+    lg = log -20 --graph --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn\\ %C(cyan)%cr]" --decorate --abbrev-commit --date=relative
+    s = status -sb
+    t = checkout -
+	co = checkout
+	ci = commit
+	br = branch
+[diff]
+	tool = meld
+[fetch]
+	prune = true

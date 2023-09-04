@@ -1,13 +1,6 @@
-# Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
-# OLD SETUP
-
-
 # Set Variables
 export HOMEBREW_CASK_OPTS="--no-quarantine"
 export NULLCMD=bat
-export JAVA_HOME='/Applications/Android Studio.app/Contents/jre/Contents/Home'
-export ANDROID_HOME=/Users/cthulhu/Library/Android/sdk
 export N_PREFIX="$HOME/.n"
 
 # Add Locations to $path array Variable
@@ -19,22 +12,13 @@ path=(
     "/Applications/Visual Studio Code.app/Contents/Resources/app/bin:Library/Python/2.7/bin"
     "$ANDROID_HOME/platform-tools"
     "Library/Python/2.7/bin"
+    "~/.git-commands"
 )
 
 # Write Handy Functions
 function mkcd() {
 	mkdir -p "$@" && cd "$_";
 }
-
-###-tns-completion-start-###
-if [ -f /Users/cthulhu/.tnsrc ]; then
-    source /Users/cthulhu/.tnsrc
-fi
-###-tns-completion-end-###
-
-export GPG_TTY=$(tty)
-
-
 
 # END OF OLD SETUP
 
@@ -143,12 +127,6 @@ alias man=batman
 alias trail='<<<${(F)path}'
 alias rm=trash
 alias go2Personal=" cd Sandbox\ Projects/keepadoo-monorepo/"
-
-# SnappCar aliases
-alias go2Work="cd SnappCar\ Projects/frontend-app/"
-alias runiOS="ns run ios --device 'iPhone 11 Pro'"
-alias listDevices="ns device ios --available-devices"
-alias generateTypings='TNS_DEBUG_METADATA_PATH="$(pwd)/metadata" ns build ios && TNS_TYPESCRIPT_DECLARATIONS_PATH="$(pwd)/typings" ns build ios'
 
 # Starship setup
 eval "$(starship init zsh)"
