@@ -2,6 +2,7 @@
 export HOMEBREW_CASK_OPTS="--no-quarantine"
 export NULLCMD=bat
 export N_PREFIX="$HOME/.n"
+export FZF_DEFAULT_OPTS="--ansi --preview-window 'right:50%' --preview 'bat --line-range :300 {}'"
 
 # Add Locations to $path array Variable
 typeset -U path
@@ -10,9 +11,9 @@ path=(
     "$N_PREFIX/bin"
     $path
     "/Applications/Visual Studio Code.app/Contents/Resources/app/bin:Library/Python/2.7/bin"
-    "$ANDROID_HOME/platform-tools"
     "Library/Python/2.7/bin"
-    "~/.git-commands"
+    "$HOME/.git-commands"
+    "$HOME/dotfiles/git-commands"
 )
 
 # Write Handy Functions
@@ -138,6 +139,3 @@ eval "$(starship init zsh)"
 
 # Load Angular CLI autocompletion.
 source <(ng completion script)
-
-# Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"

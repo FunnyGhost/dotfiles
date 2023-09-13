@@ -4,10 +4,13 @@
 [core]
 	autocrlf = input
 [alias]
-    lg = log -20 --graph --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn\\ %C(cyan)%cr]" --decorate --abbrev-commit --date=relative
+    cs = !git log -20 --pretty=format:'%h - %s %an' | fzf --preview 'git show --color {1}'
+    lg = !git --no-pager log --color --graph -30 --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %Cgreen%cr %C(bold blue)<%an>%Creset' | sed -e 's/tag: 2.gh-readonly[^,)]*//' -e 's/, //'
+    snapshot = !git checkout -b "$(git rev-parse --abbrev-ref HEAD)-snapshot-$(date +%F-%H%M%S)" && git checkout -
+    up = pull --rebase --autostash
+    ch = !git diff --name-only | fzf
     s = status -sb
     t = checkout -
-	co = checkout
 	ci = commit
 	br = branch
 [diff]
