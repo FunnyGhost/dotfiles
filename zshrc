@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # Set Variables
 export HOMEBREW_CASK_OPTS="--no-quarantine"
 export NULLCMD=bat
@@ -9,6 +16,8 @@ typeset -U path
 
 path=(
     "$N_PREFIX/bin"
+    "/opt/homebrew/bin"
+    "/opt/homebrew/sbin"
     $path
     "/Applications/Visual Studio Code.app/Contents/Resources/app/bin:Library/Python/2.7/bin"
     "Library/Python/2.7/bin"
@@ -33,7 +42,9 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="cobalt2"
+ZSH_THEME="powerlevel10k/powerlevel10k"
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -121,21 +132,22 @@ source $ZSH/oh-my-zsh.sh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
-alias exa='exa -laFh --git'
-alias ls='exa -laFh --git'
+alias eza='eza -laFh --git --icons=always'
+alias ls='eza -laFh --git --icons=always'
 alias bbd='brew bundle dump --force --describe'
 alias man=batman
 alias trail='<<<${(F)path}'
 alias rm=trash
-alias go2Personal=" cd Sandbox\ Projects/keepadoo-monorepo/"
 
-# Starship setup
-eval "$(starship init zsh)"
+# Not sure I need this
+# direnv setup 👇
+eval "$(direnv hook zsh)"
 
-# Oh-my-posh setup
-# eval "$(oh-my-posh init zsh)"
-#  eval "$(oh-my-posh init zsh --config $(brew --prefix oh-my-posh)/themes/bubbles.omp.json)"
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# # bun completions
+# [ -s "/Users/cthulhu/.bun/_bun" ] && source "/Users/cthulhu/.bun/_bun"
 
-# Load Angular CLI autocompletion.
-source <(ng completion script)
+# # bun
+# export BUN_INSTALL="$HOME/.bun"
+# export PATH="$BUN_INSTALL/bin:$PATH"
