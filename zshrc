@@ -10,7 +10,7 @@ export HOMEBREW_CASK_OPTS="--no-quarantine"
 export NULLCMD=bat
 export N_PREFIX="$HOME/.n"
 export FZF_DEFAULT_OPTS="--ansi --preview-window 'right:50%' --preview 'bat --line-range :300 {}'"
-
+export EDITOR='nvim'
 # Add Locations to $path array Variable
 typeset -U path
 
@@ -23,6 +23,7 @@ path=(
     "Library/Python/2.7/bin"
     "$HOME/.git-commands"
     "$HOME/dotfiles/git-commands"
+    "$HOME/.tmux/plugins/tmuxifier/bin"
 )
 
 # Write Handy Functions
@@ -151,3 +152,7 @@ eval "$(direnv hook zsh)"
 # # bun
 # export BUN_INSTALL="$HOME/.bun"
 # export PATH="$BUN_INSTALL/bin:$PATH"
+
+# zsh plugins
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
