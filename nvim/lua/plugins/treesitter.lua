@@ -6,7 +6,17 @@ return {
 
 		config.setup({
 			auto_install = true,
-			ensure_installed = { "lua", "javascript", "html" },
+			ensure_installed = {
+				"lua",
+				"javascript",
+				"html",
+				"bash",
+				"gitignore",
+				"prisma",
+				"tsx",
+				"typescript",
+				"css",
+			},
 			highlight = { enable = true },
 			indent = { enable = true },
 		})
