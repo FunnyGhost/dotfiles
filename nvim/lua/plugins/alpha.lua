@@ -37,6 +37,22 @@ return {
 			-- wrap = "overflow";
 		}
 
+		dashboard.section.buttons.val = {
+			dashboard.button("i", "    new file", ":ene <BAR> startinsert<CR>"),
+			dashboard.button("o", "    old files", ":Telescope oldfiles<CR>"),
+			dashboard.button("f", "󰥨    find file", ":Telescope find_files<CR>"),
+			dashboard.button("g", "󰱼    find text", ":Telescope live_grep<CR>"),
+			dashboard.button("l", "󰒲    lazy", ":Lazy<CR>"),
+			dashboard.button("m", "󱌣    mason", ":Mason<CR>"),
+			dashboard.button("p", "󰄉    profile", ":Lazy profile<CR>"),
+			dashboard.button("q", "󰭿    quit", ":qa<CR>"),
+		}
+
+		for _, button in ipairs(dashboard.section.buttons.val) do
+			button.opts.hl = "Normal"
+			button.opts.hl_shortcut = "Function"
+		end
+
 		local function footer()
 			return "Haskell can suck mo' nads"
 		end
