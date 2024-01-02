@@ -154,5 +154,5 @@ eval "$(direnv hook zsh)"
 # export PATH="$BUN_INSTALL/bin:$PATH"
 
 # zsh plugins
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
