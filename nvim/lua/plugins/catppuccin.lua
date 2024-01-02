@@ -1,3 +1,4 @@
+-- Theme for the whole NeoVim UI + theme for some integrations
 return {
 	"catppuccin/nvim",
 	lazy = false,

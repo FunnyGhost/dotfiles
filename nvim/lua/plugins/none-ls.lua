@@ -1,3 +1,4 @@
+-- This allows us to format and check our code. Uses the LSP under the hood
 return {
 	"nvimtools/none-ls.nvim",
 	config = function()

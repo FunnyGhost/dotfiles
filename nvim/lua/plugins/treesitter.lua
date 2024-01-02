@@ -1,3 +1,4 @@
+-- This highlights the whole document
 return {
 	"nvim-treesitter/nvim-treesitter",
 	build = ":TSUpdate",

@@ -1,3 +1,4 @@
+-- Sets up the LSP for different languages. These are the servers that check the current code, and provide context
 return {
 	{
 		"williamboman/mason.nvim",

@@ -1,3 +1,4 @@
+-- Tools that allows us to search files, symbols, etc.
 return {
 	{
 		"nvim-telescope/telescope.nvim",

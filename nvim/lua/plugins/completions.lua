@@ -1,3 +1,4 @@
+-- Setup to handle auto-complete from a bunch of snippets + the LSP suggestions
 return {
 	{
 		"L3MON4D3/LuaSnip",

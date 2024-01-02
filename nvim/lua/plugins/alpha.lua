@@ -1,3 +1,4 @@
+-- Used to print a nice welcome screen when opening NeoVim without a directory parameter
 return {
 
 	"goolord/alpha-nvim",
