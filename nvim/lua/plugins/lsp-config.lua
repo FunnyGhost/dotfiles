@@ -23,8 +23,9 @@ return {
 	},
 	{
 		"neovim/nvim-lspconfig",
-		lazy = false,
+		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
+			{ "folke/neodev.nvim", opts = {} },
 			"hrsh7th/cmp-nvim-lsp",
 			{ "antosha417/nvim-lsp-file-operations", config = true },
 		},
