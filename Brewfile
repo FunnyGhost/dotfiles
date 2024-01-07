@@ -1,3 +1,4 @@
+tap "1password/tap"
 tap "eth-p/software"
 tap "homebrew/bundle"
 tap "homebrew/cask-fonts"
@@ -7,6 +8,8 @@ tap "jandedobbeleer/oh-my-posh"
 brew "bat"
 # GNU File, Shell, and Text utilities
 brew "coreutils"
+# Modern replacement for 'ls'
+brew "exa"
 # Modern, maintained replacement for ls
 brew "eza"
 # Simple, fast and user-friendly alternative to find
@@ -19,18 +22,18 @@ brew "git"
 brew "git-lfs"
 # Core application library for C
 brew "glib"
+# Validating, recursive, caching DNS resolver
+brew "unbound"
 # GNU Transport Layer Security (TLS) Library
 brew "gnutls"
 # GNU Pretty Good Privacy (PGP) package
 brew "gnupg"
-# Improved top (interactive process viewer)
-brew "htop"
-# User-friendly cURL replacement (command-line HTTP client)
-brew "httpie"
 # Database of common MIME types
 brew "shared-mime-info"
 # ISO/IEC 23008-12:2017 HEIF file format decoder and encoder
 brew "libheif"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.9"
 # Tools and libraries to manipulate images in many formats
 brew "imagemagick"
 # User-friendly front-end to ssh-agent(1)
@@ -41,26 +44,18 @@ brew "less"
 brew "mas"
 # Node version management
 brew "n"
-# Free (GNU) replacement for the Pico text editor
-brew "nano"
 # Fast, highly customisable system info script
 brew "neofetch"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
-# HTTP/2 C Library
-brew "nghttp2"
-# Pinentry for GPG on Mac
-brew "pinentry-mac"
+# Platform built on V8 to build network applications
+brew "node"
 # Code formatter for JavaScript, CSS, JSON, GraphQL, Markdown, YAML
 brew "prettier"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.10"
 # File browser
 brew "ranger"
-# Persistent key-value database, with built-in net interface
-brew "redis"
-# HTTP regression testing and benchmarking utility
-brew "siege"
-# Cross-shell prompt for astronauts
-brew "starship"
 # Terminal multiplexer
 brew "tmux"
 # UNIX shell (command interpreter)
@@ -71,18 +66,20 @@ brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
 # Bash scripts that integrate bat with various command-line tools
 brew "eth-p/software/bat-extras"
-# Prompt theme engine for any shell
-brew "jandedobbeleer/oh-my-posh/oh-my-posh"
 # Password manager that keeps all passwords secure behind one password
 cask "1password"
-# Command-line helper for the 1Password password manager
+# Command-line interface for 1Password
 cask "1password-cli"
 # Application uninstaller
 cask "appcleaner"
+# Web browser focusing on privacy
+cask "brave-browser"
 # Tool to list all active shortcuts of the current application
 cask "cheatsheet"
 # Screen capturing tool
 cask "cleanshot"
+# Voice and text chat software
+cask "discord"
 # App to build and share containerized applications and microservices
 cask "docker"
 # Reimagine your terminal
@@ -95,6 +92,10 @@ cask "font-monaspace"
 cask "fork"
 # Utility to hide menu bar items
 cask "hiddenbar"
+# Terminal built on web technologies
+cask "hyper"
+# System monitoring app
+cask "istat-menus"
 # Terminal emulator as alternative to Apple's Terminal app
 cask "iterm2"
 # Keyboard customizer
@@ -103,6 +104,14 @@ cask "karabiner-elements"
 cask "ledger-live"
 # Visual diff and merge tool
 cask "meld"
+# Reverse proxy, secure introspectable tunnels to localhost
+cask "ngrok"
+# VPN client for secure internet access and private browsing
+cask "nordvpn"
+# App to write, plan, collaborate, and get organized
+cask "notion"
+# Client program for the OpenVPN Access Server
+cask "openvpn-connect"
 # HTTP client that helps testing and describing APIs
 cask "paw"
 # Control your tools with a few keystrokes
@@ -111,20 +120,36 @@ cask "raycast"
 cask "readdle-spark"
 # Move and resize windows using keyboard shortcuts or snap areas
 cask "rectangle"
-# Emoji picker optimized for blind people
-cask "rocket"
-# Tool to simulate responsive designs on multiple devices
-cask "sizzy"
+# Music streaming service
+cask "spotify"
+# Video game digital distribution service
+cask "steam"
+# Messaging app with a focus on speed and security
+cask "telegram"
 # Open-source code editor
 cask "visual-studio-code"
 # Rust-based terminal
 cask "warp"
+# JavaScript IDE
+cask "webstorm"
+# Native desktop client for WhatsApp
+cask "whatsapp"
 mas "1Password for Safari", id: 1569813296
+mas "Controller", id: 1198176727
+mas "Craft", id: 1487937127
 mas "DaisyDisk", id: 411643860
 mas "Grammarly for Safari", id: 1462114288
+mas "Keynote", id: 409183694
 mas "MusicHarbor", id: 1440405750
+mas "Notability", id: 360593530
+mas "Save to Raindrop.io", id: 1549370672
+mas "Slack", id: 803453959
+mas "Speediness", id: 1596706466
 mas "Things", id: 904280696
+mas "Ulysses", id: 1225570693
 mas "Vinegar", id: 1591303229
+mas "Xcode", id: 497799835
+vscode "alexperronnet.spectrum-vscode-icons"
 vscode "Angular.ng-template"
 vscode "antfu.file-nesting"
 vscode "BeardedBear.beardedicons"
