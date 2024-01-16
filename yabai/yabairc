@@ -1,30 +1,14 @@
-# default layout (can be bsp, stack or float)
-yabai -m config layout bsp
+#!/usr/bin/env zsh
 
-# New window spawns to the right if vertical split, or bottom if horizontal split
-yabai -m config window_placement second_child
+YABAI_CONFIG="$HOME/.config/yabai"
 
-# padding set to 12px
-yabai -m config top_padding 24
-yabai -m config bottom_padding 12
-yabai -m config left_padding 12
-yabai -m config right_padding 12
-yabai -m config window_gap 8
+# This is used to determine if a monitor is used
+# Since the notch is -only- on the laptop, if a monitor isn't used,
+# then that means the internal display is used ¯\_(ツ)_/¯
+MAIN_DISPLAY=$(system_profiler SPDisplaysDataType | grep -B 3 'Main Display:' | awk '/Display Type/ {print $3}')
 
-# center mouse on window with focus
-yabai -m config mouse_follows_focus on
-
-# modifier for clicking and dragging with mouse
-yabai -m config mouse_modifier alt
-# set modifier + left-click drag to move window
-yabai -m config mouse_action1 move
-# set modifier + right-click drag to resize window
-yabai -m config mouse_action2 resize
-
-
-# when window is dropped in center of another window, swap them (on edges it will split it)
-yabai -m mouse_drop_action swap
-
-yabai -m rule --add app="^System Settings$" manage=off
-yabai -m rule --add app="^Karabiner-Elements$" manage=off
-yabai -m rule --add app="^Fantastical$" manage=off
+if [[ $MAIN_DISPLAY = "Built-in" ]]; then
+   source "$YABAI_CONFIG/yabai-laptop"
+else
+   source "$YABAI_CONFIG/yabai-desktop"
+fi
