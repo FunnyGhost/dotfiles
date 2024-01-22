@@ -140,7 +140,6 @@ alias man=batman
 alias trail='<<<${(F)path}'
 alias rm=trash
 
-# Not sure I need this
 # direnv setup 👇
 eval "$(direnv hook zsh)"
 

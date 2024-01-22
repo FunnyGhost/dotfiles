@@ -5,7 +5,7 @@ ICON_PADDING_RIGHT=5
 case $INFO in
 "Arc")
     ICON_PADDING_RIGHT=5
-    ICON=󰞍
+    ICON=󰣇
     ;;
 "Code")
     ICON_PADDING_RIGHT=4
@@ -22,8 +22,12 @@ case $INFO in
     ICON_PADDING_RIGHT=5
     ICON=
     ;;
+"Fantastical")
+		ICON_PADDING_RIGHT=3
+		ICON=
+		;;
 "Finder")
-    ICON=
+    ICON=
     ;;
 "Google Chrome")
     ICON_PADDING_RIGHT=7
@@ -33,6 +37,10 @@ case $INFO in
     ICON_PADDING_RIGHT=4
     ICON=󰕼
     ;;
+"iTerm2")
+		ICON_PADDING_RIGHT=4
+		ICON=
+		;;
 "kitty")
     ICON=󰄛
     ;;
@@ -43,6 +51,10 @@ case $INFO in
     ICON_PADDING_RIGHT=6
     ICON=󰈄
     ;;
+"Obsidian")
+		ICON_PADDING_RIGHT=4
+		ICON=󰈤
+		;;
 "Preview")
     ICON_PADDING_RIGHT=3
     ICON=
@@ -51,6 +63,13 @@ case $INFO in
     ICON_PADDING_RIGHT=3
     ICON=
     ;;
+"Slack")
+		ICON=
+		;;
+"Spark Desktop")
+		ICON_PADDING_RIGHT=3
+		ICON=
+		;;
 "Spotify")
     ICON=
     ;;
