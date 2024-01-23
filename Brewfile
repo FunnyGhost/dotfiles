@@ -102,38 +102,26 @@ cask "cheatsheet"
 cask "cleanshot"
 # App to build and share containerized applications and microservices
 cask "docker"
-# Reimagine your terminal
-cask "fig"
 # Developer targeted fonts with a high number of glyphs
 cask "font-anonymice-nerd-font"
 # Developer targeted fonts with a high number of glyphs
 cask "font-hack-nerd-font"
 # Superfamily of fonts for code
 cask "font-monaspace"
-# GIT client
-cask "fork"
 # Utility to hide menu bar items
 cask "hiddenbar"
 # Terminal emulator as alternative to Apple's Terminal app
 cask "iterm2"
 # Visual diff and merge tool
 cask "meld"
-# App to write, plan, collaborate, and get organized
-cask "notion"
-# HTTP client that helps testing and describing APIs
-cask "paw"
 # Control your tools with a few keystrokes
 cask "raycast"
 # Email client
 cask "readdle-spark"
 # Move and resize windows using keyboard shortcuts or snap areas
 cask "rectangle"
-# Emoji picker optimized for blind people
-cask "rocket"
 # Tool that provides consistent, highly configurable symbols for apps
 cask "sf-symbols"
-# Tool to simulate responsive designs on multiple devices
-cask "sizzy"
 # Open-source code editor
 cask "visual-studio-code"
 # Rust-based terminal
