@@ -30,3 +30,4 @@ yabai -m rule --add app="^Karabiner-Elements$" manage=off
 yabai -m rule --add app="^1Password$" manage=off
 yabai -m rule --add app="^Fantastical$" manage=off
 yabai -m rule --add app="^Fantastical Helper$" manage=off
+yabai -m rule --add app="^Finder$" manage=off
