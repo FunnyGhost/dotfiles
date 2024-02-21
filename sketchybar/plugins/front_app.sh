@@ -81,6 +81,10 @@ case $INFO in
     ICON_PADDING_RIGHT=3
     ICON=󰶘
     ;;
+"Warp")
+		ICON_PADDING_RIGHT=3
+		ICON=
+		;;
 "zoom.us")
 		ICON=
 		;;
