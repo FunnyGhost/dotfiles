@@ -106,6 +106,8 @@ cask "docker"
 cask "font-anonymice-nerd-font"
 # Developer targeted fonts with a high number of glyphs
 cask "font-hack-nerd-font"
+# Developer targeted fonts with a high number of glyphs
+cask "font-jetbrains-mono-nerd-font"
 # Superfamily of fonts for code
 cask "font-monaspace"
 # Utility to hide menu bar items
