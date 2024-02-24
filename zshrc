@@ -133,8 +133,8 @@ function mkcd() {
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
-alias eza='eza -laFh --git --icons=always'
-alias ls='eza -laFh --git --icons=always'
+alias eza='eza -lahF --git --icons=always'
+alias ls='eza -lahF --git --icons=always'
 alias bbd='brew bundle dump --force --describe'
 alias man=batman
 alias trail='<<<${(F)path}'
