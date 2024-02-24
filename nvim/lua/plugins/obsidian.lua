@@ -18,7 +18,7 @@ return {
     workspaces = {
       {
         name = "notes",
-        path = "~/Documents/VimDocs",
+        path = "/Users/cthulhu/Documents/Shared with Work/Obsidian/The Depths",
       },
     },
     note_id_func = function(title)
