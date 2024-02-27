@@ -3,7 +3,9 @@ return {
     "mfussenegger/nvim-lint",
     opts = {
       linters = {
-        markdownlint = false,
+        markdownlint = {
+          args = { "--disable", "MD013", "--" },
+        },
       },
     },
   },
