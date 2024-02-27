@@ -15,6 +15,9 @@ case $INFO in
     ICON_PADDING_RIGHT=3
     ICON=
     ;;
+"Cider")
+    ICON=󱖏
+    ;;
 "Discord")
     ICON=󰙯
     ;;
