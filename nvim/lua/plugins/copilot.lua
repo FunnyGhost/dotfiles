@@ -1,9 +1,3 @@
 return {
-  "zbirenbaum/copilot.lua",
-  opts = {
-    filetypes = {
-      markdown = false,
-      help = true,
-    },
-  },
+  "github/copilot.vim",
 }
