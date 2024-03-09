@@ -2,7 +2,17 @@ return {
   {
     "folke/tokyonight.nvim",
     lazy = true,
+    enabled = false,
     opts = { style = "night" },
+  },
+  {
+    "blazkowolf/gruber-darker.nvim",
+  },
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "gruber-darker",
+    },
   },
   -- add telescope-fzf-native
   {
