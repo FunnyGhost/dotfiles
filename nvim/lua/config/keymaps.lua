@@ -34,19 +34,6 @@ vim.keymap.set("v", "<leader>mc", "di``<esc>hp", { desc = "[m]ake [c]ode" })
 
 vim.keymap.set("n", "<leader>bw", "<cmd>bufdo bwipeout<cr>", { desc = "[b]uffer [w]ipeout" })
 
--- harpoon
-local mark = require("harpoon.mark")
-local ui = require("harpoon.ui")
-
-vim.keymap.set("n", "<leader>ha", mark.add_file, { desc = "Harpoon [a]dd file" })
-vim.keymap.set("n", "<leader>h", ui.toggle_quick_menu, { desc = "[h]arpoon toggle" })
-vim.keymap.set("n", "<leader>hl", function()
-  ui.nav_next()
-end)
-vim.keymap.set("n", "<leader>hh", function()
-  ui.nav_next()
-end)
-
 -- undotree
 vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, { desc = "[u]ndo tree toggle" })
 

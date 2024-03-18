@@ -18,7 +18,7 @@ return {
     workspaces = {
       {
         name = "notes",
-        path = "/Users/cthulhu/Documents/Shared with Work/Obsidian/The Depths",
+        path = "/Users/cthulhu/Library/Mobile Documents/com~apple~CloudDocs/Shared with Work/Obsidian/The Depths",
       },
     },
     note_id_func = function(title)
