@@ -1,11 +1,19 @@
 return {
   {
-    "nyoom-engineering/oxocarbon.nvim",
+    "maxmx03/fluoromachine.nvim",
+    config = function()
+      local fm = require("fluoromachine")
+
+      fm.setup({
+        glow = true,
+        theme = "delta",
+      })
+    end,
   },
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "oxocarbon",
+      colorscheme = "fluoromachine",
     },
   },
   -- add telescope-fzf-native
