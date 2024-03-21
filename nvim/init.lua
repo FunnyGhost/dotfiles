@@ -11,6 +11,14 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+vim.filetype.add({
+  extension = {
+    mdx = "mdx",
+    analog = "analog",
+  },
+})
+vim.treesitter.language.register("markdown", "mdx")
+
 require("vim-options")
 require("keymaps")
 require("lazy").setup("plugins")
