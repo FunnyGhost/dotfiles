@@ -17,7 +17,7 @@ return {
 					-- https://github.com/nvim-neorg/neorg/blob/main/lua/neorg/modules/core/keybinds/keybinds.lua
 					config = {
 						default_keybinds = true,
-						neorg_leader = "<Leader><Leader>",
+						neorg_leader = "\\",
 					},
 				},
 				["core.dirman"] = { -- Manages Neorg workspaces
