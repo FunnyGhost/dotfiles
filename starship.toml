@@ -1,73 +1,138 @@
-# Get editor completions based on the config schema
-"$schema" = 'https://starship.rs/config-schema.json'
+format = """
+$username\
+$kubernetes\
+$directory\
+${custom.git_host}\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$hg_branch\
+$docker_context\
+$package\
+$cmake\
+$dart\
+$deno\
+$dotnet\
+$elixir\
+$elm\
+$erlang\
+$golang\
+$helm\
+$java\
+$julia\
+$kotlin\
+$nim\
+$nodejs\
+$ocaml\
+$perl\
+$php\
+$purescript\
+$python\
+$red\
+$ruby\
+$rust\
+$swift\
+$terraform\
+$vlang\
+$vagrant\
+$zig\
+$nix_shell\
+$conda\
+$aws\
+$gcloud\
+$openstack\
+$env_var\
+$crystal\
+$custom\
+$cmd_duration\
+$lua\
+$line_break\
+$jobs\
+$character"""
+
+scan_timeout = 10
 
 add_newline = false
-# A minimal left prompt
-format = """$directory$character"""
-palette = "catppuccin_mocha"
-# move the rest of the prompt to the right
-right_format = """$all"""
 
-[directory.substitutions]
-'~/tests/starship-custom' = 'work-project'
+[battery]
+disabled = true
 
-[golang]
-format = '[ ](bold cyan)'
+[character]
+success_symbol = "[](#37f499)"
+error_symbol = "[](#f16c75)"
 
 [cmd_duration]
-min_time = 10_000  # Show command duration over 10,000 milliseconds (=10 sec)
-format = " took [$duration]($style) "
+show_notifications = true
+min_time_to_notify = 60_000
+
+[directory]
+truncation_length = 1
+format = "[](#04d1f9) [$path]($style)[$read_only]($read_only_style)"
+read_only = " "
+truncation_symbol = ""
+fish_style_pwd_dir_length = 0
 
 [git_branch]
-format = " [$symbol$branch]($style) "
-symbol = "🍣 "
-style = "bold yellow"
-
-[git_commit]
-commit_hash_length = 8
-style = "bold white"
+format = ":[$symbol$branch](#f7c67f)"
+symbol = " "
 
 [git_state]
-format = '[\($state( $progress_current of $progress_total)\)]($style) '
+format = '\(:[$state( $progress_current/$progress_total)]($style)\)'
 
 [git_status]
-conflicted = "⚔️ "
-ahead = "🏎️ 💨 ×${count}"
-behind = "🐢 ×${count}"
+format = '(:[$all_status$ahead_behind]($style)) '
+conflicted = '\[ [$count](#ebfafa bold)\]'
+ahead = '\[[﯁ ](#04d1f9f)[$count](#ebfafa bold)\]'
+behind = '\[[﮾ ](](#ebfafa)[$count](#ebfafa bold)\]'
+diverged = '\[[ ](#a48cf2)|[ ﯁ ](#04d1f9f)[$ahead_count](#ebfafa bold)[ ﮾ ](#ebfafa)[$behind_count](#ebfafa)\]'
+untracked = '\[ [$count](#ebfafa bold)\]'
+stashed = '\[[](#f7c67f) [$count](#ebfafa bold)\]'
+modified = '\[[ ](#f7c67f)[$count](#ebfafa bold)\]'
+staged = '\[[ ](#37f499)[$count](#ebfafa bold)\]'
+renamed = '\[[ ](#04d1f9) [$count](#ebfafa bold)\]'
+deleted = '\[ [$count](#ebfafa bold)\]'
 
-[username]
-style_user = "bold dimmed blue"
-show_always = false
+[python]
+format = 'via [${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
 
+[custom.git_host]
+command = """
+URL=$(command git ls-remote --get-url 2> /dev/null)
 
+if [[ "$URL" =~ "github" ]]; then
+    ICON=" "
+elif [[ "$URL" =~ "gitlab" ]]; then
+    ICON=" "
+elif [[ "$URL" =~ "bitbucket" ]];then
+    ICON=" "
+elif [[ "$URL" =~ "kernel" ]];then
+    ICON=" "
+elif [[ "$URL" =~ "archlinux" ]];then
+    ICON=" "
+elif [[ "$URL" =~ "gnu" ]];then
+    ICON=" "
+elif [[ "$URL" =~ "git" ]];then
+    ICON=" "
+else
+    ICON=" "
+    URL="localhost"
+fi
 
-[nodejs]
-format = "via [🤖 $version](bold green) "
+for PATTERN in "https" "http" "git" "://" "@"; do
+    [[ "$URL" == "$PATTERN"* ]] && URL="${URL##$PATTERN}"
+done
 
-[palettes.catppuccin_mocha]
-rosewater = "#f5e0dc"
-flamingo = "#f2cdcd"
-pink = "#f5c2e7"
-mauve = "#cba6f7"
-red = "#f38ba8"
-maroon = "#eba0ac"
-peach = "#fab387"
-yellow = "#f9e2af"
-green = "#a6e3a1"
-teal = "#94e2d5"
-sky = "#89dceb"
-sapphire = "#74c7ec"
-blue = "#89b4fa"
-lavender = "#b4befe"
-text = "#cdd6f4"
-subtext1 = "#bac2de"
-subtext0 = "#a6adc8"
-overlay2 = "#9399b2"
-overlay1 = "#7f849c"
-overlay0 = "#6c7086"
-surface2 = "#585b70"
-surface1 = "#45475a"
-surface0 = "#313244"
-base = "#1e1e2e"
-mantle = "#181825"
-crust = "#11111b"
+for PATTERN in "/" ".git"; do
+    [[ "$URL" == *"$PATTERN" ]] && URL="${URL%%$PATTERN}"
+done
+printf "%s%s" "$ICON" "$URL"
+"""
+directories = [".git"]
+when = 'git rev-parse --is-inside-work-tree 2> /dev/null'
+shell = ["bash","--norc","--noprofile"]
+style = "#7081d0 bold"
+format = " at [$output]($style)"
+
+[hostname]
+disabled = true
