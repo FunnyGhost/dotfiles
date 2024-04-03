@@ -25,3 +25,6 @@ keymap.set("n", "<C-n>", ":Neotree filesystem reveal right toggle<CR>", { desc =
 
 -- UndoTree
 keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, { desc = "Toggle [u]ndo Tree" })
+
+-- Neorg
+keymap.set("n", "<leader>t", ":Neorg toc<CR>", { desc = "Toggle [t]able of contents" })

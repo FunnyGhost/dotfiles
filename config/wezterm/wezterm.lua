@@ -28,20 +28,22 @@ config.status_update_interval = 1000
 -- keys
 config.leader = { key = "s", mods = "CTRL", timeout_milliseconds = 1000 }
 config.keys = {
+  -- Disabled stuff
+  { key = 'Enter', mods = 'ALT',  action = act.DisableDefaultAssignment },
   -- Pane keybindings
-  { key = "-", mods = "LEADER", action = act.SplitVertical { domain = "CurrentPaneDomain" } },
-  { key = "|", mods = "LEADER", action = act.SplitHorizontal { domain = "CurrentPaneDomain" } },
-  { key = "m", mods = "LEADER", action = act.TogglePaneZoomState },
+  { key = "-",   mods = "LEADER", action = act.SplitVertical { domain = "CurrentPaneDomain" } },
+  { key = "|",   mods = "LEADER", action = act.SplitHorizontal { domain = "CurrentPaneDomain" } },
+  { key = "m",   mods = "LEADER", action = act.TogglePaneZoomState },
   -- Integration with neovim panes
-  { key = 'h', mods = 'CTRL',   action = wezterm.action.EmitEvent('ActivatePaneDirection-left') },
-  { key = 'j', mods = 'CTRL',   action = wezterm.action.EmitEvent('ActivatePaneDirection-down') },
-  { key = 'k', mods = 'CTRL',   action = wezterm.action.EmitEvent('ActivatePaneDirection-up') },
-  { key = 'l', mods = 'CTRL',   action = wezterm.action.EmitEvent('ActivatePaneDirection-right') },
+  { key = 'h',   mods = 'CTRL',   action = wezterm.action.EmitEvent('ActivatePaneDirection-left') },
+  { key = 'j',   mods = 'CTRL',   action = wezterm.action.EmitEvent('ActivatePaneDirection-down') },
+  { key = 'k',   mods = 'CTRL',   action = wezterm.action.EmitEvent('ActivatePaneDirection-up') },
+  { key = 'l',   mods = 'CTRL',   action = wezterm.action.EmitEvent('ActivatePaneDirection-right') },
   -- Tab keybindings
-  { key = "t", mods = "LEADER", action = act.SpawnTab("CurrentPaneDomain") },
-  { key = "[", mods = "LEADER", action = act.ActivateTabRelative(-1) },
-  { key = "]", mods = "LEADER", action = act.ActivateTabRelative(1) },
-  { key = "n", mods = "LEADER", action = act.ShowTabNavigator },
+  { key = "t",   mods = "LEADER", action = act.SpawnTab("CurrentPaneDomain") },
+  { key = "[",   mods = "LEADER", action = act.ActivateTabRelative(-1) },
+  { key = "]",   mods = "LEADER", action = act.ActivateTabRelative(1) },
+  { key = "n",   mods = "LEADER", action = act.ShowTabNavigator },
   {
     key = "r",
     mods = "LEADER",

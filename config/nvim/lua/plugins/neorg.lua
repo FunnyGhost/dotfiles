@@ -13,6 +13,11 @@ return {
 				["core.completion"] = { config = { engine = "nvim-cmp", name = "[Norg]" } },
 				["core.integrations.nvim-cmp"] = {},
 				["core.concealer"] = {},
+        ["core.qol.toc"] = {
+          config = {
+           close_after_use = true
+          },
+        },
 				["core.keybinds"] = {
 					-- https://github.com/nvim-neorg/neorg/blob/main/lua/neorg/modules/core/keybinds/keybinds.lua
 					config = {
