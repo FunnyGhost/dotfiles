@@ -6,8 +6,12 @@ tap "homebrew/cask-versions"
 tap "homebrew/services"
 tap "jandedobbeleer/oh-my-posh"
 tap "koekeishiya/formulae"
+# Codec library for encoding and decoding AV1 video streams
+brew "aom"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
+# Core application library for C
+brew "glib"
 # GNU File, Shell, and Text utilities
 brew "coreutils"
 # Load/unload environment variables based on $PWD
@@ -26,8 +30,6 @@ brew "gh"
 brew "git"
 # Git extension for versioning large files
 brew "git-lfs"
-# Core application library for C
-brew "glib"
 # GNU Transport Layer Security (TLS) Library
 brew "gnutls"
 # GNU Pretty Good Privacy (PGP) package
@@ -58,6 +60,8 @@ brew "neofetch"
 brew "neovim"
 # HTTP/2 C Library
 brew "nghttp2"
+# Platform built on V8 to build network applications
+brew "node"
 # Pinentry for GPG on Mac
 brew "pinentry-mac"
 # Theme for zsh
@@ -100,14 +104,18 @@ brew "koekeishiya/formulae/yabai"
 cask "cheatsheet"
 # Screen capturing tool
 cask "cleanshot"
-# App to build and share containerized applications and microservices
+# App to build and share containerised applications and microservices
 cask "docker"
+# Reimagine your terminal
+cask "fig"
 # Developer targeted fonts with a high number of glyphs
 cask "font-anonymice-nerd-font"
+# Monospaced font that includes programming ligatures
+cask "font-cascadia-code"
+# Developer targeted fonts with a high number of glyphs
+cask "font-caskaydia-cove-nerd-font"
 # Developer targeted fonts with a high number of glyphs
 cask "font-hack-nerd-font"
-# Developer targeted fonts with a high number of glyphs
-cask "font-jetbrains-mono-nerd-font"
 # Superfamily of fonts for code
 cask "font-monaspace"
 # Utility to hide menu bar items
@@ -116,6 +124,8 @@ cask "hiddenbar"
 cask "iterm2"
 # Visual diff and merge tool
 cask "meld"
+# Collaboration platform for API development
+cask "postman"
 # Control your tools with a few keystrokes
 cask "raycast"
 # Email client
@@ -128,30 +138,32 @@ cask "sf-symbols"
 cask "visual-studio-code"
 # Rust-based terminal
 cask "warp"
-vscode "Angular.ng-template"
+# GPU-accelerated cross-platform terminal emulator and multiplexer
+cask "wezterm"
+vscode "angular.ng-template"
 vscode "antfu.file-nesting"
-vscode "BeardedBear.beardedicons"
-vscode "BeardedBear.beardedtheme"
+vscode "beardedbear.beardedicons"
+vscode "beardedbear.beardedtheme"
 vscode "benjaminbenais.copilot-theme"
 vscode "cdonohue.quill-icons"
 vscode "christian-kohler.npm-intellisense"
 vscode "dbaeumer.vscode-eslint"
 vscode "dracula-theme.theme-dracula"
 vscode "eamodio.gitlens"
-vscode "EliverLara.sweet-vscode-icons"
-vscode "Equinusocio.vsc-material-theme"
+vscode "eliverlara.sweet-vscode-icons"
+vscode "equinusocio.vsc-material-theme"
 vscode "equinusocio.vsc-material-theme-icons"
 vscode "esbenp.prettier-vscode"
-vscode "GitHub.copilot"
-vscode "GitHub.copilot-chat"
-vscode "GitHub.copilot-labs"
-vscode "Gruntfuggly.todo-tree"
+vscode "github.copilot"
+vscode "github.copilot-chat"
+vscode "github.copilot-labs"
+vscode "gruntfuggly.todo-tree"
 vscode "jasonnutter.vscode-codeowners"
-vscode "johnpapa.Angular2"
-vscode "Orta.vscode-jest"
+vscode "johnpapa.angular2"
+vscode "orta.vscode-jest"
 vscode "prazdevs.zarp-icons"
-vscode "Prisma.prisma"
-vscode "PulkitGangwar.nextjs-snippets"
+vscode "prisma.prisma"
+vscode "pulkitgangwar.nextjs-snippets"
 vscode "sdras.fortnite-vscode-theme"
 vscode "sdras.night-owl"
 vscode "sldobri.bunker"
@@ -160,8 +172,8 @@ vscode "styled-components.vscode-styled-components"
 vscode "tamj0rd2.ts-quickfixes-extension"
 vscode "unifiedjs.vscode-mdx"
 vscode "vintharas.learn-vim"
-vscode "VisualStudioExptTeam.intellicode-api-usage-examples"
-vscode "VisualStudioExptTeam.vscodeintellicode"
+vscode "visualstudioexptteam.intellicode-api-usage-examples"
+vscode "visualstudioexptteam.vscodeintellicode"
 vscode "vscode-icons-team.vscode-icons"
 vscode "vscodevim.vim"
 vscode "wesbos.theme-cobalt2"
