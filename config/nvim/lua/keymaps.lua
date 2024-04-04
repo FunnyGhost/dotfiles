@@ -28,3 +28,6 @@ keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, { desc = "Toggle [u]ndo Tre
 
 -- Neorg
 keymap.set("n", "<leader>t", ":Neorg toc<CR>", { desc = "Toggle [t]able of contents" })
+
+-- Other
+keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "[N]o [h]ighlight" })
