@@ -12,13 +12,15 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 vim.filetype.add({
-  extension = {
-    mdx = "mdx",
-    analog = "analog",
-  },
+	extension = {
+		mdx = "mdx",
+		analog = "analog",
+	},
 })
 vim.treesitter.language.register("markdown", "mdx")
 
 require("vim-options")
 require("keymaps")
-require("lazy").setup("plugins")
+require("lazy").setup("plugins", {
+	change_detection = { notify = false },
+})
