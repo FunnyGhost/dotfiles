@@ -14,6 +14,11 @@ return {
 			vim.keymap.set("n", "<leader><space>", builtin.buffers, { desc = "[ ] Find existing buffers" })
 			vim.keymap.set("n", "<leader>ds", builtin.lsp_document_symbols, { desc = "[D]ocument [S]ymbols" })
 
+			telescope.setup({
+				defaults = {
+					path_display = { "smart" },
+				},
+			})
 			telescope.load_extension("fzf")
 		end,
 	},
