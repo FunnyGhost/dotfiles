@@ -33,3 +33,4 @@ yabai -m rule --add app="^Fantastical Helper$" manage=off
 yabai -m rule --add app="^Finder$" manage=off
 yabai -m rule --add app="^Around$" manage=off
 yabai -m rule --add app="^Cider$" manage=off
+yabai -m rule --add app="^Loom$" manage=off
