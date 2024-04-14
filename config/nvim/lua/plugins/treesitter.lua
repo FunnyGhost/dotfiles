@@ -2,15 +2,20 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
 	dependencies = {
-		"nvim-treesitter/nvim-treesitter-textobjects",
 		"windwp/nvim-ts-autotag",
 	},
 	build = ":TSUpdate",
 	event = { "BufReadPre", "BufNewFile" },
 	config = function()
-		local config = require("nvim-treesitter.configs")
+		local treesitter = require("nvim-treesitter.configs")
 
-		config.setup({
+		treesitter.setup({
+			-- enable syntax highlighting
+			highlight = { enable = true },
+			-- enable indentation
+			indent = { enable = true },
+			-- enable autotagging (with the nvim-ts-autotag plugin)
+			autotag = { enable = true },
 			auto_install = true,
 			ensure_installed = {
 				"javascript",
@@ -30,15 +35,13 @@ return {
 				"vimdoc",
 				"lua",
 			},
-			highlight = { enable = true },
-			indent = { enable = true },
 			incremental_selection = {
 				enable = true,
 				keymaps = {
-					init_selection = "<C-space>",
-					node_incremental = "<C-space>",
-					scope_incremental = false,
-					node_decremental = "<bs>",
+					init_selection = "<CR>",
+					scope_incremental = "<CR>",
+					node_incremental = "<TAB>",
+					node_decremental = "<S-TAB>",
 				},
 			},
 		})
