@@ -31,6 +31,8 @@ function mkcd() {
 	mkdir -p "$@" && cd "$_";
 }
 
+export DYLD_LIBRARY_PATH="/opt/homebrew/lib/"
+
 # END OF OLD SETUP
 
 # If you come from bash you might have to change your $PATH.
