@@ -136,7 +136,7 @@ export DYLD_LIBRARY_PATH="/opt/homebrew/lib/"
 # For a full list of active aliases, run `alias`.
 #
 alias eza='eza -lahF --git --icons=always'
-alias ls='eza -lahF --git --icons=always'
+alias ls='eza -lahF --git --hyperlink --icons=always'
 alias bbd='brew bundle dump --force --describe'
 alias man=batman
 alias trail='<<<${(F)path}'
