@@ -7,12 +7,5 @@ return {
     local eldritch = require("eldritch")
     eldritch.setup(opts)
     vim.cmd("colorscheme eldritch")
-
-    -- If using lualine
-    require("lualine").setup({
-      options = {
-        theme = "eldritch"
-      }
-    })
   end,
 }
