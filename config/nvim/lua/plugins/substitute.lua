@@ -1,3 +1,4 @@
+-- Utility for paste replace
 return {
 "gbprod/substitute.nvim",
 event = {"BufReadPre", "BufNewFile"},

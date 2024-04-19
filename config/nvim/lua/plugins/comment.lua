@@ -1,3 +1,4 @@
+-- Plugin to easily comment in/out lines
 return {
   'numToStr/Comment.nvim',
   event = { 'BufReadPre', 'BufNewFile' },

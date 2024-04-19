@@ -1,3 +1,4 @@
+-- Utility to add TODO/BUG/NOTE/etc comments, and to be able to search them
 return {
   "folke/todo-comments.nvim",
   event = {"BufReadPre", "BufNewFile"},
