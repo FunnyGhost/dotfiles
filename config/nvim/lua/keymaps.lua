@@ -9,17 +9,6 @@ keymap.set('n', '<C-u>', '<C-u>zz', { desc = "Scroll up" })
 -- Gitsigns
 keymap.set("n", "<leader>gp", ":Gitsigns preview_hunk<CR>", { desc = "[g]it [p]review" })
 
--- LSP
-keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover" })
-keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "[g]o to [d]efinition" })
-keymap.set("n", "gr", vim.lsp.buf.references, { desc = "[g]o to [r]eferences" })
-keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, { desc = "Signature Help" })
-keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Show [c]ode [a]ctions" })
-keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [d]iagnostic" })
-keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [d]iagnostic" })
-keymap.set("n", "<space>rn", vim.lsp.buf.rename, { desc = "[R]e[n]ame" })
-keymap.set("n", "<leader>gf", vim.lsp.buf.format, { desc = "[g]o [f]ormat" })
-
 -- Neotree
 keymap.set("n", "<C-n>", ":Neotree filesystem reveal right toggle<CR>", { desc = "Toggle File System" })
 
