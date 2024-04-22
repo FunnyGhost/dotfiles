@@ -1,28 +1,34 @@
 [user]
-	name = Catalin Ciubotaru
-	email = 6450559+FunnyGhost@users.noreply.github.com
+  name = Catalin Ciubotaru
+  email = 6450559+FunnyGhost@users.noreply.github.com
 [core]
-	autocrlf = input
+  autocrlf = input
+  editor = nvim
+  pager = delta
+[init]
+  defaultBranch = main
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true
 [alias]
-    cs = !git log -20 --pretty=format:'%h - %s %an' | fzf --preview 'git show --color {1}'
-    lg = !git --no-pager log --color --graph -30 --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %Cgreen%cr %C(bold blue)<%an>%Creset' | sed -e 's/tag: 2.gh-readonly[^,)]*//' -e 's/, //'
-    snapshot = !git checkout -b "$(git rev-parse --abbrev-ref HEAD)-snapshot-$(date +%F-%H%M%S)" && git checkout -
-    up = pull --rebase --autostash
-    ch = !git diff --name-only | fzf
-    s = status -sb
-    t = checkout -
-	ci = commit
-	br = branch
-[diff]
-	tool = meld
+  cs = !git log -20 --pretty=format:'%h - %s %an' | fzf --preview 'git show --color {1}'
+  lg = !git --no-pager log --color --graph -30 --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %Cgreen%cr %C(bold blue)<%an>%Creset' | sed -e 's/tag: 2.gh-readonly[^,)]*//' -e 's/, //'
+  snapshot = !git checkout -b "$(git rev-parse --abbrev-ref HEAD)-snapshot-$(date +%F-%H%M%S)" && git checkout -
+  up = pull --rebase --autostash
+  ch = !git diff --name-only | fzf
+  s = status -sb
+  t = checkout -
+  ci = commit
+  br = branch
 [fetch]
-	prune = true
+  prune = true
 [filter "lfs"]
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
-	clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+  clean = git-lfs clean -- %f
 [push]
-	autoSetupRemote = true
+  autoSetupRemote = true
 [remote]
-	autoSetupRemote = always
+  autoSetupRemote = always

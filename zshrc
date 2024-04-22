@@ -161,3 +161,5 @@ source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /opt/homebrew/etc/profile.d/z.sh
 # starship
 eval "$(starship init zsh)"
+# Set up fzf key bindings and fuzzy completion
+eval "$(fzf --zsh)"

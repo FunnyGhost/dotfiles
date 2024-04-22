@@ -35,6 +35,7 @@ return {
         "vim",
         "vimdoc",
         "lua",
+        "git_config"
       },
       incremental_selection = {
         enable = true,
