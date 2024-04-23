@@ -41,6 +41,7 @@ export DYLD_LIBRARY_PATH="/opt/homebrew/lib/"
 
 # ------------- Aliases -------------
 alias ls='eza --long --git --hyperlink --icons=always --no-filesize --no-time --no-permissions --no-user'
+alias cd='z'
 alias bbd='brew bundle dump --force --describe'
 alias man=batman
 alias trail='<<<${(F)path}'
@@ -58,7 +59,8 @@ eval "$(starship init zsh)"
 eval "$(fzf --zsh)"
 export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always --line-range :500 {}'"
 export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
-
+# Eldritch theme
+export FZF_DEFAULT_OPTS='--color=fg:#ebfafa,bg:#282a36,hl:#37f499 --color=fg+:#ebfafa,bg+:#212337,hl+:#37f499 --color=info:#f7c67f,prompt:#04d1f9,pointer:#7081d0 --color=marker:#7081d0,spinner:#f7c67f,header:#323449'
 # ------------- Other stuff -------------
 # direnv setup 👇
 eval "$(direnv hook zsh)"
