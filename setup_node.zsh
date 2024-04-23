@@ -17,7 +17,6 @@ fi
 npm config set save-exact true -g
 npm install --global @angular/cli
 npm install --global typescript
-npm install --global http-server
 npm install --global trash-cli
 
 echo "Global npm packages installed:"
