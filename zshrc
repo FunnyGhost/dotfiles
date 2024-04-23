@@ -57,7 +57,6 @@ eval "$(starship init zsh)"
 # -------------- FZF --------------
 # Set up fzf key bindings and fuzzy completion
 eval "$(fzf --zsh)"
-export FZF_DEFAULT_OPTS="--ansi --preview-window 'right:50%' --preview 'bat --line-range :300 {}'"
 export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always --line-range :500 {}'"
 export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
 
