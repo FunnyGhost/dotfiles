@@ -90,14 +90,16 @@ brew "ranger"
 brew "redis"
 # HTTP regression testing and benchmarking utility
 brew "siege"
+# Create beautiful image of your source code
+brew "silicon"
 # Cross-shell prompt for astronauts
 brew "starship"
 # Official tldr client written in Rust
 brew "tlrc"
 # Terminal multiplexer
 brew "tmux"
-# Tracks most-used directories to make cd smarter
-brew "z"
+# Shell extension to navigate your filesystem faster
+brew "zoxide"
 # UNIX shell (command interpreter)
 brew "zsh"
 # Fish-like fast/unobtrusive autosuggestions for zsh

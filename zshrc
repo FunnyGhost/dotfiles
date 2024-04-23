@@ -50,7 +50,6 @@ alias rm=trash
 # zsh plugins
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /opt/homebrew/etc/profile.d/z.sh
 # starship
 eval "$(starship init zsh)"
 
@@ -63,3 +62,5 @@ export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
 # ------------- Other stuff -------------
 # direnv setup 👇
 eval "$(direnv hook zsh)"
+# zoxide setup 👇
+eval "$(zoxide init zsh)"
