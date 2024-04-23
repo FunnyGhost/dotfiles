@@ -28,12 +28,20 @@ brew "fzf"
 brew "gh"
 # Distributed revision control system
 brew "git"
+# Syntax-highlighting pager for git and diff output
+brew "git-delta"
 # Git extension for versioning large files
 brew "git-lfs"
+# Validating, recursive, caching DNS resolver
+brew "unbound"
 # GNU Transport Layer Security (TLS) Library
 brew "gnutls"
 # GNU Pretty Good Privacy (PGP) package
 brew "gnupg"
+# Task is a task runner/build tool that aims to be simpler and easier to use
+brew "go-task"
+# OpenType text shaping engine
+brew "harfbuzz"
 # Improved top (interactive process viewer)
 brew "htop"
 # User-friendly cURL replacement (command-line HTTP client)
@@ -50,6 +58,8 @@ brew "jq"
 brew "keychain"
 # Pager program similar to more
 brew "less"
+# Just-In-Time Compiler (JIT) for the Lua programming language
+brew "luajit"
 # Node version management
 brew "n"
 # Free (GNU) replacement for the Pico text editor
@@ -64,6 +74,8 @@ brew "nghttp2"
 brew "node"
 # Pinentry for GPG on Mac
 brew "pinentry-mac"
+# Manage compile and link flags for libraries
+brew "pkg-config"
 # Theme for zsh
 brew "powerlevel10k"
 # Code formatter for JavaScript, CSS, JSON, GraphQL, Markdown, YAML
@@ -80,6 +92,8 @@ brew "redis"
 brew "siege"
 # Cross-shell prompt for astronauts
 brew "starship"
+# Official tldr client written in Rust
+brew "tlrc"
 # Terminal multiplexer
 brew "tmux"
 # Tracks most-used directories to make cd smarter
@@ -122,6 +136,8 @@ cask "font-monaspace"
 cask "hiddenbar"
 # Terminal emulator as alternative to Apple's Terminal app
 cask "iterm2"
+# GPU-based terminal emulator
+cask "kitty"
 # Visual diff and merge tool
 cask "meld"
 # Collaboration platform for API development
