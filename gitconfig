@@ -11,6 +11,7 @@
   diffFilter = delta --color-only
 [delta]
   navigate = true
+  side-by-side = true
 [alias]
   cs = !git log -20 --pretty=format:'%h - %s %an' | fzf --preview 'git show --color {1}'
   lg = !git --no-pager log --color --graph -30 --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %Cgreen%cr %C(bold blue)<%an>%Creset' | sed -e 's/tag: 2.gh-readonly[^,)]*//' -e 's/, //'
