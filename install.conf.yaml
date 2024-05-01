@@ -2,7 +2,7 @@
     link:
       relink: true
 
-- clean: ['~']
+- clean: ["~"]
 
 - link:
     ~/.zshrc:
@@ -11,18 +11,44 @@
     ~/.config/bat:
       create: true
       path: config/bat
+    ~/.config/karabiner:
+      create: true
+      path: config/karabiner
+    ~/.config/kitty:
+      create: true
+      path: config/kitty
+    ~/.config/nvim:
+      create: true
+      path: config/nvim
+    ~/.config/sketchybar:
+      create: true
+      path: config/sketchybar
+    ~/.config/skhd:
+      create: true
+      path: config/skhd
+    ~/.config/wezterm:
+      create: true
+      path: config/wezterm
+    ~/.config/yabai:
+      create: true
+      path: config/yabai
+    ~/.config/starship.toml:
+      create: true
+      path: config/starship.toml
+    /usr/local/bin/:
+      path: utils
 
 - create:
     - ~/Sandbox Projects
     - ~/External Clients
 
 - shell:
-  - command: ./setup_homebrew.zsh
-    stdout: true
-    stderr: true
-  - command: ./setup_zsh.zsh
-    stdout: true
-    stderr: true
-  - command: ./setup_node.zsh
-    stdout: true
-    stderr: true
+    - command: ./setup_homebrew.zsh
+      stdout: true
+      stderr: true
+    - command: ./setup_zsh.zsh
+      stdout: true
+      stderr: true
+    - command: ./setup_node.zsh
+      stdout: true
+      stderr: true
