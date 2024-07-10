@@ -47,8 +47,14 @@ case $INFO in
 "kitty")
     ICON=󰄛
     ;;
+"Mail")
+    ICON=
+    ;;
 "Messages")
     ICON=󰍦
+    ;;
+"Notes")
+    ICON=
     ;;
 "Notion")
     ICON_PADDING_RIGHT=6
