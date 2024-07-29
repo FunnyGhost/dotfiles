@@ -46,6 +46,7 @@ alias bbd='brew bundle dump --force --describe'
 alias man=batman
 alias trail='<<<${(F)path}'
 alias rm=trash
+alias inv='nvim $(fzf --preview="bat {}")'
 
 # ------------- Prompt -------------
 # zsh plugins
