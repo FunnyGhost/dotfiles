@@ -5,6 +5,7 @@ tap "homebrew/cask-fonts"
 tap "homebrew/cask-versions"
 tap "homebrew/services"
 tap "jandedobbeleer/oh-my-posh"
+tap "jesseduffield/lazygit"
 tap "koekeishiya/formulae"
 # Codec library for encoding and decoding AV1 video streams
 brew "aom"
@@ -38,6 +39,8 @@ brew "unbound"
 brew "gnutls"
 # GNU Pretty Good Privacy (PGP) package
 brew "gnupg"
+# Open source programming language to build simple/reliable/efficient software
+brew "go"
 # Task is a task runner/build tool that aims to be simpler and easier to use
 brew "go-task"
 # OpenType text shaping engine
@@ -54,6 +57,8 @@ brew "libheif"
 brew "imagemagick"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
+# Handy way to save and run project-specific commands
+brew "just"
 # User-friendly front-end to ssh-agent(1)
 brew "keychain"
 # Pager program similar to more
@@ -112,6 +117,8 @@ brew "eth-p/software/bat-extras"
 brew "felixkratz/formulae/sketchybar"
 # Prompt theme engine for any shell
 brew "jandedobbeleer/oh-my-posh/oh-my-posh"
+# A simple terminal UI for git commands, written in Go
+brew "jesseduffield/lazygit/lazygit"
 # Simple hotkey-daemon for macOS.
 brew "koekeishiya/formulae/skhd"
 # A tiling window manager for macOS based on binary space partitioning.
@@ -124,15 +131,10 @@ cask "cleanshot"
 cask "docker"
 # Reimagine your terminal
 cask "fig"
-# Developer targeted fonts with a high number of glyphs
 cask "font-anonymice-nerd-font"
-# Monospaced font that includes programming ligatures
 cask "font-cascadia-code"
-# Developer targeted fonts with a high number of glyphs
 cask "font-caskaydia-cove-nerd-font"
-# Developer targeted fonts with a high number of glyphs
 cask "font-hack-nerd-font"
-# Superfamily of fonts for code
 cask "font-monaspace"
 # Utility to hide menu bar items
 cask "hiddenbar"
@@ -148,8 +150,6 @@ cask "postman"
 cask "raycast"
 # Email client
 cask "readdle-spark"
-# Move and resize windows using keyboard shortcuts or snap areas
-cask "rectangle"
 # Tool that provides consistent, highly configurable symbols for apps
 cask "sf-symbols"
 # Open-source code editor
