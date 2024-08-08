@@ -11,11 +11,8 @@ path=(
     "/opt/homebrew/bin"
     "/opt/homebrew/sbin"
     $path
-    "/Applications/Visual Studio Code.app/Contents/Resources/app/bin:Library/Python/2.7/bin"
     "Library/Python/2.7/bin"
     "$HOME/.git-commands"
-    "$HOME/dotfiles/git-commands"
-    "$HOME/.tmux/plugins/tmuxifier/bin"
 )
 
 # ------------- Functions -------------
