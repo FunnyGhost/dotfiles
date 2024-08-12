@@ -121,8 +121,6 @@ brew "jandedobbeleer/oh-my-posh/oh-my-posh"
 brew "jesseduffield/lazygit/lazygit"
 # Simple hotkey-daemon for macOS.
 brew "koekeishiya/formulae/skhd"
-# A tiling window manager for macOS based on binary space partitioning.
-brew "koekeishiya/formulae/yabai"
 # Tool to list all active shortcuts of the current application
 cask "cheatsheet"
 # Screen capturing tool
