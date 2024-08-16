@@ -37,7 +37,8 @@ _fzf_comprun() {
 export DYLD_LIBRARY_PATH="/opt/homebrew/lib/"
 
 # ------------- Aliases -------------
-alias ls='eza --long --git --hyperlink --icons=always --no-filesize --no-time --no-permissions --no-user'
+alias ls='eza -a --long --git --hyperlink --icons=always'
+alias lt='eza --tree --level=2 --long --icons --git'
 alias cd='z'
 alias bbd='brew bundle dump --force --describe'
 alias man=batman
