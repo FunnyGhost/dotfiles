@@ -8,9 +8,10 @@ local act = wezterm.action
 
 -- this is where you actually apply your config choices
 config.font = wezterm.font_with_fallback({
-	{ family = "CaskaydiaCove Nerd Font Mono" },
+	{ family = "Mononoki" },
 })
-config.font_size = 14
+config.font_size = 16
+
 config.line_height = 1.2
 
 -- changing the color scheme looks like this
