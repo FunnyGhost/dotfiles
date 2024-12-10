@@ -85,6 +85,14 @@ return {
 					capabilities = capabilities,
 				})
 			end,
+			["vtsls"] = function()
+				lspconfig["vtsls"].setup({
+					capabilities = capabilities,
+					settings = {
+						typescript = { tsserver = { maxTsServerMemory = 8192 } },
+					},
+				})
+			end,
 			["emmet_ls"] = function()
 				-- configure emmet language server
 				lspconfig["emmet_ls"].setup({
