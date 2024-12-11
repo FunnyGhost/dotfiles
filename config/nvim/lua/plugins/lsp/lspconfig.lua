@@ -86,10 +86,44 @@ return {
 				})
 			end,
 			["vtsls"] = function()
+				-- Use the same settings for JS and TS.
+				local lang_settings = {
+					suggest = { completeFunctionCalls = true },
+					inlayHints = {
+						functionLikeReturnTypes = { enabled = true },
+						parameterNames = { enabled = "literals" },
+						variableTypes = { enabled = true },
+					},
+				}
 				lspconfig["vtsls"].setup({
 					capabilities = capabilities,
 					settings = {
-						typescript = { tsserver = { maxTsServerMemory = 8192 } },
+						typescript = vim.tbl_deep_extend("force", lang_settings, {
+							tsserver = { maxTsServerMemory = 8192 },
+						}),
+						javascript = lang_settings,
+						vtsls = {
+							-- Automatically use workspace version of TypeScript lib on startup.
+							autoUseWorkspaceTsdk = true,
+							experimental = {
+								-- Inlay hint truncation.
+								maxInlayHintLength = 30,
+								-- For completion performance.
+								completion = {
+									enableServerSideFuzzyMatch = true,
+								},
+							},
+						},
+						-- tsserver_file_preferences = {
+						--     includeCompletionsForModuleExports = true,
+						--     includeInlayParameterNameHints = 'all',
+						--     includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+						--     includeInlayFunctionParameterTypeHints = true,
+						--     includeInlayVariableTypeHints = true,
+						--     includeInlayPropertyDeclarationTypeHints = true,
+						--     includeInlayFunctionLikeReturnTypeHints = true,
+						--     includeInlayEnumMemberValueHints = true,
+						-- },
 					},
 				})
 			end,
