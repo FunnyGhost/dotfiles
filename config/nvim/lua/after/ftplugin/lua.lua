@@ -1,0 +1,5 @@
+-- Config added here will be applied to the all the *lua* files, after the default config.
+-- Could look like this:
+-- local set = vim.opt_local
+-- set.number = true
+-- set.shiftwidth = 4
