@@ -9,6 +9,7 @@ if not vim.loop.fs_stat(lazypath) then
 		lazypath,
 	})
 end
+-- This appends the lazypath to the runtimepath
 vim.opt.rtp:prepend(lazypath)
 
 vim.filetype.add({
