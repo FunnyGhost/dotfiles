@@ -17,3 +17,4 @@ keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, { desc = "Toggle [u]ndo Tre
 
 -- Other
 keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "[N]o [h]ighlight" })
+keymap.set("n", "<leader>cp", ':let @+ = expand("%:p")<CR>', { noremap = true, silent = true })
