@@ -27,7 +27,6 @@ return {
         "yaml",
         "prisma",
         "markdown",
-        "norg",
         "markdown_inline",
         "dockerfile",
         "gitignore",
