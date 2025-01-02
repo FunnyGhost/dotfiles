@@ -1,0 +1,8 @@
+# Colors
+theme = Eldritch
+
+# Fonts
+font-family=mononoki
+font-size=16
+adjust-cell-width=2%
+adjust-cell-height=15%
