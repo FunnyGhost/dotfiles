@@ -7,12 +7,17 @@ tap "homebrew/services"
 tap "jandedobbeleer/oh-my-posh"
 tap "jesseduffield/lazygit"
 tap "koekeishiya/formulae"
+tap "nikitabobko/tap"
+# New file format for still image compression
+brew "jpeg-xl"
 # Codec library for encoding and decoding AV1 video streams
 brew "aom"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
 # Core application library for C
 brew "glib"
+# Manage your dotfiles across multiple diverse machines, securely
+brew "chezmoi"
 # GNU File, Shell, and Text utilities
 brew "coreutils"
 # Load/unload environment variables based on $PWD
@@ -27,6 +32,10 @@ brew "fd"
 brew "fzf"
 # GitHub command-line tool
 brew "gh"
+# OpenType text shaping engine
+brew "harfbuzz"
+# Interpreter for PostScript and PDF
+brew "ghostscript"
 # Distributed revision control system
 brew "git"
 # Syntax-highlighting pager for git and diff output
@@ -43,8 +52,6 @@ brew "gnupg"
 brew "go"
 # Task is a task runner/build tool that aims to be simpler and easier to use
 brew "go-task"
-# OpenType text shaping engine
-brew "harfbuzz"
 # Improved top (interactive process viewer)
 brew "htop"
 # User-friendly cURL replacement (command-line HTTP client)
@@ -57,6 +64,10 @@ brew "libheif"
 brew "imagemagick"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
+# Platform built on V8 to build network applications
+brew "node"
+# Interactive environments for writing and running code
+brew "jupyterlab"
 # Handy way to save and run project-specific commands
 brew "just"
 # User-friendly front-end to ssh-agent(1)
@@ -75,12 +86,10 @@ brew "neofetch"
 brew "neovim"
 # HTTP/2 C Library
 brew "nghttp2"
-# Platform built on V8 to build network applications
-brew "node"
 # Pinentry for GPG on Mac
 brew "pinentry-mac"
-# Manage compile and link flags for libraries
-brew "pkg-config"
+# Package compiler and linker metadata toolkit
+brew "pkgconf"
 # Theme for zsh
 brew "powerlevel10k"
 # Code formatter for JavaScript, CSS, JSON, GraphQL, Markdown, YAML
@@ -99,6 +108,8 @@ brew "siege"
 brew "silicon"
 # Cross-shell prompt for astronauts
 brew "starship"
+# Organize software neatly under a single directory tree (e.g. /usr/local)
+brew "stow"
 # Official tldr client written in Rust
 brew "tlrc"
 # Terminal multiplexer
@@ -119,8 +130,6 @@ brew "felixkratz/formulae/sketchybar"
 brew "jandedobbeleer/oh-my-posh/oh-my-posh"
 # A simple terminal UI for git commands, written in Go
 brew "jesseduffield/lazygit/lazygit"
-# Simple hotkey-daemon for macOS.
-brew "koekeishiya/formulae/skhd"
 # Tool to list all active shortcuts of the current application
 cask "cheatsheet"
 # Screen capturing tool
@@ -134,12 +143,18 @@ cask "font-cascadia-code"
 cask "font-caskaydia-cove-nerd-font"
 cask "font-hack-nerd-font"
 cask "font-monaspace"
+cask "font-mononoki"
+cask "font-mononoki-nerd-font"
+# Terminal emulator that uses platform-native UI and GPU acceleration
+cask "ghostty"
 # Utility to hide menu bar items
 cask "hiddenbar"
 # Terminal emulator as alternative to Apple's Terminal app
 cask "iterm2"
 # GPU-based terminal emulator
 cask "kitty"
+# Extensible two-pane file manager
+cask "marta"
 # Visual diff and merge tool
 cask "meld"
 # Collaboration platform for API development
@@ -150,6 +165,8 @@ cask "raycast"
 cask "readdle-spark"
 # Tool that provides consistent, highly configurable symbols for apps
 cask "sf-symbols"
+# Team communication and collaboration software
+cask "slack"
 # Open-source code editor
 cask "visual-studio-code"
 # Rust-based terminal
