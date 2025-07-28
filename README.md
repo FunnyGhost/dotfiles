@@ -40,18 +40,70 @@ This repository contains my personal development environment setup that I use da
 ### 🎨 **Included Fonts**
 Perfect for terminals and coding with full icon support:
 
-- **Hack Nerd Font** - Clean, readable monospace with excellent icon support
-- **CaskaydiaCove Nerd Font** - Microsoft's Cascadia Code with Nerd Font icons
-- **Mononoki Nerd Font** - Warm, friendly monospace perfect for long coding sessions
-- **Anonymice Nerd Font** - Anonymous Pro with enhanced readability
-- **Cascadia Code** - Microsoft's modern coding font with ligatures
-- **Monaspace** - GitHub's new font family (Neon, Argon, Xenon, Radon, Krypton)
-- **Mononoki** - Original version without Nerd Font patches
+#### **Hack Nerd Font** ⭐ *Recommended*
+- **[📖 View Font Specimen](https://github.com/source-foundry/Hack)** | **[🔗 Nerd Font Version](https://www.nerdfonts.com/font-downloads)**
+- Clean, readable monospace designed specifically for source code
+- **Best for:** General coding, excellent readability at all sizes
+- **Features:** Full Nerd Font icon set, optimized letter spacing
 
-💡 **Font Features:**
-- **Ligatures** - Beautiful code symbols (→, ≠, ≤, ≥)
-- **Nerd Font Icons** - File type icons, git status, and more in terminal
-- **Optimal Spacing** - Designed specifically for code readability
+#### **CaskaydiaCove Nerd Font**  
+- **[📖 View Font Specimen](https://github.com/microsoft/cascadia-code)** | **[🔗 Download Page](https://github.com/microsoft/cascadia-code/releases)**
+- Microsoft's Cascadia Code enhanced with programming ligatures and Nerd Font icons
+- **Best for:** Modern development, TypeScript/JavaScript, C#
+- **Features:** Beautiful ligatures (!=, =>, <=), cursive italics
+
+#### **Mononoki Nerd Font**
+- **[📖 View Font Specimen](https://madmalik.github.io/mononoki/)** | **[🔗 GitHub](https://github.com/madmalik/mononoki)**
+- Warm, friendly monospace perfect for long coding sessions
+- **Best for:** Comfortable extended coding, reduced eye strain
+- **Features:** Rounded characters, excellent readability
+
+#### **Anonymice Nerd Font**
+- **[📖 View Font Specimen](https://fonts.google.com/specimen/Anonymous+Pro)** | **[🔗 Original](https://www.marksimonson.com/fonts/view/anonymous-pro)**
+- Based on Anonymous Pro - excellent clarity at smaller sizes
+- **Best for:** Terminal work, shell scripting, system administration
+- **Features:** Sharp, clean letterforms, great for small text
+
+#### **Cascadia Code** (Original)
+- **[📖 View Font Specimen](https://github.com/microsoft/cascadia-code)** | **[🔗 Microsoft Docs](https://docs.microsoft.com/en-us/windows/terminal/cascadia-code)**
+- Microsoft's flagship coding font with programming ligatures
+- **Best for:** Windows development, PowerShell, modern editors
+- **Features:** Programming ligatures, cursive italics, multiple weights
+
+#### **Monaspace**
+- **[📖 View Font Specimen](https://monaspace.githubnext.com/)** | **[🔗 GitHub](https://github.com/githubnext/monaspace)**
+- GitHub's revolutionary font superfamily with 5 distinct styles
+- **Variants:** Neon, Argon, Xenon, Radon, Krypton
+- **Best for:** Syntax highlighting diversity, modern development
+- **Features:** Texture healing, multiple widths, advanced typography
+
+#### **Mononoki** (Original)
+- **[📖 View Font Specimen](https://madmalik.github.io/mononoki/)** | **[🔗 GitHub](https://github.com/madmalik/mononoki)**
+- The original version without Nerd Font patches
+- **Best for:** Minimalist setups, when you don't need icons
+- **Features:** Clean design, warm appearance, good contrast
+
+### 💎 **Why These Fonts Are Perfect for Development**
+
+**🔗 Programming Ligatures** (Cascadia Code, CaskaydiaCove):
+- Combines character sequences like `!=`, `<=`, `>=`, `=>`, `->` into single symbols
+- Makes code more readable and aesthetically pleasing
+- **[See Ligatures in Action](https://github.com/microsoft/cascadia-code#programming-ligatures)**
+
+**🎨 Nerd Font Icons** (All Nerd Font variants):
+- 3,600+ icons for file types, folders, git status, and development tools
+- Shows file extensions as icons in terminal file listings
+- Git branch/status symbols in your prompt
+- **[Browse All Icons](https://www.nerdfonts.com/cheat-sheet)**
+
+**⚡ Terminal Optimization**:
+- All fonts tested for readability at 12-14pt sizes
+- Excellent character distinction (0 vs O, 1 vs l vs I)
+- Proper spacing for tabular data and code alignment
+- UTF-8 and emoji support for modern development
+
+**🎯 Installation Tip:**
+Try **Hack Nerd Font** first - it offers the best balance of readability, icon support, and general compatibility. You can always switch later!
 
 ## 🚀 Quick Start
 
