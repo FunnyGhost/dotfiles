@@ -1,0 +1,3 @@
+[submodule "git-commands/.git-commands"]
+	path = git-commands/.git-commands
+	url = https://github.com/FunnyGhost/git-commands.git
