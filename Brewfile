@@ -124,8 +124,6 @@ brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
 # Bash scripts that integrate bat with various command-line tools
 brew "eth-p/software/bat-extras"
-# Custom macOS statusbar with shell plugin, interaction and graph support
-brew "felixkratz/formulae/sketchybar"
 # Prompt theme engine for any shell
 brew "jandedobbeleer/oh-my-posh/oh-my-posh"
 # A simple terminal UI for git commands, written in Go
@@ -134,10 +132,10 @@ brew "jesseduffield/lazygit/lazygit"
 cask "cheatsheet"
 # Screen capturing tool
 cask "cleanshot"
+# Write, edit, and chat about your code with AI
+cask "cursor"
 # App to build and share containerised applications and microservices
-cask "docker"
-# Reimagine your terminal
-cask "fig"
+cask "docker-desktop"
 cask "font-anonymice-nerd-font"
 cask "font-cascadia-code"
 cask "font-caskaydia-cove-nerd-font"
@@ -149,50 +147,33 @@ cask "font-mononoki-nerd-font"
 cask "ghostty"
 # Utility to hide menu bar items
 cask "hiddenbar"
-# Terminal emulator as alternative to Apple's Terminal app
-cask "iterm2"
-# GPU-based terminal emulator
-cask "kitty"
-# Extensible two-pane file manager
-cask "marta"
-# Visual diff and merge tool
-cask "meld"
 # Collaboration platform for API development
 cask "postman"
 # Control your tools with a few keystrokes
 cask "raycast"
-# Email client
-cask "readdle-spark"
 # Tool that provides consistent, highly configurable symbols for apps
 cask "sf-symbols"
 # Team communication and collaboration software
 cask "slack"
 # Open-source code editor
 cask "visual-studio-code"
-# Rust-based terminal
-cask "warp"
 # GPU-accelerated cross-platform terminal emulator and multiplexer
 cask "wezterm"
-vscode "angular.ng-template"
 vscode "antfu.file-nesting"
 vscode "beardedbear.beardedicons"
 vscode "beardedbear.beardedtheme"
-vscode "benjaminbenais.copilot-theme"
 vscode "cdonohue.quill-icons"
 vscode "christian-kohler.npm-intellisense"
 vscode "dbaeumer.vscode-eslint"
 vscode "dracula-theme.theme-dracula"
 vscode "eamodio.gitlens"
 vscode "eliverlara.sweet-vscode-icons"
-vscode "equinusocio.vsc-material-theme"
-vscode "equinusocio.vsc-material-theme-icons"
 vscode "esbenp.prettier-vscode"
 vscode "github.copilot"
 vscode "github.copilot-chat"
 vscode "github.copilot-labs"
 vscode "gruntfuggly.todo-tree"
 vscode "jasonnutter.vscode-codeowners"
-vscode "johnpapa.angular2"
 vscode "orta.vscode-jest"
 vscode "prazdevs.zarp-icons"
 vscode "prisma.prisma"
@@ -202,9 +183,7 @@ vscode "sdras.night-owl"
 vscode "sldobri.bunker"
 vscode "streetsidesoftware.code-spell-checker"
 vscode "styled-components.vscode-styled-components"
-vscode "tamj0rd2.ts-quickfixes-extension"
 vscode "unifiedjs.vscode-mdx"
-vscode "vintharas.learn-vim"
 vscode "visualstudioexptteam.intellicode-api-usage-examples"
 vscode "visualstudioexptteam.vscodeintellicode"
 vscode "vscode-icons-team.vscode-icons"
