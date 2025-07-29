@@ -1,18 +1,25 @@
--- Plugin to easily comment in/out lines
+-- =====================================================
+-- COMMENT.NVIM - SMART CODE COMMENTING
+-- =====================================================
+-- Comment.nvim: Intelligent code commenting with treesitter integration
+-- Supports different comment styles for different languages and contexts (JSX, Vue, etc.)
+
 return {
-  'numToStr/Comment.nvim',
-  event = { 'BufReadPre', 'BufNewFile' },
+  "numToStr/Comment.nvim", -- Smart commenting plugin
+  event = { "BufReadPre", "BufNewFile" }, -- Load when opening files
   dependencies = {
-    'JoosepAlviste/nvim-ts-context-commentstring',
+    "JoosepAlviste/nvim-ts-context-commentstring", -- Treesitter-aware comment strings
   },
   config = function()
-    local comment = require('Comment')
-    local ts_context_commentstring = require('ts_context_commentstring.integrations.comment_nvim')
+    local comment = require("Comment")
 
-    -- enable comment
+    -- Import treesitter context commentstring for better language support
+    local ts_context_commentstring = require("ts_context_commentstring.integrations.comment_nvim")
+
     comment.setup({
-      -- for commenting tsx, jsx, svelte and html files
-      pre_hook = ts_context_commentstring.create_pre_hook()
+      -- TREESITTER INTEGRATION
+      -- Use treesitter to determine correct comment syntax for mixed-language files
+      pre_hook = ts_context_commentstring.create_pre_hook(),
     })
   end,
 }

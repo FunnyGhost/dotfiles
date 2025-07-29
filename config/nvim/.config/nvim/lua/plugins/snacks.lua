@@ -1,116 +1,140 @@
+-- =====================================================
+-- SNACKS.NVIM - COMPREHENSIVE UTILITY COLLECTION
+-- =====================================================
+-- Snacks: Modern collection of useful utilities for Neovim
+-- Provides notifications, terminal, zen mode, scratch buffers, git integration, and more
+-- Created by folke (author of lazy.nvim, which-key.nvim, etc.)
+
 return {
 	"folke/snacks.nvim",
-	priority = 1000,
-	lazy = false,
+	priority = 1000, -- Load early to ensure other plugins can use snacks features
+	lazy = false,    -- Don't lazy load - needed for core functionality
 	---@type snacks.Config
 	opts = {
-		bigfile = { enabled = true },
-		dashboard = { enabled = false },
-		indent = { enabled = true },
-		input = { enabled = true },
+		-- FEATURE TOGGLES
+		bigfile = { enabled = true },     -- Handle large files efficiently
+		dashboard = { enabled = false },  -- Disable dashboard (using default or other plugin)
+		indent = { enabled = true },      -- Show indentation guides
+		input = { enabled = true },       -- Enhanced vim.ui.input interface
 		notifier = {
-			enabled = true,
-			timeout = 3000,
+			enabled = true,  -- Show notifications in UI
+			timeout = 3000,  -- Hide notifications after 3 seconds
 		},
-		quickfile = { enabled = true },
-		scroll = { enabled = false },
-		statuscolumn = { enabled = true },
-		words = { enabled = true },
+		quickfile = { enabled = true },   -- Fast file operations
+		scroll = { enabled = false },     -- Smooth scrolling (disabled - can be distracting)
+		statuscolumn = { enabled = true }, -- Enhanced status column with git signs
+		words = { enabled = true },       -- Highlight word under cursor and enable navigation
 		styles = {
 			notification = {
-				-- wo = { wrap = true } -- Wrap notifications
+				-- wo = { wrap = true } -- Wrap long notifications (commented out)
 			},
 		},
 	},
 	keys = {
+		-- ZEN MODE AND FOCUS
 		{
 			"<leader>z",
 			function()
-				Snacks.zen()
+				Snacks.zen() -- Toggle distraction-free zen mode
 			end,
 			desc = "Toggle Zen Mode",
 		},
+		
+		-- SCRATCH BUFFERS
 		{
 			"<leader>.",
 			function()
-				Snacks.scratch()
+				Snacks.scratch() -- Open/create scratch buffer for quick notes
 			end,
 			desc = "Toggle Scratch Buffer",
 		},
 		{
 			"<leader>S",
 			function()
-				Snacks.scratch.select()
+				Snacks.scratch.select() -- Choose from existing scratch buffers
 			end,
 			desc = "Select Scratch Buffer",
 		},
+		
+		-- NOTIFICATIONS
 		{
 			"<leader>n",
 			function()
-				Snacks.notifier.show_history()
+				Snacks.notifier.show_history() -- Show notification history
 			end,
 			desc = "Notification History",
 		},
 		{
+			"<leader>un",
+			function()
+				Snacks.notifier.hide() -- Dismiss all visible notifications
+			end,
+			desc = "Dismiss All Notifications",
+		},
+		
+		-- BUFFER MANAGEMENT
+		{
 			"<leader>bd",
 			function()
-				Snacks.bufdelete()
+				Snacks.bufdelete() -- Smart buffer deletion (handles modified buffers)
 			end,
 			desc = "Delete Buffer",
 		},
+		
+		-- FILE OPERATIONS
 		{
 			"<leader>cR",
 			function()
-				Snacks.rename.rename_file()
+				Snacks.rename.rename_file() -- Rename current file and update imports
 			end,
 			desc = "Rename File",
 		},
+		
+		-- GIT INTEGRATION
 		{
 			"<leader>gB",
 			function()
-				Snacks.gitbrowse()
+				Snacks.gitbrowse() -- Open current file/line in GitHub browser
 			end,
 			desc = "Git Browse on GitHub",
 		},
 		{
 			"<leader>gb",
 			function()
-				Snacks.git.blame_line()
+				Snacks.git.blame_line() -- Show git blame for current line
 			end,
 			desc = "Git Blame Line",
 		},
 		{
 			"<leader>gF",
 			function()
-				Snacks.lazygit.log_file()
+				Snacks.lazygit.log_file() -- Open lazygit with current file history
 			end,
 			desc = "Lazygit Current File History",
 		},
 		{
 			"<leader>gl",
 			function()
-				Snacks.lazygit.log()
+				Snacks.lazygit.log() -- Open lazygit with repository log
 			end,
 			desc = "Lazygit Log (cwd)",
 		},
-		{
-			"<leader>un",
-			function()
-				Snacks.notifier.hide()
-			end,
-			desc = "Dismiss All Notifications",
-		},
+		
+		-- TERMINAL INTEGRATION
 		{
 			"<c-/>",
 			function()
-				Snacks.terminal()
+				Snacks.terminal() -- Toggle floating terminal
 			end,
 			desc = "Toggle Terminal",
 		},
+		
+		-- WORD NAVIGATION
+		-- Navigate between references of word under cursor
 		{
 			"]]",
 			function()
-				Snacks.words.jump(vim.v.count1)
+				Snacks.words.jump(vim.v.count1) -- Jump to next occurrence
 			end,
 			desc = "Next Reference",
 			mode = { "n", "t" },
@@ -118,44 +142,52 @@ return {
 		{
 			"[[",
 			function()
-				Snacks.words.jump(-vim.v.count1)
+				Snacks.words.jump(-vim.v.count1) -- Jump to previous occurrence
 			end,
 			desc = "Prev Reference",
 			mode = { "n", "t" },
 		},
+		
+		-- NEOVIM DOCUMENTATION
 		{
 			"<leader>N",
 			desc = "Neovim News",
 			function()
+				-- Display Neovim release notes in a nice floating window
 				Snacks.win({
 					file = vim.api.nvim_get_runtime_file("doc/news.txt", false)[1],
-					width = 0.6,
-					height = 0.6,
+					width = 0.6,  -- 60% of screen width
+					height = 0.6, -- 60% of screen height
 					wo = {
-						spell = false,
-						wrap = false,
-						signcolumn = "yes",
-						statuscolumn = " ",
-						conceallevel = 3,
+						spell = false,        -- No spell checking in news
+						wrap = false,         -- No line wrapping
+						signcolumn = "yes",   -- Show sign column
+						statuscolumn = " ",   -- Minimal status column
+						conceallevel = 3,     -- Hide markup characters
 					},
 				})
 			end,
 		},
 	},
+	
+	-- INITIALIZATION AND GLOBAL UTILITIES
 	init = function()
+		-- Set up utilities after other plugins load
 		vim.api.nvim_create_autocmd("User", {
 			pattern = "VeryLazy",
 			callback = function()
-				-- Setup some globals for debugging (lazy-loaded)
+				-- DEBUGGING UTILITIES
+				-- Global debug functions for development
 				_G.dd = function(...)
-					Snacks.debug.inspect(...)
+					Snacks.debug.inspect(...) -- Pretty-print values
 				end
 				_G.bt = function()
-					Snacks.debug.backtrace()
+					Snacks.debug.backtrace() -- Show call stack
 				end
 				vim.print = _G.dd -- Override print to use snacks for `:=` command
 
-				-- Create some toggle mappings
+				-- TOGGLE UTILITIES
+				-- Create toggle mappings for common options
 				Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
 				Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
 				Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
