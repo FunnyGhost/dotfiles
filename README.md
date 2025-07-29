@@ -273,6 +273,72 @@ git pull origin master
 
 ## 🚨 Important Notes
 
+### 🔒 Work & Private Configuration
+This repository uses a **local override pattern** to securely handle work-specific and private configurations without exposing secrets in version control.
+
+#### **Shell Configuration & Secrets**
+The `.zshrc` automatically sources work-specific configuration:
+
+**config/zsh/.zshrc.local** (automatically loaded):
+```bash
+# Work-specific secrets and configuration
+# This file should not be committed to version control
+
+export COMPANY_USERNAME=your-username
+export COMPANY_API_TOKEN=your-secret-token
+export DATABASE_URL="postgresql://user:pass@host:5432/db"
+
+# Package manager credentials (if needed)
+export HOMEBREW_COMPANY_USER=${COMPANY_USERNAME}
+export HOMEBREW_COMPANY_TOKEN=${COMPANY_API_TOKEN}
+
+# Add any other work-specific environment variables here
+export AWS_PROFILE="work"
+export DOCKER_REGISTRY="company.registry.com"
+```
+
+**How it works:**
+- Main `.zshrc` contains this line: `[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local`
+- If the local file exists, it's automatically loaded
+- If it doesn't exist, no error occurs
+- All secrets stay out of version control
+
+#### **Package Management & Work Tools** 
+The Brewfile system supports work-specific packages:
+
+**Brewfile.local** (work packages):
+```bash
+# Work-specific Homebrew packages
+# This file should not be committed to version control
+
+# Work-specific taps (private repositories)
+tap "company/internal-tools"
+tap "organization/private-tap", "git@github.com:organization/homebrew-private.git"
+
+# Work-specific tools and applications
+brew "company/cli-tool"
+brew "organization/development-utils"
+cask "company-vpn"
+cask "internal-app"
+```
+
+**Automated Management:**
+The `bbd` alias now handles both files automatically:
+```bash
+# Updates both Brewfiles safely
+bbd  # This runs: brew bundle dump for main + local files
+
+# Manual installation (if needed)
+brew bundle install                        # Public packages
+brew bundle install --file=Brewfile.local  # Work packages (if file exists)
+```
+
+**Safety Features:**
+- Both `.zshrc.local` and `Brewfile.local` are **gitignored**
+- Commands use conditional logic: `[[ -f Brewfile.local ]] && ...`
+- No errors if local files don't exist
+- Secrets never accidentally committed
+
 ### Window Management
 This repo contains configurations for multiple window managers (Aerospace, yabai). The current recommendation is to use **Raycast** for window management, which provides a great UI for configuration.
 

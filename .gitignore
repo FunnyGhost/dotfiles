@@ -1,2 +1,7 @@
 .DS_STORE
 Brewfile.lock.json
+# Work-specific packages
+Brewfile.local
+
+# Environment secrets
+.zshrc.local

@@ -40,7 +40,7 @@ export DYLD_LIBRARY_PATH="/opt/homebrew/lib/"
 alias ls='eza -a --long --git --hyperlink --icons=always'
 alias lt='eza --tree --level=2 --long --icons --git'
 alias cd='z'
-alias bbd='brew bundle dump --force --describe'
+alias bbd='brew bundle dump --force --describe && [[ -f Brewfile.local ]] && brew bundle dump --force --describe --file=Brewfile.local'
 alias man=batman
 alias trail='<<<${(F)path}'
 alias rm=trash
@@ -65,3 +65,10 @@ export FZF_DEFAULT_OPTS='--color=fg:#ebfafa,bg:#282a36,hl:#37f499 --color=fg+:#e
 eval "$(direnv hook zsh)"
 # zoxide setup 👇
 eval "$(zoxide init zsh)"
+
+# Added by Windsurf
+export PATH="/Users/cthulhu/.codeium/windsurf/bin:$PATH"
+
+# ------------- Local/Work Configuration -------------
+# Source work-specific secrets and configuration if it exists
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local

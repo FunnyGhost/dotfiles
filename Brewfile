@@ -8,6 +8,7 @@ tap "jandedobbeleer/oh-my-posh"
 tap "jesseduffield/lazygit"
 tap "koekeishiya/formulae"
 tap "nikitabobko/tap"
+# Work-specific taps (add to Brewfile.local if needed)
 # New file format for still image compression
 brew "jpeg-xl"
 # Codec library for encoding and decoding AV1 video streams
