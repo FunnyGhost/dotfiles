@@ -37,32 +37,31 @@ For detailed mappings, see: [`lua/keymaps.lua`](./lua/keymaps.lua)
 ### Essential Keys to Know
 
 #### Terminal Management
-- `<leader>th` - Open horizontal terminal split
-- `<leader>tv` - Open vertical terminal split
-- `<leader>tc` - Close current terminal
-- `<Esc>` (in terminal) - Exit to normal mode
+- `<leader>th` - [T]erminal [h]orizontal split
+- `<leader>tv` - [T]erminal [v]ertical split
+- `<leader>tc` - [T]erminal [c]lose
 
 #### File Explorer (Built-in Netrw)
-- `<leader>fe` - Open file explorer
-- `<leader>fv` - Open file explorer (vertical split)
-- `<leader>fs` - Open file explorer (horizontal split)
-- `<leader>ft` - Toggle file explorer tree style
+- `<leader>fe` - [F]ile [e]xplorer
+- `<leader>fv` - [F]ile explorer [v]ertical split
+- `<leader>fs` - [F]ile explorer horizontal [s]plit
+- `<leader>ft` - [F]ile explorer [t]ree style toggle
 
 #### Better Editing
-- `<leader>p` (visual mode) - Paste without yanking selection
+- `<leader>p` (visual mode) - [P]aste without yanking selection
 - `<C-d>` / `<C-u>` - Scroll down/up (cursor centered)
 - `gcc` - Comment/uncomment line
 - `gc{motion}` - Comment motion (e.g., `gc2j` comments 2 lines)
 
 #### LSP (When Language Servers Available)
 - `K` - Show hover documentation
-- `gd` - Go to definition
-- `gD` - Go to declaration
-- `grn` - Rename symbol
-- `grf` - Find references
-- `gim` - Go to implementation
-- `gs` - Document symbols
-- `gca` - Code actions
+- `gd` - [G]o to [d]efinition
+- `gD` - [G]o to [D]eclaration
+- `grn` - [R]e[n]ame
+- `grf` - [R]e[f]erences
+- `gim` - [I]mple[m]entation
+- `gs` - Document [s]ymbols
+- `gca` - [C]ode [a]ctions
 - `[d` / `]d` - Navigate diagnostics
 
 #### Window Management
@@ -71,16 +70,15 @@ For detailed mappings, see: [`lua/keymaps.lua`](./lua/keymaps.lua)
 - `<C-w>s` - Horizontal split
 
 #### Quick Actions
-- `<leader>w` - Save file
-- `<leader>q` - Quit
-- `<leader>nh` - Clear search highlighting
+- `<leader>w` - [W]rite file
+- `<leader>q` - [Q]uit
+- `<leader>nh` - [N]o [h]ighlight
 
 ## Current Features
 
 ### Built-in Neovim 0.11.3 Features
 - ✅ **Native LSP** with modern `vim.lsp.config()` and `vim.lsp.enable()` APIs
 - ✅ **Built-in completion** for LSP
-- ✅ **Native commenting** (`gcc`, `gc{motion}`)
 - ✅ **Enhanced diagnostics** with better defaults
 - ✅ **Improved treesitter** performance and highlighting
 - ✅ **Better terminal** integration
