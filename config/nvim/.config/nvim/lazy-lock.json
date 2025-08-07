@@ -1,3 +1,6 @@
 {
-  "lazy.nvim": { "branch": "main", "commit": "6c3bda4aca61a13a9c63f1c1d1b16b9d3be90d7a" }
+  "fzf-lua": { "branch": "main", "commit": "141e9967526ce17888edaa2ec4372a1035dbf4f4" },
+  "lazy.nvim": { "branch": "main", "commit": "6c3bda4aca61a13a9c63f1c1d1b16b9d3be90d7a" },
+  "mini.files": { "branch": "main", "commit": "49c855977e9f4821d1ed8179ed44fe098b93ea2a" },
+  "nvim-web-devicons": { "branch": "master", "commit": "3362099de3368aa620a8105b19ed04c2053e38c0" }
 }

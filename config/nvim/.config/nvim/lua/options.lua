@@ -48,7 +48,7 @@ vim.opt.swapfile = false               -- Don't create swap files
 
 -- PERFORMANCE
 vim.opt.updatetime = 250               -- Faster completion (default 4000ms)
-vim.opt.timeoutlen = 300               -- Time to wait for mapped sequence
+vim.opt.timeoutlen = 1000              -- Time to wait for mapped sequence (1 second)
 
 -- COMPLETION (0.11+ has built-in LSP completion!)
 vim.opt.completeopt = "menu,menuone,noselect,preview"

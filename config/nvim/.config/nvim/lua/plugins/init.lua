@@ -5,12 +5,10 @@
 -- This demonstrates that modern Neovim is quite capable on its own
 
 return {
-  -- No plugins yet! 
-  -- Neovim 0.10+ includes:
-  -- - Built-in LSP client
-  -- - Treesitter integration
-  -- - Built-in commenting (gc{motion})
-  -- - Improved completion
-  -- - Better terminal integration
-  -- - And much more!
+  -- File management and fuzzy finding plugins
+  -- Individual plugin configs are in separate files for organization
+  -- 
+  -- Plugins automatically loaded from:
+  -- - mini-files.lua (file management)
+  -- - fzf-lua.lua (fuzzy finding & search)
 }

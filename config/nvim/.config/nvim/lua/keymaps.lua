@@ -5,6 +5,10 @@
 
 local keymap = vim.keymap.set
 
+-- =====================================================
+-- GENERIC NEOVIM KEYMAPS (No plugins required)
+-- =====================================================
+
 -- BETTER MOVEMENT
 -- Keep cursor centered when scrolling
 keymap("n", "<C-d>", "<C-d>zz", { desc = "Scroll down (centered)" })
@@ -58,17 +62,22 @@ keymap("n", "<C-Left>", ":vertical resize -2<CR>", { desc = "Decrease window wid
 keymap("n", "<C-Right>", ":vertical resize +2<CR>", { desc = "Increase window width" })
 
 -- BUFFER MANAGEMENT
--- Next/previous buffer
 keymap("n", "<leader>bn", ":bnext<CR>", { desc = "[B]uffer [N]ext" })
 keymap("n", "<leader>bp", ":bprevious<CR>", { desc = "[B]uffer [P]revious" })
 keymap("n", "<leader>bd", ":bdelete<CR>", { desc = "[B]uffer [D]elete" })
+keymap("n", "<leader>bD", ":bdelete!<CR>", { desc = "[B]uffer [D]elete (force)" })
+keymap("n", "<leader>ba", ":%bd|e#|bd#<CR>", { desc = "[B]uffer delete [A]ll except current" })
+keymap("n", "<leader>bl", ":buffers<CR>", { desc = "[B]uffer [L]ist" })
 
 -- QUICK ACTIONS
 -- Save file
 keymap("n", "<leader>w", ":w<CR>", { desc = "[W]rite file" })
+keymap("n", "<leader>wa", ":wa<CR>", { desc = "[W]rite [A]ll files" })
 
 -- Quit
 keymap("n", "<leader>q", ":q<CR>", { desc = "[Q]uit" })
+keymap("n", "<leader>qa", ":qa<CR>", { desc = "[Q]uit [A]ll" })
+keymap("n", "<leader>Q", ":q!<CR>", { desc = "[Q]uit (force)" })
 
 -- Source current file (useful for config editing)
 keymap("n", "<leader><leader>x", ":source %<CR>", { desc = "E[x]ecute current file" })
@@ -123,13 +132,53 @@ vim.api.nvim_create_autocmd('LspAttach', {
 -- gc{motion} and gcc are built-in in Neovim 0.10+
 -- Example: gcc (comment line), gc2j (comment 2 lines down), etc.
 
--- FILE EXPLORER (using built-in netrw for now)
-keymap("n", "<leader>fe", ":Explore<CR>", { desc = "[F]ile [E]xplorer" })
-keymap("n", "<leader>fv", ":Vexplore<CR>", { desc = "[F]ile explorer [V]ertical" })
-keymap("n", "<leader>fs", ":Sexplore<CR>", { desc = "[F]ile explorer [S]plit" })
+-- =====================================================
+-- PLUGIN KEYMAPS
+-- =====================================================
 
--- Toggle netrw tree style
-keymap("n", "<leader>ft", function()
-  vim.g.netrw_liststyle = (vim.g.netrw_liststyle == 3) and 0 or 3
-  vim.cmd("Explore")
-end, { desc = "[F]ile explorer [T]ree toggle" })
+-- MINI.FILES PLUGIN KEYMAPS
+keymap("n", "<leader>fm", function() 
+  local mini_files = require("mini.files")
+  mini_files.open(vim.api.nvim_buf_get_name(0))
+end, { desc = "[F]ile [M]anager" })
+
+keymap("n", "<leader>fM", function() 
+  local mini_files = require("mini.files")
+  mini_files.open(vim.fn.getcwd())
+end, { desc = "[F]ile [M]anager (CWD)" })
+
+-- FZF-LUA PLUGIN KEYMAPS
+-- File Operations
+keymap("n", "<leader>ff", function() require("fzf-lua").files() end, { desc = "[F]ind [F]iles" })
+keymap("n", "<leader>fr", function() require("fzf-lua").oldfiles() end, { desc = "[F]ind [R]ecent files" })
+keymap("n", "<leader>fb", function() require("fzf-lua").buffers() end, { desc = "[F]ind [B]uffers" })
+
+-- Search Operations
+keymap("n", "<leader>fg", function() require("fzf-lua").live_grep() end, { desc = "[F]ind by [G]rep" })
+keymap("n", "<leader>fw", function() require("fzf-lua").grep_cword() end, { desc = "[F]ind current [W]ord" })
+keymap("n", "<leader>fW", function() require("fzf-lua").grep_cWORD() end, { desc = "[F]ind current [W]ORD" })
+keymap("v", "<leader>fg", function() require("fzf-lua").grep_visual() end, { desc = "[F]ind selection by [G]rep" })
+
+-- Git Integration
+keymap("n", "<leader>gf", function() require("fzf-lua").git_files() end, { desc = "[G]it [F]iles" })
+keymap("n", "<leader>gs", function() require("fzf-lua").git_status() end, { desc = "[G]it [S]tatus" })
+keymap("n", "<leader>gc", function() require("fzf-lua").git_commits() end, { desc = "[G]it [C]ommits" })
+keymap("n", "<leader>gC", function() require("fzf-lua").git_bcommits() end, { desc = "[G]it buffer [C]ommits" })
+keymap("n", "<leader>gb", function() require("fzf-lua").git_branches() end, { desc = "[G]it [B]ranches" })
+
+-- LSP Integration (when LSP available)
+keymap("n", "<leader>lr", function() require("fzf-lua").lsp_references() end, { desc = "[L]sp [R]eferences" })
+keymap("n", "<leader>ld", function() require("fzf-lua").lsp_definitions() end, { desc = "[L]sp [D]efinitions" })
+keymap("n", "<leader>li", function() require("fzf-lua").lsp_implementations() end, { desc = "[L]sp [I]mplementations" })
+keymap("n", "<leader>ls", function() require("fzf-lua").lsp_document_symbols() end, { desc = "[L]sp document [S]ymbols" })
+keymap("n", "<leader>lS", function() require("fzf-lua").lsp_live_workspace_symbols() end, { desc = "[L]sp workspace [S]ymbols" })
+keymap("n", "<leader>la", function() require("fzf-lua").lsp_code_actions() end, { desc = "[L]sp code [A]ctions" })
+
+-- Miscellaneous
+keymap("n", "<leader>fh", function() require("fzf-lua").help_tags() end, { desc = "[F]ind [H]elp tags" })
+keymap("n", "<leader>fk", function() require("fzf-lua").keymaps() end, { desc = "[F]ind [K]eymaps" })
+keymap("n", "<leader>fc", function() require("fzf-lua").commands() end, { desc = "[F]ind [C]ommands" })
+keymap("n", "<leader>f:", function() require("fzf-lua").command_history() end, { desc = "[F]ind command history" })
+keymap("n", "<leader>f/", function() require("fzf-lua").search_history() end, { desc = "[F]ind search history" })
+keymap("n", "<leader>f.", function() require("fzf-lua").resume() end, { desc = "[F]ind resume last search" })
+keymap("n", "<leader>fF", function() require("fzf-lua").builtin() end, { desc = "[F]zf builtin commands" })
