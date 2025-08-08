@@ -25,13 +25,6 @@ return {
 		},
 		attach_to_untracked = true,
 		current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
-		current_line_blame_opts = {
-			virt_text = true,
-			virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
-			delay = 1000,
-			ignore_whitespace = false,
-		},
-		current_line_blame_formatter = "<author>, <author_time:%Y-%m-%d> - <summary>",
 		sign_priority = 6,
 		update_debounce = 100,
 		status_formatter = nil, -- Use default
@@ -43,9 +36,6 @@ return {
 			relative = "cursor",
 			row = 0,
 			col = 1,
-		},
-		yadm = {
-			enable = false,
 		},
 		on_attach = function(bufnr)
 			local gs = package.loaded.gitsigns
@@ -86,22 +76,11 @@ return {
 			map("v", "<leader>hr", function()
 				gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
 			end, { desc = "[H]unk [R]eset" })
-			map("n", "<leader>hS", gs.stage_buffer, { desc = "[H]unk [S]tage buffer" })
 			map("n", "<leader>hu", gs.undo_stage_hunk, { desc = "[H]unk [U]ndo stage" })
-			map("n", "<leader>hR", gs.reset_buffer, { desc = "[H]unk [R]eset buffer" })
 			map("n", "<leader>hp", gs.preview_hunk, { desc = "[H]unk [P]review" })
 			map("n", "<leader>hb", function()
 				gs.blame_line({ full = true })
 			end, { desc = "[H]unk [B]lame line" })
-			map("n", "<leader>tb", gs.toggle_current_line_blame, { desc = "[T]oggle line [B]lame" })
-			map("n", "<leader>hd", gs.diffthis, { desc = "[H]unk [D]iff this" })
-			map("n", "<leader>hD", function()
-				gs.diffthis("~")
-			end, { desc = "[H]unk [D]iff this ~" })
-			map("n", "<leader>td", gs.toggle_deleted, { desc = "[T]oggle [D]eleted" })
-
-			-- Text object
-			map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", { desc = "Select hunk" })
 		end,
 	},
 }
