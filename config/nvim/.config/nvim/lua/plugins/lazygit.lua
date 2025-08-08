@@ -12,7 +12,7 @@ return {
 		{
 			"<leader>lg",
 			"<cmd>LazyGit<CR>",
-			desc = "[G]it lazy[G]it",
+			desc = "[L]azy[G]it",
 		},
 	},
 	-- Optional: Set custom LazyGit config path
