@@ -51,42 +51,32 @@ return {
       -- TypeScript LSP settings (vtsls optimized for large codebases)
       vtsls = {
         settings = {
-          typescript = {
+          typescript = vim.tbl_deep_extend("force", {
+            suggest = { completeFunctionCalls = true },
             inlayHints = {
-              includeInlayParameterNameHints = "all",
-              includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-              includeInlayFunctionParameterTypeHints = true,
-              includeInlayVariableTypeHints = true,
-              includeInlayVariableTypeHintsWhenTypeMatchesName = false,
-              includeInlayPropertyDeclarationTypeHints = true,
-              includeInlayFunctionLikeReturnTypeHints = true,
-              includeInlayEnumMemberValueHints = true,
+              functionLikeReturnTypes = { enabled = true },
+              parameterNames = { enabled = "literals" },
+              variableTypes = { enabled = true },
             },
-            format = {
-              indentSize = 2,
-              convertTabsToSpaces = true,
-              tabSize = 2,
-            },
-          },
+          }, {
+            tsserver = { maxTsServerMemory = 8192 },
+          }),
           javascript = {
+            suggest = { completeFunctionCalls = true },
             inlayHints = {
-              includeInlayParameterNameHints = "all",
-              includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-              includeInlayFunctionParameterTypeHints = true,
-              includeInlayVariableTypeHints = true,
-              includeInlayVariableTypeHintsWhenTypeMatchesName = false,
-              includeInlayPropertyDeclarationTypeHints = true,
-              includeInlayFunctionLikeReturnTypeHints = true,
-              includeInlayEnumMemberValueHints = true,
-            },
-            format = {
-              indentSize = 2,
-              convertTabsToSpaces = true,
-              tabSize = 2,
+              functionLikeReturnTypes = { enabled = true },
+              parameterNames = { enabled = "literals" },
+              variableTypes = { enabled = true },
             },
           },
-          completions = {
-            completeFunctionCalls = true,
+          vtsls = {
+            autoUseWorkspaceTsdk = true,
+            experimental = {
+              maxInlayHintLength = 30,
+              completion = {
+                enableServerSideFuzzyMatch = true,
+              },
+            },
           },
         },
         -- Monorepo support: look for tsconfig.json and package.json
