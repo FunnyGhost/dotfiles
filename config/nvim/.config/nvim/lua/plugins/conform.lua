@@ -1,3 +1,8 @@
+-- =====================================================
+-- CONFORM.NVIM - CODE FORMATTING
+-- =====================================================
+-- Provides async formatting with project-local formatters
+
 return {
 	"stevearc/conform.nvim",
 	event = { "BufWritePre" }, -- Load before saving
@@ -5,12 +10,12 @@ return {
 	keys = {
 		{
 			-- Manual format
-			"<leader>fm",
+			"<leader>cf",
 			function()
 				require("conform").format({ async = true, lsp_fallback = true })
 			end,
 			mode = "",
-			desc = "[F]ormat [M]anually",
+			desc = "[C]ode [F]ormat",
 		},
 	},
 	opts = {
