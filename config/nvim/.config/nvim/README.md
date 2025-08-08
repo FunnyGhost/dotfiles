@@ -145,10 +145,12 @@ For detailed mappings, see: [`lua/keymaps.lua`](./lua/keymaps.lua)
 
 ## Plugins
 
-### Active Plugins (3)
+### Active Plugins (5)
 - ✅ **mini.files** - Lightweight file management (edit directories like buffers)
 - ✅ **fzf-lua** - Fast fuzzy finding and search (files, grep, git, LSP)
 - ✅ **nvim-treesitter** - Accurate syntax highlighting & parsing (parsers: lua, vim, vimdoc, bash, markdown, markdown_inline, json, yaml, toml, javascript, typescript, tsx, html, css, jsonc)
+- ✅ **eldritch.nvim** - Colorscheme (loads early with high priority)
+- ✅ **lualine.nvim** - Statusline (configured with Eldritch theme)
 
 ### Coming Soon (Based on Workflow Needs)
 - [ ] Git integration (Gitsigns?)
@@ -205,6 +207,10 @@ Then configure in `lua/plugins/lsp-example.lua` using the new 0.11 APIs.
 - Use `g~` to set current directory from mini.files
 
 ### FZF-lua - Fuzzy Finding
+### Theme & Statusline
+- Colorscheme: `eldritch` (loaded at startup)
+- Statusline: `lualine` with `theme = 'eldritch'` and `globalstatus = true`
+
 ### Treesitter - Syntax Highlighting
 - Enabled: highlight only (indent disabled for stability).
 - Parsers installed: lua, vim, vimdoc, bash, markdown(_inline), json, yaml, toml, javascript, typescript, tsx, html, css, jsonc.
