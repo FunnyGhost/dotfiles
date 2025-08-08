@@ -12,4 +12,5 @@ return {
   -- - mini-files.lua (file management)
   -- - fzf-lua.lua (fuzzy finding & search)
   -- - lsp/*.lua (LSP configuration)
+  -- - treesitter/*.lua (syntax and code understanding)
 }
