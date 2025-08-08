@@ -13,4 +13,5 @@ return {
   -- - fzf-lua.lua (fuzzy finding & search)
   -- - lsp/*.lua (LSP configuration)
   -- - treesitter/*.lua (syntax and code understanding)
+  -- - completion/*.lua (autocompletion and snippets)
 }
