@@ -155,9 +155,9 @@ For detailed mappings, see: [`lua/keymaps.lua`](./lua/keymaps.lua)
 
 ### Coming Soon (Based on Workflow Needs)
 - [ ] Git integration (Gitsigns?)
-- [ ] Status line (Lualine?)
-- [ ] Color scheme
 - [ ] Additional LSP tooling
+- [ ] Snippets and completion
+- [ ] AI assistance tools
 
 ## LSP Setup
 
@@ -223,8 +223,16 @@ Then configure in `lua/plugins/lsp-example.lua` using the new 0.11 APIs.
   - `:LspInfo` → one `vtsls` client; hover `K`, go-to `gd`, rename `grn`, code actions `gca`.
 
 ### Theme & Statusline
-- Colorscheme: `eldritch` (loaded at startup)
+- Colorscheme: `eldritch.nvim` (loaded at startup)
+  - 24-bit color support
+  - Terminal colors enabled
+  - Italic comments and keywords
+  - Clean, focused interface
 - Statusline: `lualine` with `theme = 'eldritch'` and `globalstatus = true`
+  - Git integration
+  - LSP diagnostics
+  - File information
+  - Clean separators
 
 ### Treesitter - Syntax Highlighting
 - Enabled: highlight only (indent disabled for stability).
@@ -265,6 +273,19 @@ All plugins in this configuration have been security audited:
 - **Security:** Extensively audited, no known vulnerabilities
 - **Usage:** Used by millions of developers for years
 - **Trust Level:** Very High - Industry standard tool
+
+**✅ eldritch.nvim (eldritch-theme/eldritch.nvim)**
+- **Author:** Eldritch Theme team
+- **Security:** Pure Lua theme, no external dependencies
+- **Trust Level:** High - Simple theme implementation
+- **Last Audit:** Current (2025)
+
+**✅ lualine.nvim (nvim-lualine/lualine.nvim)**
+- **Author:** Shadman Shadmani and community
+- **Security:** Pure Lua, optional icon dependencies
+- **Trust Level:** Very High - Industry standard statusline
+- **Dependencies:** Optional nvim-web-devicons (safe)
+- **Last Audit:** Current (2025)
 
 ### Security Best Practices
 - All plugins are from trusted, well-known developers
@@ -310,6 +331,6 @@ This configuration evolves based on actual workflow needs. When adding plugins:
 
 ---
 
-**Last Updated:** $(date)  
+**Last Updated:** 2025-08-08  
 **Neovim Version:** 0.11.3+  
 **Status:** Minimal base complete, adding plugins incrementally

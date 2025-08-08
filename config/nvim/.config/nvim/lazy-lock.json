@@ -1,6 +1,7 @@
 {
   "eldritch.nvim": { "branch": "master", "commit": "c980caea40cab7eab2c3a467af5bab1e7e66fcce" },
-  "fzf-lua": { "branch": "main", "commit": "141e9967526ce17888edaa2ec4372a1035dbf4f4" },
+  "fzf-lua": { "branch": "main", "commit": "9bdb62771ce8dbeb286b641d59d2d4b492613d5c" },
+  "indent-blankline.nvim": { "branch": "master", "commit": "005b56001b2cb30bfa61b7986bc50657816ba4ba" },
   "lazy.nvim": { "branch": "main", "commit": "6c3bda4aca61a13a9c63f1c1d1b16b9d3be90d7a" },
   "lualine.nvim": { "branch": "master", "commit": "a94fc68960665e54408fe37dcf573193c4ce82c9" },
   "mini.files": { "branch": "main", "commit": "49c855977e9f4821d1ed8179ed44fe098b93ea2a" },
