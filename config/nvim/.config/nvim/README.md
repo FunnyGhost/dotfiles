@@ -145,9 +145,10 @@ For detailed mappings, see: [`lua/keymaps.lua`](./lua/keymaps.lua)
 
 ## Plugins
 
-### Active Plugins (2)
+### Active Plugins (3)
 - ✅ **mini.files** - Lightweight file management (edit directories like buffers)
 - ✅ **fzf-lua** - Fast fuzzy finding and search (files, grep, git, LSP)
+- ✅ **nvim-treesitter** - Accurate syntax highlighting & parsing (parsers: lua, vim, vimdoc, bash, markdown, markdown_inline, json, yaml, toml, javascript, typescript, tsx, html, css, jsonc)
 
 ### Coming Soon (Based on Workflow Needs)
 - [ ] Git integration (Gitsigns?)
@@ -204,6 +205,11 @@ Then configure in `lua/plugins/lsp-example.lua` using the new 0.11 APIs.
 - Use `g~` to set current directory from mini.files
 
 ### FZF-lua - Fuzzy Finding
+### Treesitter - Syntax Highlighting
+- Enabled: highlight only (indent disabled for stability).
+- Parsers installed: lua, vim, vimdoc, bash, markdown(_inline), json, yaml, toml, javascript, typescript, tsx, html, css, jsonc.
+- No auto-install: new languages won’t be fetched implicitly.
+
 **Tips for effective usage:**
 - Start typing to filter results instantly
 - Use space to separate multiple search terms
