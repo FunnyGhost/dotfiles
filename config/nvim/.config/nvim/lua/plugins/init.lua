@@ -11,4 +11,5 @@ return {
   -- Plugins automatically loaded from:
   -- - mini-files.lua (file management)
   -- - fzf-lua.lua (fuzzy finding & search)
+  -- - lsp/*.lua (LSP configuration)
 }
