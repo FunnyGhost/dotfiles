@@ -145,12 +145,13 @@ For detailed mappings, see: [`lua/keymaps.lua`](./lua/keymaps.lua)
 
 ## Plugins
 
-### Active Plugins (5)
+### Active Plugins (6)
 - ✅ **mini.files** - Lightweight file management (edit directories like buffers)
 - ✅ **fzf-lua** - Fast fuzzy finding and search (files, grep, git, LSP)
 - ✅ **nvim-treesitter** - Accurate syntax highlighting & parsing (parsers: lua, vim, vimdoc, bash, markdown, markdown_inline, json, yaml, toml, javascript, typescript, tsx, html, css, jsonc)
 - ✅ **eldritch.nvim** - Colorscheme (loads early with high priority)
 - ✅ **lualine.nvim** - Statusline (configured with Eldritch theme)
+- ✅ **nvim-lspconfig** + **mason.nvim** (+ vtsls) - Language Server Protocol with TypeScript focus
 
 ### Coming Soon (Based on Workflow Needs)
 - [ ] Git integration (Gitsigns?)
@@ -207,6 +208,20 @@ Then configure in `lua/plugins/lsp-example.lua` using the new 0.11 APIs.
 - Use `g~` to set current directory from mini.files
 
 ### FZF-lua - Fuzzy Finding
+### LSP - TypeScript/React + Web
+- Stack: `nvim-lspconfig` + `mason.nvim` + `vtsls` (TypeScript), plus `html`, `cssls`, `jsonls`.
+- Monorepo tuned:
+  - Root detection prefers workspace markers (pnpm/yarn workspaces, nx/turbo, etc.) and falls back to `.git`.
+  - `vtsls` uses workspace TypeScript (autoUseWorkspaceTsdk) and disables single-file support to avoid extra servers.
+  - Inlay hints enabled for TS/JS (can be tuned later).
+- Install servers via `:Mason`:
+  - TypeScript: `vtsls`
+  - HTML: `html-lsp`
+  - CSS: `css-lsp`
+  - JSON: `json-lsp`
+- Verify:
+  - `:LspInfo` → one `vtsls` client; hover `K`, go-to `gd`, rename `grn`, code actions `gca`.
+
 ### Theme & Statusline
 - Colorscheme: `eldritch` (loaded at startup)
 - Statusline: `lualine` with `theme = 'eldritch'` and `globalstatus = true`
