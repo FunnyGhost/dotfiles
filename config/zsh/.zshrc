@@ -69,6 +69,24 @@ eval "$(zoxide init zsh)"
 # Added by Windsurf
 export PATH="/Users/cthulhu/.codeium/windsurf/bin:$PATH"
 
+# ------------- VI Mode Configuration -------------
+# Enable VI mode
+bindkey -v
+
+# Reduce the delay when switching modes (default is 0.4 seconds)
+export KEYTIMEOUT=1
+
+# Allow backspace to cross line boundaries
+bindkey -v '^?' backward-delete-char
+
+# Allow ctrl-a and ctrl-e to move to beginning/end of line
+bindkey '^a' beginning-of-line
+bindkey '^e' end-of-line
+
+# Allow ctrl-p and ctrl-n for history navigation
+bindkey '^p' up-history
+bindkey '^n' down-history
+
 # ------------- Local/Work Configuration -------------
 # Source work-specific secrets and configuration if it exists
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
