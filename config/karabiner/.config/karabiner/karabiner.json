@@ -19,76 +19,54 @@
                         ]
                     },
                     {
-                        "description": "Double tap Command for Emoji Picker (Control + Command + Space)",
+                        "description": "Hold Command for Emoji Picker (Control + Command + Space)",
                         "manipulators": [
                             {
+                                "type": "basic",
                                 "from": {
                                     "key_code": "left_command",
                                     "modifiers": { "optional": ["any"] }
                                 },
-                                "parameters": { "basic.to_delayed_action_delay_milliseconds": 200 },
                                 "to": [
                                     {
-                                        "set_variable": {
-                                            "name": "command_double_tap",
-                                            "value": 1
-                                        }
+                                        "key_code": "left_command"
                                     }
                                 ],
-                                "to_delayed_action": {
-                                    "to_if_canceled": [
-                                        {
-                                            "set_variable": {
-                                                "name": "command_double_tap",
-                                                "value": 0
-                                            }
-                                        }
-                                    ],
-                                    "to_if_invoked": [
-                                        {
-                                            "key_code": "spacebar",
-                                            "modifiers": ["left_control", "left_command"]
-                                        }
-                                    ]
-                                },
-                                "type": "basic"
+                                "to_if_held_down": [
+                                    {
+                                        "key_code": "spacebar",
+                                        "modifiers": ["left_control", "left_command"]
+                                    }
+                                ],
+                                "parameters": {
+                                    "basic.to_if_held_down_threshold_milliseconds": 1000
+                                }
                             }
                         ]
                     },
                     {
-                        "description": "Double tap Option for Password Complete (Shift + Command + Space)",
+                        "description": "Hold Option for Password Complete (Shift + Command + Space)",
                         "manipulators": [
                             {
+                                "type": "basic",
                                 "from": {
                                     "key_code": "left_option",
                                     "modifiers": { "optional": ["any"] }
                                 },
-                                "parameters": { "basic.to_delayed_action_delay_milliseconds": 200 },
                                 "to": [
                                     {
-                                        "set_variable": {
-                                            "name": "option_double_tap",
-                                            "value": 1
-                                        }
+                                        "key_code": "left_option"
                                     }
                                 ],
-                                "to_delayed_action": {
-                                    "to_if_canceled": [
-                                        {
-                                            "set_variable": {
-                                                "name": "option_double_tap",
-                                                "value": 0
-                                            }
-                                        }
-                                    ],
-                                    "to_if_invoked": [
-                                        {
-                                            "key_code": "spacebar",
-                                            "modifiers": ["left_shift", "left_command"]
-                                        }
-                                    ]
-                                },
-                                "type": "basic"
+                                "to_if_held_down": [
+                                    {
+                                        "key_code": "spacebar",
+                                        "modifiers": ["left_shift", "left_command"]
+                                    }
+                                ],
+                                "parameters": {
+                                    "basic.to_if_held_down_threshold_milliseconds": 1000
+                                }
                             }
                         ]
                     }
