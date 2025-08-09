@@ -12,6 +12,9 @@ macos-titlebar-style=hidden
 window-padding-x=20,4
 window-padding-y=20,4
 
+# Keybindings
+keybind=global:cmd+grave_accent=toggle_quick_terminal
+
 # Some shaders can be found in this repo, they're usually uploaded to discord
 # https://github.com/hackrmomo/ghostty-shaders
 # custom-shader = shaders/animated-gradient-shader.glsl
