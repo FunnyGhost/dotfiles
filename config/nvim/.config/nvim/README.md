@@ -28,108 +28,10 @@ git clone <your-repo> ~/.config/nvim
 nvim
 ```
 
-## Key Mappings
+## Documentation
 
-**Leader Key:** `<Space>`
-
-For detailed mappings, see: [`lua/keymaps.lua`](./lua/keymaps.lua)
-
-### Essential Keys to Know
-
-#### Terminal Management
-- `<leader>th` - [T]erminal [h]orizontal split
-- `<leader>tv` - [T]erminal [v]ertical split
-- `<leader>tc` - [T]erminal [c]lose
-
-#### File Management
-- `<leader>fm` - [F]ile [m]anager (mini.files)
-- `<leader>fM` - [F]ile [M]anager in cwd
-
-#### Fuzzy Finding & Search (fzf-lua)
-**File Operations:**
-- `<leader>ff` - [F]ind [f]iles
-- `<leader>fr` - [F]ind [r]ecent files
-- `<leader>fb` - [F]ind [b]uffers
-
-**Search Operations:**
-- `<leader>fg` - [F]ind by [g]rep (live grep)
-- `<leader>fw` - [F]ind current [w]ord
-- `<leader>fW` - [F]ind current [W]ORD
-
-**Git Integration:**
-- `<leader>gf` - [G]it [f]iles
-- `<leader>gs` - [G]it [s]tatus
-- `<leader>gc` - [G]it [c]ommits
-- `<leader>gC` - [G]it buffer [C]ommits
-- `<leader>gb` - [G]it [b]ranches
-- `<leader>lg` - [L]azy[G]it
-
-**Git Signs:**
-- `]c` - Next hunk
-- `[c` - Previous hunk
-- `<leader>hs` - [H]unk [S]tage
-- `<leader>hr` - [H]unk [R]eset
-- `<leader>hu` - [H]unk [U]ndo stage
-- `<leader>hp` - [H]unk [P]review
-- `<leader>hb` - [H]unk [B]lame line
-
-**LSP Integration (when LSP available):**
-- `<leader>lr` - [L]sp [r]eferences (browse all)
-- `<leader>ld` - [L]sp [d]efinitions (browse all)
-- `<leader>li` - [L]sp [i]mplementations (browse all)
-- `<leader>ls` - [L]sp document [s]ymbols (browse)
-- `<leader>lS` - [L]sp workspace [S]ymbols (browse)
-- `<leader>la` - [L]sp code [a]ctions (browse)
-
-**Misc:**
-- `<leader>fh` - [F]ind [h]elp tags
-- `<leader>fk` - [F]ind [k]eymaps
-- `<leader>fc` - [F]ind [c]ommands
-- `<leader>f:` - [F]ind command history
-- `<leader>f/` - [F]ind search history
-- `<leader>f.` - [F]ind resume last search
-- `<leader>fF` - [F]zf builtin commands
-
-#### Better Editing
-- `<leader>p` (visual mode) - [P]aste without yanking selection
-- `<C-d>` / `<C-u>` - Scroll down/up (cursor centered)
-- `gcc` - Comment/uncomment line
-- `gc{motion}` - Comment motion (e.g., `gc2j` comments 2 lines)
-
-#### LSP Direct Actions (When Language Servers Available)
-**Immediate actions on current symbol:**
-- `K` - Show hover documentation
-- `gd` - [G]o to [d]efinition
-- `gD` - [G]o to [D]eclaration
-- `grn` - [R]e[n]ame symbol under cursor
-- `grf` - [R]e[f]erences to symbol under cursor
-- `gim` - [I]mple[m]entation of symbol under cursor
-- `gs` - [G]o [s]ymbols under cursor
-- `gca` - [C]ode [a]ctions for current position
-- `[d` / `]d` - Navigate diagnostics
-
-**Note:** These work directly on the symbol under your cursor. For browsing/searching through multiple LSP results, use the FZF-LSP keymaps above (`<leader>l*`).
-
-#### Buffer Management
-- `<leader>bn` - [B]uffer [n]ext
-- `<leader>bp` - [B]uffer [p]revious
-- `<leader>bd` - [B]uffer [d]elete current
-- `<leader>bD` - [B]uffer [D]elete current (force)
-- `<leader>ba` - [B]uffer delete [a]ll except current
-- `<leader>bl` - [B]uffer [l]ist all
-
-#### Window Management
-- `<C-h/j/k/l>` - Navigate between windows
-- `<C-w>v` - Vertical split
-- `<C-w>s` - Horizontal split
-
-#### Quick Actions
-- `<leader>w` - [W]rite file
-- `<leader>wa` - [W]rite [a]ll files
-- `<leader>q` - [Q]uit
-- `<leader>qa` - [Q]uit [a]ll
-- `<leader>Q` - [Q]uit (force)
-- `<leader>nh` - [N]o [h]ighlight
+- [KEYMAPS.md](./KEYMAPS.md) - Complete keybinding reference
+- [lua/keymaps.lua](./lua/keymaps.lua) - Keymap source code
 
 ## Current Features
 
@@ -162,13 +64,17 @@ For detailed mappings, see: [`lua/keymaps.lua`](./lua/keymaps.lua)
 │       ├── lazygit.lua   # LazyGit integration
 │       ├── gitsigns.lua  # Git decorations
 │       ├── fzf-lua.lua   # Fuzzy finder
-│       └── mini-files.lua # File manager
+│       ├── mini-files.lua # File manager
+│       ├── conform.lua   # Code formatting
+│       ├── lint.lua      # Linting configuration
+│       └── which-key.lua # Keybinding hints
+├── KEYMAPS.md           # Keybinding reference
 └── README.md            # This file
 ```
 
 ## Plugins
 
-### Active Plugins (12)
+### Active Plugins (15)
 - ✅ **mini.files** - Lightweight file management (edit directories like buffers)
 - ✅ **fzf-lua** - Fast fuzzy finding and search (files, grep, git, LSP)
 - ✅ **nvim-treesitter** - Accurate syntax highlighting & parsing
@@ -181,6 +87,9 @@ For detailed mappings, see: [`lua/keymaps.lua`](./lua/keymaps.lua)
 - ✅ **copilot.vim** - GitHub Copilot integration
 - ✅ **lazygit.nvim** - LazyGit integration
 - ✅ **gitsigns.nvim** - Git decorations in sign column
+- ✅ **conform.nvim** - Automatic code formatting
+- ✅ **nvim-lint** - Asynchronous linting (ESLint)
+- ✅ **which-key.nvim** - Keybinding hints and discovery
 
 
 ## LSP Setup
@@ -204,45 +113,7 @@ Then browse and install the servers you need:
 - **Memory usage:** ~35MB base
 - **Responsive editing:** Built-in features + optimized plugins
 
-## Plugin Usage Guide
-
-### Mini.files - File Management
-**Opening:**
-- `<leader>fm` - Open in current file's directory
-- `<leader>fM` - Open in working directory
-
-**Navigation (inside mini.files):**
-- `h` - Go up one directory level
-- `l` - Enter directory or open file
-- `L` - Open file in new tab
-- `H` - Go up and close current directory
-- `q` - Close mini.files
-
-**File Operations:**
-- `=` - Save all changes (synchronize)
-- `<BS>` - Reset to original directory
-- `@` - Reveal current working directory
-- `g?` - Show help
-
-**Tips:**
-- Edit directory contents like a normal buffer
-- Multiple operations are batched until you press `=`
-- Use `g~` to set current directory from mini.files
-
-### FZF-lua - Fuzzy Finding
-### LSP - TypeScript/React + Web
-- Stack: `nvim-lspconfig` + `mason.nvim` + `vtsls` (TypeScript), plus `html`, `cssls`, `jsonls`.
-- Monorepo tuned:
-  - Root detection prefers workspace markers (pnpm/yarn workspaces, nx/turbo, etc.) and falls back to `.git`.
-  - `vtsls` uses workspace TypeScript (autoUseWorkspaceTsdk) and disables single-file support to avoid extra servers.
-  - Inlay hints enabled for TS/JS (can be tuned later).
-- Install servers via `:Mason`:
-  - TypeScript: `vtsls`
-  - HTML: `html-lsp`
-  - CSS: `css-lsp`
-  - JSON: `json-lsp`
-- Verify:
-  - `:LspInfo` → one `vtsls` client; hover `K`, go-to `gd`, rename `grn`, code actions `gca`.
+## Plugin Features
 
 ### Theme & Statusline
 - Colorscheme: `eldritch.nvim` (loaded at startup)
@@ -257,9 +128,9 @@ Then browse and install the servers you need:
   - Clean separators
 
 ### Treesitter - Syntax Highlighting
-- Enabled: highlight only (indent disabled for stability).
-- Parsers installed: lua, vim, vimdoc, bash, markdown(_inline), json, yaml, toml, javascript, typescript, tsx, html, css, jsonc.
-- No auto-install: new languages won't be fetched implicitly.
+- Enabled: highlight only (indent disabled for stability)
+- Parsers installed: lua, vim, vimdoc, bash, markdown(_inline), json, yaml, toml, javascript, typescript, tsx, html, css, jsonc
+- No auto-install: new languages won't be fetched implicitly
 
 ### Git Integration
 - **LazyGit** (`<leader>lg`): Full-featured Git TUI
@@ -275,7 +146,45 @@ Then browse and install the servers you need:
   - Navigate hunks
   - Show deleted lines
 
-**Tips for effective usage:**
+### Completion & Snippets
+- **nvim-cmp**: Modern completion engine
+  - LSP integration for intelligent suggestions
+  - Buffer words for context-aware completion
+  - Path completion for files
+  - Snippet integration
+- **LuaSnip**: Advanced snippet engine
+  - VSCode snippet format support
+  - Dynamic snippets
+  - Snippet transformations
+- **friendly-snippets**: Large snippet collection
+  - Language-specific snippets
+  - Framework snippets
+  - Common patterns
+- **GitHub Copilot**: AI-powered code suggestions
+  - Full line and full function suggestions
+  - Context-aware completions
+  - Tab to accept suggestions
+
+### Code Quality Tools
+- **conform.nvim**: Automatic code formatting
+  - Format on save
+  - Project-local formatter detection
+  - Multiple formatter support
+  - Prettier integration
+- **nvim-lint**: Asynchronous linting
+  - Real-time ESLint integration
+  - Project-local linter detection
+  - Automatic lint on change
+  - Error/warning diagnostics
+
+### Keybinding Discovery
+- **which-key.nvim**: Interactive key binding guide
+  - Shows available key combinations
+  - Groups commands by category
+  - Automatic detection of mappings
+  - Quick command reference
+
+### FZF Tips
 - Start typing to filter results instantly
 - Use space to separate multiple search terms
 - `Ctrl-j/k` or arrow keys to navigate
@@ -358,6 +267,27 @@ All plugins in this configuration have been security audited:
 - **Dependencies:** Git only
 - **Last Audit:** Current (2025)
 
+**✅ conform.nvim (stevearc/conform.nvim)**
+- **Author:** Steven Arcangeli
+- **Security:** Pure Lua, uses project-local formatters
+- **Trust Level:** High - Well-reviewed code
+- **Dependencies:** Project formatters (prettier, etc.)
+- **Last Audit:** Current (2025)
+
+**✅ nvim-lint (mfussenegger/nvim-lint)**
+- **Author:** Michael Fussenegger
+- **Security:** Pure Lua, uses project-local linters
+- **Trust Level:** High - Simple, focused plugin
+- **Dependencies:** Project linters (eslint, etc.)
+- **Last Audit:** Current (2025)
+
+**✅ which-key.nvim (folke/which-key.nvim)**
+- **Author:** Folke Lemaitre - Core Neovim contributor
+- **Security:** Pure Lua, no external dependencies
+- **Trust Level:** Very High - Industry standard
+- **Dependencies:** None
+- **Last Audit:** Current (2025)
+
 ### Security Best Practices
 - All plugins are from trusted, well-known developers
 - No compiled binaries included in Lua plugins
@@ -402,6 +332,6 @@ This configuration evolves based on actual workflow needs. When adding plugins:
 
 ---
 
-**Last Updated:** 2025-08-08  
+**Last Updated:** 2025-08-09  
 **Neovim Version:** 0.11.3+  
-**Status:** Core features complete, adding productivity tools
+**Status:** Core features complete, code quality tools integrated, documentation reorganized
