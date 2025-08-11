@@ -157,7 +157,7 @@ Stow creates symbolic links from your home directory to the configuration files 
 
 ```bash
 # Install all main configurations
-stow -d config -t ~ aerospace bat ghostty git karabiner kitty nvim sketchybar skhd starship wezterm yabai zsh
+stow -d config -t ~ aerospace bat ghostty git karabiner kitty lazygit nvim sketchybar skhd starship wezterm yabai zsh
 
 # Install git commands
 stow -d . -t ~ git-commands
@@ -209,6 +209,14 @@ After setup, you'll have:
 - **Syntax highlighting**: `bat` for file viewing with themes
 
 ### 🔧 **Enhanced Git Workflow**
+
+#### LazyGit Integration
+- **Terminal UI** for Git operations with custom configuration
+- **Disabled auto-fetch** for better performance in large repos
+- **Keyboard-driven interface** with intuitive shortcuts
+- **Full integration** with Neovim via `<leader>lg`
+
+#### Custom Git Commands
 - **21 custom git commands** for enhanced productivity:
 
 #### Core Workflow Commands
@@ -255,7 +263,7 @@ stow -d config -t ~ nvim
 stow -d config -t ~ -D nvim
 
 # Reinstall all configs
-stow -d config -t ~ --restow aerospace bat ghostty git karabiner kitty nvim sketchybar skhd starship wezterm yabai zsh
+stow -d config -t ~ --restow aerospace bat ghostty git karabiner kitty lazygit nvim sketchybar skhd starship wezterm yabai zsh
 ```
 
 ### Updating Git Commands
