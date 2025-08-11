@@ -15,8 +15,4 @@ return {
 			desc = "[L]azy[G]it",
 		},
 	},
-	-- Optional: Set custom LazyGit config path
-	-- init = function()
-	--   vim.g.lazygit_config = vim.fn.expand("~/.config/lazygit/config.yml")
-	-- end,
 }

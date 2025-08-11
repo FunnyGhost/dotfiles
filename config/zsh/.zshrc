@@ -1,4 +1,9 @@
 # ------------- Variables -------------
+# Set XDG paths (used by many modern apps)
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+
 export HOMEBREW_CASK_OPTS="--no-quarantine"
 export NULLCMD=bat
 export N_PREFIX="$HOME/.n"
