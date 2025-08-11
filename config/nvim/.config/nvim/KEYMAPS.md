@@ -179,8 +179,9 @@ A comprehensive guide to all keybindings in our Neovim setup. Leader key is set 
 - `<C-k>` - Move to top window
 
 ### Window Operations
-- `<C-w>v` - Split vertically
-- `<C-w>s` - Split horizontally
+- `<C-w>v` or `:vsp` - Split vertically
+- `<C-w>s` or `:sp` - Split horizontally
+- `<C-w>c` or `:q` - Close current window
 - `<C-Up>` - Increase height
 - `<C-Down>` - Decrease height
 - `<C-Left>` - Decrease width
@@ -199,3 +200,25 @@ A comprehensive guide to all keybindings in our Neovim setup. Leader key is set 
 - `<leader>qa` - [Q]uit [A]ll
 - `<leader>Q` - [Q]uit (force)
 - `<leader>nh` - [N]o [H]ighlight
+
+## 🎓 Vim Learning Resources
+
+### Advanced Motions
+- `;` - Repeat last f/F/t/T motion forward
+- `,` - Repeat last f/F/t/T motion backward
+- `%` - Jump to matching bracket/parenthesis
+- `*` - Search word under cursor forward
+- `#` - Search word under cursor backward
+
+### Text Objects
+- `is` - Inner sentence
+- `as` - A sentence
+- `ip` - Inner paragraph
+- `ap` - A paragraph
+
+### Visual Mode
+- `v` - Character-wise visual mode
+- `V` - Line-wise visual mode
+- `<C-v>` - Block-wise visual mode
+- `o` - Move to other end of selection
+- `gv` - Reselect last visual selection
