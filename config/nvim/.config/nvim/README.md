@@ -64,18 +64,20 @@ nvim
 │       ├── lazygit.lua   # LazyGit integration
 │       ├── gitsigns.lua  # Git decorations
 │       ├── fzf-lua.lua   # Fuzzy finder
-│       ├── mini-files.lua # File manager
-│       ├── conform.lua   # Code formatting
-│       ├── lint.lua      # Linting configuration
-│       └── which-key.lua # Keybinding hints
+│       ├── mini-files.lua   # File manager
+│       ├── mini-surround.lua # Text operations
+│       ├── conform.lua     # Code formatting
+│       ├── lint.lua        # Linting configuration
+│       └── which-key.lua   # Keybinding hints
 ├── KEYMAPS.md           # Keybinding reference
 └── README.md            # This file
 ```
 
 ## Plugins
 
-### Active Plugins (15)
+### Active Plugins (16)
 - ✅ **mini.files** - Lightweight file management (edit directories like buffers)
+- ✅ **mini.surround** - Fast surround text operations
 - ✅ **fzf-lua** - Fast fuzzy finding and search (files, grep, git, LSP)
 - ✅ **nvim-treesitter** - Accurate syntax highlighting & parsing
 - ✅ **eldritch.nvim** - Colorscheme (loads early with high priority)
@@ -184,6 +186,13 @@ Then browse and install the servers you need:
   - Automatic detection of mappings
   - Quick command reference
 
+### Text Operations
+- **mini.surround**: Fast surround text operations
+  - Works with (), [], {}, <>, '', "", ``, tags, and more
+  - Supports custom text input for surrounding
+  - Visual mode support for precise selection
+  - Search and highlight functionality
+
 ### FZF Tips
 - Start typing to filter results instantly
 - Use space to separate multiple search terms
@@ -205,6 +214,12 @@ All plugins in this configuration have been security audited:
 - **Security:** Pure Lua, no external dependencies
 - **Trust Level:** Very High - Used by thousands in production
 - **Last Audit:** Current (well-maintained, active development)
+
+**✅ mini.surround (echasnovski/mini.surround)**
+- **Author:** Eva Chasnovski - Core Neovim contributor
+- **Security:** Pure Lua, no external dependencies
+- **Trust Level:** Very High - Part of mini.nvim collection
+- **Last Audit:** Current (2025)
 
 **✅ fzf-lua (ibhagwan/fzf-lua)**
 - **Author:** Bhagwan - Well-known Neovim community member  

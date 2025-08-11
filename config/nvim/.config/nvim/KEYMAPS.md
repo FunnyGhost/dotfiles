@@ -105,6 +105,15 @@ A comprehensive guide to all keybindings in our Neovim setup. Leader key is set 
 - `gcc` - Comment/uncomment line
 - `gc{motion}` - Comment motion (e.g., `gc2j` comments 2 lines)
 
+### Surround Operations
+- `ys{motion}{char}` - [Y]ou [S]urround motion (e.g., `ysw"` surrounds word with quotes)
+- `ys{char}` - [Y]ou [S]urround in visual mode
+- `ds{char}` - [D]elete [S]urround
+- `cs{target}{replacement}` - [C]hange [S]urround
+- `gsf{char}` - [G]o [S]urround [F]ind next
+- `gsF{char}` - [G]o [S]urround [F]ind previous
+- `gsh{char}` - [G]o [S]urround [H]ighlight
+
 ## 📦 Git Operations
 
 ### Git Navigation
