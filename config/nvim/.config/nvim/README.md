@@ -68,14 +68,15 @@ nvim
 │       ├── mini-surround.lua # Text operations
 │       ├── conform.lua     # Code formatting
 │       ├── lint.lua        # Linting configuration
-│       └── which-key.lua   # Keybinding hints
+│       ├── which-key.lua   # Keybinding hints
+│       └── trouble.lua     # Enhanced diagnostics
 ├── KEYMAPS.md           # Keybinding reference
 └── README.md            # This file
 ```
 
 ## Plugins
 
-### Active Plugins (16)
+### Active Plugins (17)
 - ✅ **mini.files** - Lightweight file management (edit directories like buffers)
 - ✅ **mini.surround** - Fast surround text operations
 - ✅ **fzf-lua** - Fast fuzzy finding and search (files, grep, git, LSP)
@@ -92,6 +93,7 @@ nvim
 - ✅ **conform.nvim** - Automatic code formatting
 - ✅ **nvim-lint** - Asynchronous linting (ESLint)
 - ✅ **which-key.nvim** - Keybinding hints and discovery
+- ✅ **trouble.nvim** - Enhanced diagnostics and references
 
 
 ## LSP Setup
@@ -178,6 +180,11 @@ Then browse and install the servers you need:
   - Project-local linter detection
   - Automatic lint on change
   - Error/warning diagnostics
+- **trouble.nvim**: Enhanced diagnostics and references
+  - Pretty diagnostics display with icons
+  - LSP references and definitions
+  - Quickfix and location list integration
+  - Tree-like organization by file/folder
 
 ### Keybinding Discovery
 - **which-key.nvim**: Interactive key binding guide
@@ -301,6 +308,13 @@ All plugins in this configuration have been security audited:
 - **Security:** Pure Lua, no external dependencies
 - **Trust Level:** Very High - Industry standard
 - **Dependencies:** None
+- **Last Audit:** Current (2025)
+
+**✅ trouble.nvim (folke/trouble.nvim)**
+- **Author:** Folke Lemaitre - Core Neovim contributor
+- **Security:** Pure Lua, no external dependencies
+- **Trust Level:** Very High - Industry standard
+- **Dependencies:** nvim-web-devicons (safe)
 - **Last Audit:** Current (2025)
 
 ### Security Best Practices

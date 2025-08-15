@@ -97,6 +97,14 @@ A comprehensive guide to all keybindings in our Neovim setup. Leader key is set 
 - `<leader>e` - Show diagnostic [E]rror
 - `<leader>dl` - [D]iagnostic [L]ist
 
+### Trouble.nvim (Enhanced Diagnostics)
+- `<leader>xx` - [X] [X] All diagnostics
+- `<leader>xw` - [X] diagnostics for current [W]indow/buffer
+- `<leader>cs` - [C]ode [S]ymbols
+- `<leader>cl` - [C]ode [L]SP definitions/references
+- `<leader>xL` - [X] [L]ocation list
+- `<leader>xQ` - [X] [Q]uickfix list
+
 ### Text Operations
 - `<leader>p` - [P]aste without yanking (visual mode)
 - `<C-d>` / `<C-u>` - Scroll down/up (centered)
