@@ -158,7 +158,7 @@ Stow creates symbolic links from your home directory to the configuration files 
 
 ```bash
 # Install all main configurations
-stow -d config -t ~ aerospace bat borders ghostty git karabiner kitty lazygit nvim sketchybar skhd starship wezterm yabai zsh
+stow -d config -t ~ aerospace bat borders ghostty git karabiner kitty lazygit nvim sketchybar skhd starship wezterm zsh
 
 # Install git commands
 stow -d . -t ~ git-commands
@@ -264,7 +264,7 @@ stow -d config -t ~ nvim
 stow -d config -t ~ -D nvim
 
 # Reinstall all configs
-stow -d config -t ~ --restow aerospace bat borders ghostty git karabiner kitty lazygit nvim sketchybar skhd starship wezterm yabai zsh
+stow -d config -t ~ --restow aerospace bat borders ghostty git karabiner kitty lazygit nvim sketchybar skhd starship wezterm zsh
 ```
 
 ### Updating Git Commands
@@ -349,7 +349,59 @@ brew bundle install --file=Brewfile.local  # Work packages (if file exists)
 - Secrets never accidentally committed
 
 ### Window Management
-This repo contains configurations for multiple window managers (Aerospace, yabai). The current recommendation is to use **Raycast** for window management, which provides a great UI for configuration.
+This repo contains configurations for multiple window managers. The current setup uses **Aerospace** for tiling window management with Sketchybar integration.
+
+#### 🚀 Aerospace Configuration
+The Aerospace window manager provides a powerful tiling system with the following features:
+
+**Core Features:**
+- Automatic window tiling with smart layouts
+- Multiple workspaces with monitor assignments
+- Mouse follows focus
+- Sketchybar integration for workspace indicators
+
+**Key Bindings:**
+- **Window Focus:** `alt + h/j/k/l` - Focus left/down/up/right
+- **Window Movement:** `alt + shift + h/j/k/l` - Move window left/down/up/right
+- **Layouts:**
+  - `alt + e` - Tile layout (horizontal/vertical)
+  - `alt + comma` - Accordion layout
+  - `alt + f` - Toggle fullscreen
+  - `alt + y` - Join with window below
+
+**Workspace Management:**
+- `alt + 1-5` - Switch to workspace 1-5
+- `alt + shift + 1-5` - Move window to workspace 1-5
+- `alt + tab` - Switch between last two workspaces
+- `alt + shift + tab` - Move workspace to next monitor
+
+**Quick App Launch:**
+- `alt + b` - Brave Browser
+- `alt + c` - Cursor
+- `alt + g` - Ghostty
+- `alt + s` - Slack
+- `alt + m` - Mail
+
+**Service Mode** (accessed with `alt + shift + semicolon`):
+- `r` - Reset layout (flatten workspace tree)
+- `f` - Toggle floating/tiling layout
+- `backspace` - Close all windows but current
+- `esc` - Reload config and exit service mode
+
+**Window Gaps:**
+- Inner gaps: 8px (horizontal and vertical)
+- Outer gaps: 5px (bottom, right, left)
+- Top gap: 10px for main monitor
+
+**Monitor Configuration:**
+- Workspaces 1-5 assigned to main monitor
+- Workspaces 6-7 assigned to secondary monitor
+- Automatic window placement (e.g., Brave Browser opens in workspace 1)
+
+**Integration:**
+- Sketchybar workspace indicators
+- Automatic workspace icon updates
+- Mouse follows focus across monitors
 
 ### Customization
 All configurations are designed to be customizable:
