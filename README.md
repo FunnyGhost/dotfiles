@@ -26,6 +26,7 @@ This repository contains my personal development environment setup that I use da
 
 ### 🎨 **System & Window Management**
 - **Window Management Configs** - Aerospace, yabai, skhd (legacy)
+- **JankyBorders** - Beautiful window borders with Eldritch theme colors
 - **Karabiner Elements** - Keyboard customization
 - **SketchyBar** - Custom status bar (legacy)
 - **Bat** - Syntax highlighting with custom themes
@@ -157,7 +158,7 @@ Stow creates symbolic links from your home directory to the configuration files 
 
 ```bash
 # Install all main configurations
-stow -d config -t ~ aerospace bat ghostty git karabiner kitty lazygit nvim sketchybar skhd starship wezterm yabai zsh
+stow -d config -t ~ aerospace bat borders ghostty git karabiner kitty lazygit nvim sketchybar skhd starship wezterm yabai zsh
 
 # Install git commands
 stow -d . -t ~ git-commands
@@ -263,7 +264,7 @@ stow -d config -t ~ nvim
 stow -d config -t ~ -D nvim
 
 # Reinstall all configs
-stow -d config -t ~ --restow aerospace bat ghostty git karabiner kitty lazygit nvim sketchybar skhd starship wezterm yabai zsh
+stow -d config -t ~ --restow aerospace bat borders ghostty git karabiner kitty lazygit nvim sketchybar skhd starship wezterm yabai zsh
 ```
 
 ### Updating Git Commands
