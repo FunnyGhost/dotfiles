@@ -66,12 +66,12 @@ preset = 'qwerty'
 #                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
 #                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
-inner.horizontal = 8
-inner.vertical = 8
-outer.bottom = 5
-outer.top = [{ monitor.main = 10}, 10]
-outer.right = 5
-outer.left = 5
+inner.horizontal = 16
+inner.vertical = 16
+outer.bottom = 10
+outer.top = [{ monitor."resolution=1512x982" = 10}, { monitor."resolution>=1920x1080" = 40}, 40]
+outer.right = 10
+outer.left = 10
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -104,73 +104,77 @@ outer.left = 5
 # '''
 
 # App shortcuts
-alt-b = 'exec-and-forget open -a /Applications/Brave\ Browser.app'
-alt-c = 'exec-and-forget open -a /Applications/Cursor.app'
-alt-g = 'exec-and-forget open -a /Applications/Ghostty.app'
-alt-s = 'exec-and-forget open -a /Applications/Slack.app'
-alt-m = 'exec-and-forget open -a /Applications/Mail.app'
+alt-b = 'exec-and-forget open -a /Applications/Brave\ Browser.app'    # [B]rowser
+alt-d = 'exec-and-forget open -a /Applications/Cursor.app'           # [D]evelopment
+alt-c = 'exec-and-forget open -a /Applications/Notion\ Calendar.app' # [C]alendar
+alt-g = 'exec-and-forget open -a /Applications/Ghostty.app'          # [G]hostty
+alt-s = 'exec-and-forget open -a /Applications/Slack.app'            # [S]lack
+alt-m = 'exec-and-forget open -a /System/Applications/Mail.app'      # [M]ail
 alt-shift-r = ['exec-and-forget /opt/homebrew/bin/sketchybar --reload']
 
-# See: https://nikitabobko.github.ioeAeroSpace/commands#layout
-alt-e = 'layout tiles horizontal vertical'
-alt-comma = 'layout accordion horizontal vertical'
-alt-f = 'fullscreen'
-alt-y = ['focus right', 'join-with down', 'layout tiles horizontal']
-# See: https://nikitabobko.github.io/AeroSpace/commands#focus
-alt-h = 'focus left'
-alt-j = 'focus down'
-alt-k = 'focus up'
-alt-l = 'focus right'
+# Layout Management
+alt-e = 'layout tiles horizontal vertical'      # [E]qual split layout
+alt-comma = 'layout accordion horizontal vertical' # Collapse to accordion (like folding with a comma)
+alt-f = 'fullscreen'                           # [F]ullscreen
+alt-y = ['focus right', 'join-with down', 'layout tiles horizontal']  # Join windows (Y shape)
 
-# app shortcut
+# Window Focus (Vim-style movement)
+alt-h = 'focus left'                           # [H] - Left (Vim style)
+alt-j = 'focus down'                           # [J] - Down (Vim style)
+alt-k = 'focus up'                             # [K] - Up (Vim style)
+alt-l = 'focus right'                          # [L] - Right (Vim style)
 
-# See: https://nikitabobko.github.io/AeroSpace/commands#move
-alt-shift-h = 'move left'
-alt-shift-j = 'move down'
-alt-shift-k = 'move up'
-alt-shift-l = 'move right'
+# Window Movement (Shift + Vim-style movement)
+alt-shift-h = 'move left'                      # Move [H]orizontally left
+alt-shift-j = 'move down'                      # [J]ump down
+alt-shift-k = 'move up'                        # [K]limb up
+alt-shift-l = 'move right'                     # Move [L]aterally right
 
-# See: https://nikitabobko.github.io/AeroSpace/commands#resize
-alt-shift-minus = 'resize smart -50'
-alt-shift-equal = 'resize smart +50'
+# Window Resizing
+alt-shift-minus = 'resize smart -50'           # Shrink window (minus = smaller)
+alt-shift-equal = 'resize smart +50'           # Grow window (equal/plus = bigger)
 
-# See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-alt-1 = 'workspace 1'
-alt-2 = 'workspace 2'
-alt-3 = 'workspace 3'
-alt-4 = 'workspace 4'
-alt-5 = 'workspace 5'
+# Workspace Selection (Number = Direct Access)
+alt-1 = 'workspace 1'                          # Primary workspace
+alt-2 = 'workspace 2'                          # Secondary workspace
+alt-3 = 'workspace 3'                          # Tertiary workspace
+alt-4 = 'workspace 4'                          # Quaternary workspace
+alt-5 = 'workspace 5'                          # Quinary workspace
+alt-6 = 'workspace 6'                          # Sextary workspace
+alt-7 = 'workspace 7'                          # Septenary workspace
 
-# See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
-alt-shift-1 = 'move-node-to-workspace 1'
-alt-shift-2 = 'move-node-to-workspace 2'
-alt-shift-3 = 'move-node-to-workspace 3'
-alt-shift-4 = 'move-node-to-workspace 4'
-alt-shift-5 = 'move-node-to-workspace 5'
+# Move Windows to Workspaces
+alt-shift-1 = 'move-node-to-workspace 1'       # Move to primary
+alt-shift-2 = 'move-node-to-workspace 2'       # Move to secondary
+alt-shift-3 = 'move-node-to-workspace 3'       # Move to tertiary
+alt-shift-4 = 'move-node-to-workspace 4'       # Move to quaternary
+alt-shift-5 = 'move-node-to-workspace 5'       # Move to quinary
+alt-shift-6 = 'move-node-to-workspace 6'       # Move to external monitor 1
+alt-shift-7 = 'move-node-to-workspace 7'       # Move to external monitor 2
 
-# See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
-alt-tab = 'workspace-back-and-forth'
-# See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
-alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+# Quick Workspace Switching
+alt-tab = 'workspace-back-and-forth'           # Toggle between last two workspaces
+alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'  # Cycle workspace to next monitor
 
-# See: https://nikitabobko.github.io/AeroSpace/commands#mode
-alt-shift-semicolon = 'mode service'
+# Service Mode Entry
+alt-shift-semicolon = 'mode service'           # Enter service mode (like vim's : command mode)
 
-# 'service' binding mode declaration.
-# See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
+# Service Mode Bindings
 [mode.service.binding]
-esc = ['reload-config', 'mode main']
-r = ['flatten-workspace-tree', 'mode main'] # reset layout
-f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
-backspace = ['close-all-windows-but-current', 'mode main']
+esc = ['reload-config', 'mode main']          # Exit service mode and reload config
+r = ['flatten-workspace-tree', 'mode main']    # [R]eset layout to default
+f = ['layout floating tiling', 'mode main']    # Toggle [F]loating mode
+backspace = ['close-all-windows-but-current', 'mode main']  # Clear all but current window
 
+# Window Joining (Vim-style directions)
+alt-shift-h = ['join-with left', 'mode main']   # Join with window to the [H] left
+alt-shift-j = ['join-with down', 'mode main']   # Join with window [J] below
+alt-shift-k = ['join-with up', 'mode main']     # Join with window [K] above
+alt-shift-l = ['join-with right', 'mode main']  # Join with window to the [L] right
+
+# Future Features
 # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
-#s = ['layout sticky tiling', 'mode main']
-
-alt-shift-h = ['join-with left', 'mode main']
-alt-shift-j = ['join-with down', 'mode main']
-alt-shift-k = ['join-with up', 'mode main']
-alt-shift-l = ['join-with right', 'mode main']
+#s = ['layout sticky tiling', 'mode main']      # Toggle [S]ticky mode (when implemented)
 
 # Default space
 [[on-window-detected]]
