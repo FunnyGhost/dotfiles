@@ -2,7 +2,9 @@
 # Not too different from the base starting config!
 
 PLUGIN_DIR="$CONFIG_DIR/plugins"
-ITEM_DIR="$CONFIG_DIR/items" 
+ITEM_DIR="$CONFIG_DIR/items"
+
+
 ##### Bar Appearance #####
 # Configuring the general appearance of the bar.
 # These are only some of the options available. For all options see:
