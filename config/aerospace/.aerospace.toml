@@ -176,10 +176,38 @@ alt-shift-l = ['join-with right', 'mode main']  # Join with window to the [L] ri
 # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
 #s = ['layout sticky tiling', 'mode main']      # Toggle [S]ticky mode (when implemented)
 
-# Default space
+# Workspace Organization
+
+# Development Space (1)
 [[on-window-detected]]
-if.app-id ='com.brave.Browser'
+if.app-id = 'com.todesktop.230313mzl4w4u92'  # Cursor
 run = ['move-node-to-workspace 1']
+
+[[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'  # Ghostty
+run = ['move-node-to-workspace 1']
+
+# Browsing Space (2)
+[[on-window-detected]]
+if.app-id = 'com.brave.Browser'  # Brave
+run = ['move-node-to-workspace 2']
+
+[[on-window-detected]]
+if.app-id = 'company.thebrowser.dia'  # Dia
+run = ['move-node-to-workspace 2']
+
+# Social Space (3)
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'  # Slack
+run = ['move-node-to-workspace 3']
+
+[[on-window-detected]]
+if.app-id = 'com.apple.mail'  # Mail
+run = ['move-node-to-workspace 3']
+
+[[on-window-detected]]
+if.app-id = 'com.cron.electron'  # Notion Calendar
+run = ['move-node-to-workspace 3']
 
 # force certain workspaces to certain monitors
 [workspace-to-monitor-force-assignment]
