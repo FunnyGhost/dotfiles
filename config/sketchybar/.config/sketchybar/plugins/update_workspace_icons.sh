@@ -11,7 +11,7 @@ update_space_icons() {
     if [ "${apps}" != "" ]; then
         icon_strip=" "
         while read -r app; do
-            icon_strip+=" $($CONFIG_DIR/plugins/icon_map_fn.sh "$app")"
+            icon_strip+="  $($CONFIG_DIR/plugins/icon_map_fn.sh "$app")  "
         done <<<"${apps}"
     else
         icon_strip=""
