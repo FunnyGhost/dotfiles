@@ -58,7 +58,7 @@ return {
 							variableTypes = { enabled = true },
 						},
 					}, {
-						tsserver = { maxTsServerMemory = 8192 },
+						tsserver = { maxTsServerMemory = 10240, nodePath = "node" },
 					}),
 					javascript = {
 						suggest = { completeFunctionCalls = true },
@@ -80,11 +80,8 @@ return {
 				},
 				-- Monorepo support: look for tsconfig.json and package.json
 				root_dir = function(fname)
-					return require("lspconfig.util").root_pattern(
-						"tsconfig.json",
-						"package.json",
-						".git"
-					)(fname) or vim.fn.getcwd()
+					return require("lspconfig.util").root_pattern("tsconfig.json", "package.json", ".git")(fname)
+						or vim.fn.getcwd()
 				end,
 			},
 		},
@@ -113,3 +110,4 @@ return {
 		end
 	end,
 }
+
