@@ -105,6 +105,7 @@ outer.left = 10
 # '''
 
 # App shortcuts
+alt-a = 'exec-and-forget open -a /Applications/Perplexity.app'       # [A]I assistant
 alt-b = 'exec-and-forget open -a /Applications/Brave\ Browser.app'    # [B]rowser
 alt-d = 'exec-and-forget open -a /Applications/Cursor.app'           # [D]evelopment
 alt-c = 'exec-and-forget open -a /Applications/Notion\ Calendar.app' # [C]alendar
@@ -209,6 +210,11 @@ run = ['move-node-to-workspace 3']
 [[on-window-detected]]
 if.app-id = 'com.cron.electron'  # Notion Calendar
 run = ['move-node-to-workspace 3']
+
+# AI Assistant Space (4)
+[[on-window-detected]]
+if.app-id = 'ai.perplexity.mac'  # Perplexity
+run = ['move-node-to-workspace 4']
 
 # force certain workspaces to certain monitors
 [workspace-to-monitor-force-assignment]
