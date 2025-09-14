@@ -145,6 +145,15 @@ alt-5 = 'workspace 5'                          # Quinary workspace
 alt-6 = 'workspace 6'                          # Sextary workspace
 alt-7 = 'workspace 7'                          # Septenary workspace
 
+# Keypad Workspace Selection (for wired keyboards)
+alt-keypad1 = 'workspace 1'                    # Primary workspace (keypad)
+alt-keypad2 = 'workspace 2'                    # Secondary workspace (keypad)
+alt-keypad3 = 'workspace 3'                    # Tertiary workspace (keypad)
+alt-keypad4 = 'workspace 4'                    # Quaternary workspace (keypad)
+alt-keypad5 = 'workspace 5'                    # Quinary workspace (keypad)
+alt-keypad6 = 'workspace 6'                    # Sextary workspace (keypad)
+alt-keypad7 = 'workspace 7'                    # Septenary workspace (keypad)
+
 # Move Windows to Workspaces
 alt-shift-1 = 'move-node-to-workspace 1'       # Move to primary
 alt-shift-2 = 'move-node-to-workspace 2'       # Move to secondary
@@ -153,6 +162,15 @@ alt-shift-4 = 'move-node-to-workspace 4'       # Move to quaternary
 alt-shift-5 = 'move-node-to-workspace 5'       # Move to quinary
 alt-shift-6 = 'move-node-to-workspace 6'       # Move to external monitor 1
 alt-shift-7 = 'move-node-to-workspace 7'       # Move to external monitor 2
+
+# Move Windows to Workspaces (Keypad)
+alt-shift-keypad1 = 'move-node-to-workspace 1' # Move to primary (keypad)
+alt-shift-keypad2 = 'move-node-to-workspace 2' # Move to secondary (keypad)
+alt-shift-keypad3 = 'move-node-to-workspace 3' # Move to tertiary (keypad)
+alt-shift-keypad4 = 'move-node-to-workspace 4' # Move to quaternary (keypad)
+alt-shift-keypad5 = 'move-node-to-workspace 5' # Move to quinary (keypad)
+alt-shift-keypad6 = 'move-node-to-workspace 6' # Move to external monitor 1 (keypad)
+alt-shift-keypad7 = 'move-node-to-workspace 7' # Move to external monitor 2 (keypad)
 
 # Quick Workspace Switching
 alt-tab = 'workspace-back-and-forth'           # Toggle between last two workspaces
