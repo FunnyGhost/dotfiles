@@ -23,7 +23,7 @@ function icon_map() {
   "Dia")
     icon_result="󰖟"
     ;;
-  "Perplexity")
+  "Comet")
     icon_result="󰚩"
     ;;
   *)
