@@ -9,6 +9,27 @@ return {
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 	config = function()
 		require("fzf-lua").setup({
+			-- Force custom colors by overriding defaults
+			profiles = {
+				telescope = false, -- Disable telescope profile
+			},
+			-- Override default fzf colors completely
+			fzf_colors = {
+				["fg"] = "#ebfafa", -- Lighthouse White
+				["bg"] = "#212337", -- Background
+				["hl"] = "#a48cf2", -- Lovecraft Purple
+				["fg+"] = "#ebfafa", -- Lighthouse White
+				["bg+"] = "#323449", -- Shallow Depths Grey
+				["hl+"] = "#a48cf2", -- Lovecraft Purple
+				["info"] = "#04d1f9", -- Dreaming Blue
+				["border"] = "#323449", -- Shallow Depths Grey
+				["gutter"] = "-1",
+				["query"] = "#ebfafa", -- Lighthouse White
+				["prompt"] = "#a48cf2", -- Lovecraft Purple
+				["pointer"] = "#37f499", -- Great Old One Green
+				["marker"] = "#f265b5", -- Pustule Pink
+				["header"] = "#a48cf2", -- Lovecraft Purple
+			},
 			-- Use telescope-like UI
 			winopts = {
 				height = 0.90, -- Window height
@@ -33,7 +54,7 @@ return {
 				},
 			},
 
-			-- Highlight groups
+			-- Highlight groups - Use Eldritch theme colors
 			hls = {
 				normal = "Normal", -- Base highlight group
 				border = "FloatBorder", -- Border highlight
@@ -77,8 +98,8 @@ return {
 					"pointer:#37f499", -- Great Old One Green for pointer
 					"marker:#f265b5", -- Pustule Pink for marker
 					"border:#323449", -- Shallow Depths Grey for borders
-					"header:#7081d0", -- The Old One Purple for header
-					"info:#f7c67f", -- Dreaming Orange for info
+					"header:#a48cf2", -- Lovecraft Purple for header (matches theme)
+					"info:#04d1f9", -- Dreaming Blue for info (matches theme)
 					"spinner:#37f499", -- Great Old One Green for spinner
 					"prompt:#a48cf2", -- Lovecraft Purple for prompt
 				}, ","),
