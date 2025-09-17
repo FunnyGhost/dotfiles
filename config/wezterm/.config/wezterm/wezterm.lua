@@ -33,8 +33,8 @@ config.keys = {
 	-- Disabled stuff
 	{ key = "Enter", mods = "ALT", action = act.DisableDefaultAssignment },
 	-- Pane keybindings
-	{ key = "-", mods = "LEADER", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
-	{ key = "|", mods = "LEADER", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+	{ key = "h", mods = "LEADER", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+	{ key = "v", mods = "LEADER", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
 	{ key = "m", mods = "LEADER", action = act.TogglePaneZoomState },
 	-- Integration with neovim panes
 	{ key = "h", mods = "CTRL", action = wezterm.action.EmitEvent("ActivatePaneDirection-left") },
