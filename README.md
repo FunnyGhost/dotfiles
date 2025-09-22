@@ -379,6 +379,7 @@ The Aerospace window manager provides a powerful tiling system with the followin
 - `alt + b` - Brave Browser
 - `alt + c` - Cursor
 - `alt + g` - Ghostty
+- `alt + w` - Wezterm
 - `alt + s` - Slack
 - `alt + m` - Mail
 

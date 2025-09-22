@@ -110,6 +110,7 @@ alt-b = 'exec-and-forget open -a /Applications/Brave\ Browser.app'    # [B]rowse
 alt-d = 'exec-and-forget open -a /Applications/Cursor.app'           # [D]evelopment
 alt-c = 'exec-and-forget open -a /Applications/Notion\ Calendar.app' # [C]alendar
 alt-g = 'exec-and-forget open -a /Applications/Ghostty.app'          # [G]hostty
+alt-w = 'exec-and-forget open -a /Applications/WezTerm.app'          # [W]ezterm
 alt-s = 'exec-and-forget open -a /Applications/Slack.app'            # [S]lack
 alt-m = 'exec-and-forget open -a /System/Applications/Mail.app'      # [M]ail
 alt-shift-r = ['exec-and-forget /opt/homebrew/bin/sketchybar --reload']
@@ -205,6 +206,10 @@ run = ['move-node-to-workspace 1']
 
 [[on-window-detected]]
 if.app-id = 'com.mitchellh.ghostty'  # Ghostty
+run = ['move-node-to-workspace 1']
+
+[[on-window-detected]]
+if.app-id = 'com.github.wez.wezterm'  # Wezterm
 run = ['move-node-to-workspace 1']
 
 # Browsing Space (2)
