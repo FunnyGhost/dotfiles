@@ -1,8 +1,8 @@
 tap "eth-p/software"
 tap "felixkratz/formulae"
 tap "homebrew/bundle"
-tap "homebrew/cask-fonts"
-tap "homebrew/cask-versions"
+# tap "homebrew/cask-fonts"  # Deprecated
+# tap "homebrew/cask-versions"  # Deprecated
 tap "homebrew/services"
 tap "jandedobbeleer/oh-my-posh"
 tap "jesseduffield/lazygit"
@@ -134,9 +134,11 @@ brew "felixkratz/formulae/borders"
 brew "felixkratz/formulae/sketchybar"
 # Prompt theme engine for any shell
 brew "jandedobbeleer/oh-my-posh/oh-my-posh"
-brew "miroapp-dev/miro/miro-emu"
+# brew "miroapp-dev/miro/miro-emu"  # Repository not found
 # AeroSpace is an i3-like tiling window manager for macOS
 cask "aerospace"
+# Keyboard customization for macOS
+cask "karabiner-elements"
 # Web browser focusing on privacy
 cask "brave-browser"
 # Screen capturing tool
