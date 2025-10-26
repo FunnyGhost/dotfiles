@@ -7,6 +7,7 @@ tap "homebrew/services"
 tap "jandedobbeleer/oh-my-posh"
 tap "jesseduffield/lazygit"
 tap "koekeishiya/formulae"
+tap "neovim/neovim"
 tap "nikitabobko/tap"
 # Work-specific taps (add to Brewfile.local if needed)
 # New file format for still image compression
@@ -73,6 +74,8 @@ brew "jupyterlab"
 brew "just"
 # User-friendly front-end to ssh-agent(1)
 brew "keychain"
+# Simple terminal UI for git commands
+brew "lazygit"
 # Pager program similar to more
 brew "less"
 # Just-In-Time Compiler (JIT) for the Lua programming language
@@ -125,12 +128,17 @@ brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
 # Bash scripts that integrate bat with various command-line tools
 brew "eth-p/software/bat-extras"
+# A window border system for macOS
+brew "felixkratz/formulae/borders"
+# Custom macOS statusbar with shell plugin, interaction and graph support
+brew "felixkratz/formulae/sketchybar"
 # Prompt theme engine for any shell
 brew "jandedobbeleer/oh-my-posh/oh-my-posh"
-# A simple terminal UI for git commands, written in Go
-brew "jesseduffield/lazygit/lazygit"
-# Tool to list all active shortcuts of the current application
-cask "cheatsheet"
+brew "miroapp-dev/miro/miro-emu"
+# AeroSpace is an i3-like tiling window manager for macOS
+cask "aerospace"
+# Web browser focusing on privacy
+cask "brave-browser"
 # Screen capturing tool
 cask "cleanshot"
 # Write, edit, and chat about your code with AI
@@ -148,6 +156,8 @@ cask "font-mononoki-nerd-font"
 cask "ghostty"
 # Utility to hide menu bar items
 cask "hiddenbar"
+# Calendar for professionals and teams
+cask "notion-calendar"
 # Collaboration platform for API development
 cask "postman"
 # Control your tools with a few keystrokes
