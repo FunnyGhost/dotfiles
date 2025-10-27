@@ -156,6 +156,8 @@ cask "font-mononoki"
 cask "font-mononoki-nerd-font"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
+# Browser
+cask "helium"
 # Utility to hide menu bar items
 cask "hiddenbar"
 # Calendar for professionals and teams
