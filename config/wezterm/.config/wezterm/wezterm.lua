@@ -26,6 +26,7 @@ config.inactive_pane_hsb = {
 }
 config.use_fancy_tab_bar = false
 config.status_update_interval = 1000
+config.tab_max_width = 40
 
 -- keys
 config.leader = { key = "s", mods = "CTRL", timeout_milliseconds = 1000 }
