@@ -44,7 +44,10 @@ export DYLD_LIBRARY_PATH="/opt/homebrew/lib/"
 # ------------- Aliases -------------
 alias ls='eza -a --long --git --hyperlink --icons=always'
 alias lt='eza --tree --level=2 --long --icons --git'
-alias cd='z'
+# Only alias cd to z in interactive shells (allows non-interactive scripts to use normal cd)
+if [[ -o interactive ]]; then
+    alias cd='z'
+fi
 alias bbd='brew bundle dump --force --describe && [[ -f Brewfile.local ]] && brew bundle dump --force --describe --file=Brewfile.local'
 alias man=batman
 alias trail='<<<${(F)path}'
@@ -95,3 +98,10 @@ bindkey '^n' down-history
 # ------------- Local/Work Configuration -------------
 # Source work-specific secrets and configuration if it exists
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+
+# bun completions
+[ -s "/Users/cthulhu/.bun/_bun" ] && source "/Users/cthulhu/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
