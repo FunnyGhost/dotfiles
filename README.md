@@ -17,6 +17,7 @@ This repository contains my personal development environment setup that I use da
 - **Neovim** - Modern Vim-based editor with Lazy.nvim plugin manager
 - **Git** - Version control with custom configuration
 - **21 Custom Git Commands** - Enhanced git workflow (via submodule)
+- **Claude Code** - AI coding assistant with pre-configured permissions and status line
 
 ### 🖥️ **Terminal & Shell**
 - **Zsh** - Modern shell configuration
@@ -158,7 +159,7 @@ Stow creates symbolic links from your home directory to the configuration files 
 
 ```bash
 # Install all main configurations
-stow -d config -t ~ aerospace bat borders ghostty git karabiner kitty lazygit nvim sketchybar skhd starship wezterm zsh
+stow -d config -t ~ aerospace bat borders claude ghostty git karabiner kitty lazygit nvim sketchybar skhd starship wezterm zsh
 
 # Install git commands
 stow -d . -t ~ git-commands
@@ -264,7 +265,7 @@ stow -d config -t ~ nvim
 stow -d config -t ~ -D nvim
 
 # Reinstall all configs
-stow -d config -t ~ --restow aerospace bat borders ghostty git karabiner kitty lazygit nvim sketchybar skhd starship wezterm zsh
+stow -d config -t ~ --restow aerospace bat borders claude ghostty git karabiner kitty lazygit nvim sketchybar skhd starship wezterm zsh
 ```
 
 ### Updating Git Commands
@@ -410,6 +411,7 @@ All configurations are designed to be customizable:
 - **Shell aliases**: Edit `config/zsh/.zshrc`
 - **Git settings**: Edit `config/git/.gitconfig`
 - **Neovim**: See `config/nvim/.config/nvim/`
+- **Claude Code**: Edit `config/claude/.claude/settings.json` (global permissions, status line) or `settings.local.json` (machine-specific permissions)
 
 ## 🔧 Troubleshooting
 
