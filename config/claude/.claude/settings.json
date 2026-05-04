@@ -1,9 +1,4 @@
 {
-  "statusLine": {
-    "type": "command",
-    "command": "bun /Users/cthulhu/.claude/claude-statusline/statusline.ts"
-  },
-  "alwaysThinkingEnabled": true,
   "permissions": {
     "allow": [
       "Bash(git status:*)",
@@ -19,5 +14,12 @@
       "Bash(echo:*)",
       "WebSearch"
     ]
-  }
+  },
+  "model": "opus[1m]",
+  "statusLine": {
+    "type": "command",
+    "command": "bun /Users/cthulhu/.claude/claude-statusline/statusline.ts"
+  },
+  "alwaysThinkingEnabled": true,
+  "theme": "dark-daltonized"
 }
