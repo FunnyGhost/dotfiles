@@ -105,11 +105,10 @@ outer.left = 10
 # '''
 
 # App shortcuts
-alt-a = 'exec-and-forget open -a /Applications/Helium.app'           # [A]I assistant
-alt-b = 'exec-and-forget open -a /Applications/Brave\ Browser.app'    # [B]rowser
+alt-z = 'exec-and-forget open -a /Applications/Zen.app'              # [Z]en browser
+alt-a = 'exec-and-forget open -a /Applications/Claude.app'           # Cl[a]ude
 alt-d = 'exec-and-forget open -a /Applications/Cursor.app'           # [D]evelopment
 alt-c = 'exec-and-forget open -a /Applications/Notion\ Calendar.app' # [C]alendar
-alt-g = 'exec-and-forget open -a /Applications/Ghostty.app'          # [G]hostty
 alt-w = 'exec-and-forget open -a /Applications/WezTerm.app'          # [W]ezterm
 alt-s = 'exec-and-forget open -a /Applications/Slack.app'            # [S]lack
 alt-m = 'exec-and-forget open -a /System/Applications/Mail.app'      # [M]ail
@@ -205,21 +204,8 @@ if.app-id = 'com.todesktop.230313mzl4w4u92'  # Cursor
 run = ['move-node-to-workspace 1']
 
 [[on-window-detected]]
-if.app-id = 'com.mitchellh.ghostty'  # Ghostty
-run = ['move-node-to-workspace 1']
-
-[[on-window-detected]]
 if.app-id = 'com.github.wez.wezterm'  # Wezterm
 run = ['move-node-to-workspace 1']
-
-# Browsing Space (2)
-[[on-window-detected]]
-if.app-id = 'com.brave.Browser'  # Brave
-run = ['move-node-to-workspace 2']
-
-[[on-window-detected]]
-if.app-id = 'company.thebrowser.dia'  # Dia
-run = ['move-node-to-workspace 2']
 
 # Social Space (3)
 [[on-window-detected]]
@@ -234,10 +220,15 @@ run = ['move-node-to-workspace 3']
 if.app-id = 'com.cron.electron'  # Notion Calendar
 run = ['move-node-to-workspace 3']
 
-# AI Assistant Space (4)
+# Browsing Space (4)
 [[on-window-detected]]
-if.app-id = 'net.imput.helium'  # Helium
+if.app-id = 'app.zen-browser.zen'  # Zen
 run = ['move-node-to-workspace 4']
+
+# Claude Space (5)
+[[on-window-detected]]
+if.app-id = 'com.anthropic.claudefordesktop'  # Claude
+run = ['move-node-to-workspace 5']
 
 # force certain workspaces to certain monitors
 [workspace-to-monitor-force-assignment]
