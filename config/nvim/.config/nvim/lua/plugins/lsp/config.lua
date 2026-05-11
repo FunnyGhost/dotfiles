@@ -78,11 +78,20 @@ return {
 						},
 					},
 				},
-				-- Monorepo support: look for tsconfig.json and package.json
-				root_dir = function(fname)
-					return require("lspconfig.util").root_pattern("tsconfig.json", "package.json", ".git")(fname)
-						or vim.fn.getcwd()
-				end,
+			},
+			-- Emmet: HTML/CSS abbreviation expansion
+			emmet_language_server = {
+				filetypes = {
+					"html",
+					"css",
+					"scss",
+					"sass",
+					"less",
+					"javascriptreact",
+					"typescriptreact",
+					"vue",
+					"svelte",
+				},
 			},
 		},
 	},
@@ -98,16 +107,20 @@ return {
 		}
 		opts.capabilities = capabilities
 
-		-- Setup each server
+		-- Setup each server using the nvim 0.11+ vim.lsp.config API
+		local servers = {}
 		for server, server_opts in pairs(opts.servers) do
 			if server_opts then
-				local server_opts = vim.tbl_deep_extend("force", {
-					capabilities = vim.deepcopy(opts.capabilities),
-				}, server_opts)
-
-				require("lspconfig")[server].setup(server_opts)
+				vim.lsp.config(
+					server,
+					vim.tbl_deep_extend("force", {
+						capabilities = vim.deepcopy(opts.capabilities),
+					}, server_opts)
+				)
+				table.insert(servers, server)
 			end
 		end
+		vim.lsp.enable(servers)
 	end,
 }
 
