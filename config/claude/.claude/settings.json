@@ -20,6 +20,17 @@
     "type": "command",
     "command": "bun /Users/cthulhu/.claude/claude-statusline/statusline.ts"
   },
+  "extraKnownMarketplaces": {
+    "plannotator": {
+      "source": {
+        "source": "github",
+        "repo": "backnotprop/plannotator"
+      }
+    }
+  },
   "alwaysThinkingEnabled": true,
-  "theme": "dark-daltonized"
+  "theme": "dark-daltonized",
+  "enabledPlugins": {
+    "plannotator@plannotator": true
+  }
 }
