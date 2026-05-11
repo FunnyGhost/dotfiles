@@ -13,6 +13,7 @@ return {
       -- LSP
       "lua-language-server", -- Lua
       "vtsls",              -- TypeScript (optimized for large codebases)
+      "emmet-language-server", -- Emmet for HTML/CSS/JSX
     },
     ui = {
       border = "rounded",
