@@ -11,7 +11,7 @@ return {
 		-- TIMEOUT CONFIGURATION
 		-- These settings control when the which-key popup appears
 		vim.o.timeout = true -- Enable timeout for key sequences
-		vim.o.timeoutlen = 300 -- Show which-key popup after 300ms of inactivity
+		vim.o.timeoutlen = 800 -- Show which-key popup after 800ms of inactivity
 	end,
 	opts = {
 		-- Using default configuration
