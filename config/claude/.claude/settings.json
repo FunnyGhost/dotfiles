@@ -18,7 +18,7 @@
   "model": "opus[1m]",
   "statusLine": {
     "type": "command",
-    "command": "bun /Users/cthulhu/.claude/claude-statusline/statusline.ts"
+    "command": "~/.claude/statusline.sh"
   },
   "extraKnownMarketplaces": {
     "plannotator": {

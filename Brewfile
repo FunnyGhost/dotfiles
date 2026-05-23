@@ -106,6 +106,8 @@ cask "aerospace"
 cask "karabiner-elements"
 # AI assistant desktop app by Anthropic
 cask "claude"
+# Terminal-based AI coding assistant by Anthropic
+cask "claude-code"
 # Screen capturing tool
 cask "cleanshot"
 # Write, edit, and chat about your code with AI
