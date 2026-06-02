@@ -1,0 +1,474 @@
+#!/usr/bin/env python3
+# ^ This first line lets you run the file directly (./wwid) using Python 3.
+"""
+wwid — "What Was I Doing": index, search & resume your Claude Code chats
+from anywhere.
+
+WHAT IT DOES
+  • Scans every Claude Code conversation stored on this machine.
+  • Shows them in an interactive fuzzy picker (using the `fzf` program).
+  • When you pick one, it re-opens that chat with `claude --resume`.
+  • You can also jump straight to the chat that created a given pull request.
+
+It is READ-ONLY: it only reads Claude's transcript files and never changes
+them.
+
+HOW IT WORKS (the short version)
+  Claude Code saves each conversation as a ".jsonl" file — a text file with
+  one JSON record per line — under ~/.claude/projects/<folder>/<id>.jsonl.
+  Different record "types" hold different facts we care about:
+      custom-title  -> a name you set with `claude -n` or `/rename`
+      ai-title      -> the auto-generated chat name
+      pr-link       -> a pull request that was opened from this chat
+      user          -> something you typed (we grab the first real message)
+      assistant     -> Claude's reply (we read token usage from the last one)
+  `scan()` walks every file, pulls those facts into one record per chat, and
+  the rest of the file formats and presents them.
+
+USAGE
+  wwid                 fuzzy picker over all chats (default)
+  wwid <query>         picker pre-filtered by a search query
+  wwid pr <num|url>    find chat(s) by attached PR; resume if there's one
+  wwid list            print a plain text table (good for scripts / grep)
+  wwid -h | --help
+"""
+
+import glob          # find files matching a path pattern
+import json          # parse the JSON on each transcript line
+import os            # paths, current directory, launching claude
+import re            # small text/pattern helpers
+import shutil        # check whether `fzf` / `claude` are installed
+import subprocess    # run `fzf` and capture what the user picked
+import sys           # arguments, exit codes, stderr
+import time          # turn timestamps into "3h ago"
+import unicodedata   # measure on-screen width of characters (for alignment)
+
+# Where Claude Code stores all conversation transcripts.
+PROJECTS = os.path.expanduser("~/.claude/projects")
+
+# We pack several values onto one line for fzf, separated by a TAB. fzf can
+# then treat the line as columns (fields) split on that TAB.
+TAB = "\t"
+
+# How wide each column is, in characters, when we print the aligned table.
+W_NAME, W_AGE, W_CTX, W_MSGS, W_PR, W_PROJ, W_PROMPT = 34, 9, 5, 6, 22, 24, 50
+
+# First messages that are too generic to use as a chat's name. If the first
+# thing typed was one of these, we look for a better name instead.
+TRIVIAL = {"resume", "continue", "exit", "clear", "y", "yes", "ok", "no"}
+
+
+def die(msg, code=1):
+    """Print an error to stderr and stop the program."""
+    print(f"wwid: {msg}", file=sys.stderr)
+    sys.exit(code)
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# Text & alignment helpers
+# Terminals are grids of fixed-width cells. Most characters take 1 cell, but
+# some (CJK, emoji) take 2. These helpers keep columns lined up regardless.
+# ──────────────────────────────────────────────────────────────────────────
+
+def char_width(ch):
+    """How many terminal cells a single character occupies (1 or 2)."""
+    return 2 if unicodedata.east_asian_width(ch) in ("W", "F") else 1
+
+
+def fit(text, width):
+    """
+    Make `text` occupy exactly `width` terminal cells:
+      • too long  -> cut it off and add an ellipsis (…)
+      • too short -> pad with spaces on the right
+    """
+    text = text or ""
+    out, used = [], 0
+    for ch in text:
+        cw = char_width(ch)
+        if used + cw > width:          # adding this char would overflow
+            if used < width:
+                out.append("…")        # mark that we trimmed something
+                used += 1
+            break
+        out.append(ch)
+        used += cw
+    if used < width:                   # pad the remainder with spaces
+        out.append(" " * (width - used))
+    return "".join(out)
+
+
+def one_line(text, limit=200):
+    """Collapse any whitespace/newlines into single spaces and shorten."""
+    text = re.sub(r"\s+", " ", text or "").strip()
+    return text[:limit] + ("…" if len(text) > limit else "")
+
+
+def human_age(mtime):
+    """Turn a file's last-modified time into a friendly 'just now / 3h ago'."""
+    seconds = max(0, time.time() - mtime)
+    for unit, size in (("d", 86400), ("h", 3600), ("m", 60)):
+        if seconds >= size:
+            return f"{int(seconds // size)}{unit} ago"
+    return "just now"
+
+
+def is_trivial(text):
+    """True if `text` is too generic/noisy to use as a chat name."""
+    t = (text or "").strip()
+    if not t:
+        return True
+    if t.lower() in TRIVIAL:
+        return True
+    # Slash commands, internal command markers, and interrupt notices.
+    if t.startswith(("/", "<command-name>", "<local-command", "[Request interrupted")):
+        return True
+    # A message that is *only* an image attachment, e.g. "[Image #1]".
+    if re.fullmatch(r"\[Image[^\]]*\]", t):
+        return True
+    return False
+
+
+def first_text(content):
+    """
+    A message's `content` is either a plain string or a list of "blocks"
+    (text, images, tool calls...). Return just the human-readable text.
+    """
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        return " ".join(
+            block.get("text", "")
+            for block in content
+            if isinstance(block, dict) and block.get("type") == "text"
+        )
+    return ""
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# Scanning: read every transcript into a list of simple chat records
+# ──────────────────────────────────────────────────────────────────────────
+
+def scan():
+    """
+    Read every transcript file and return one record (a dict) per chat,
+    newest activity first. Each record holds the facts the UI needs.
+    """
+    sessions = []
+
+    # Match ~/.claude/projects/<any folder>/<any session id>.jsonl
+    for path in glob.glob(os.path.join(PROJECTS, "*", "*.jsonl")):
+        session_id = os.path.splitext(os.path.basename(path))[0]  # filename = id
+
+        # Start with empty/default values; we fill these in as we read lines.
+        s = {
+            "id": session_id,
+            "path": path,
+            "mtime": os.path.getmtime(path),   # last-modified time = last activity
+            "custom_title": None,              # name set via -n / /rename
+            "ai_title": None,                  # auto-generated name
+            "cwd": None,                       # folder the chat ran in
+            "first_prompt": None,              # first meaningful user message
+            "prs": {},                         # pr number -> {number, url, repo}
+            "msgs": 0,                         # total user + assistant messages
+            "assistant_msgs": 0,               # used to skip empty chats
+            "last_usage": None,                # token counts from the last reply
+            "models": set(),                   # which model(s) the chat used
+        }
+
+        try:
+            with open(path, encoding="utf-8") as fh:
+                for line in fh:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    try:
+                        record = json.loads(line)
+                    except json.JSONDecodeError:
+                        continue  # skip any corrupt/partial line
+                    if not isinstance(record, dict):
+                        continue
+
+                    kind = record.get("type")
+
+                    if kind == "custom-title":
+                        s["custom_title"] = record.get("customTitle") or s["custom_title"]
+
+                    elif kind == "ai-title":
+                        s["ai_title"] = record.get("aiTitle") or s["ai_title"]
+
+                    elif kind == "pr-link":
+                        number = record.get("prNumber")
+                        if number is not None:
+                            # Keyed by number so re-links of the same PR dedupe.
+                            s["prs"][number] = {
+                                "number": number,
+                                "url": record.get("prUrl", ""),
+                                "repo": record.get("prRepository", ""),
+                            }
+
+                    elif kind == "user":
+                        s["msgs"] += 1
+                        if record.get("cwd"):
+                            s["cwd"] = record["cwd"]
+                        # Keep the FIRST message that's a real prompt (not noise).
+                        if not record.get("isMeta") and s["first_prompt"] is None:
+                            txt = first_text(record.get("message", {}).get("content")).strip()
+                            if txt and not is_trivial(txt):
+                                s["first_prompt"] = txt
+
+                    elif kind == "assistant":
+                        s["msgs"] += 1
+                        s["assistant_msgs"] += 1
+                        message = record.get("message", {})
+                        if record.get("cwd"):
+                            s["cwd"] = record["cwd"]
+                        if message.get("usage"):
+                            s["last_usage"] = message["usage"]  # latest wins
+                        if message.get("model"):
+                            s["models"].add(message["model"])
+        except OSError:
+            continue  # unreadable file — just skip it
+
+        # A chat with no assistant replies is empty/aborted; don't list it.
+        if s["assistant_msgs"] == 0:
+            continue
+        sessions.append(s)
+
+    # Newest first (largest modified-time first).
+    sessions.sort(key=lambda chat: chat["mtime"], reverse=True)
+    return sessions
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# Derived display values (computed from a chat record)
+# ──────────────────────────────────────────────────────────────────────────
+
+def display_name(s):
+    """Best available name: your custom name, else AI name, else 1st prompt."""
+    return s["custom_title"] or s["ai_title"] or s["first_prompt"] or "(untitled)"
+
+
+def context_pct(s):
+    """
+    Roughly how full the context window was at the chat's last turn, as a
+    percentage. Returns None if we have no token data.
+
+    The last reply tells us how many tokens were sent (fresh input + cached
+    input). We compare that to the window size. We can't always tell whether
+    the chat used the 200K or 1M window, so we infer: anything over 200K must
+    have been on the 1M window.
+    """
+    usage = s.get("last_usage")
+    if not usage:
+        return None
+    context_tokens = (
+        usage.get("input_tokens", 0)
+        + usage.get("cache_creation_input_tokens", 0)
+        + usage.get("cache_read_input_tokens", 0)
+    )
+    if context_tokens <= 0:
+        return None
+    is_one_million = any("[1m]" in m for m in s["models"]) or context_tokens > 200_000
+    window = 1_000_000 if is_one_million else 200_000
+    return min(100, round(context_tokens / window * 100))
+
+
+def short_cwd(cwd):
+    """Show the chat's folder, with your home directory shortened to '~'."""
+    if not cwd:
+        return "?"
+    home = os.path.expanduser("~")
+    return cwd.replace(home, "~", 1) if cwd.startswith(home) else cwd
+
+
+def pr_label(s):
+    """Compact list of linked PRs, e.g. 'PR#651 web-application-renderer'."""
+    if not s["prs"]:
+        return ""
+    parts = []
+    for pr in sorted(s["prs"].values(), key=lambda p: p["number"]):
+        repo = pr["repo"].split("/")[-1] if pr["repo"] else ""   # drop the org/
+        parts.append(f"PR#{pr['number']}{(' ' + repo) if repo else ''}")
+    return " ".join(parts)
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# Building the aligned table (one formatted row per chat, plus the header)
+# ──────────────────────────────────────────────────────────────────────────
+
+def row(s):
+    """One chat formatted as fixed-width, space-separated columns."""
+    pct = context_pct(s)
+    pct_text = (f"{pct}%" if pct is not None else "—").rjust(W_CTX)
+
+    # The first prompt is shown in its own column — unless it's identical to
+    # the name (which would just repeat the same text twice).
+    prompt = one_line(s["first_prompt"] or "", 120)
+    if prompt.strip() == display_name(s).strip():
+        prompt = ""
+
+    return "  ".join([
+        fit(display_name(s), W_NAME),
+        human_age(s["mtime"]).rjust(W_AGE),
+        pct_text,
+        f"{s['msgs']}".rjust(W_MSGS),
+        fit(pr_label(s) or "·", W_PR),          # "·" = placeholder for "no PR"
+        fit(short_cwd(s["cwd"]), W_PROJ),
+        fit(prompt, W_PROMPT),
+    ])
+
+
+def header_row():
+    """The column titles, using the same widths so they line up with rows."""
+    return "  ".join([
+        fit("NAME", W_NAME),
+        "AGE".rjust(W_AGE),
+        "CTX".rjust(W_CTX),
+        "MSGS".rjust(W_MSGS),
+        fit("PR", W_PR),
+        fit("PROJECT", W_PROJ),
+        fit("FIRST PROMPT", W_PROMPT),
+    ])
+
+
+def sep_row():
+    """A horizontal rule (───) exactly as wide as the header."""
+    return "─" * sum(char_width(c) for c in header_row())
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# Actions: resume a chat, run the picker, list, find by PR
+# ──────────────────────────────────────────────────────────────────────────
+
+def resume(session_id, cwd):
+    """
+    Re-open a chat. We `cd` into its original folder first (so file paths and
+    tools behave), then hand the terminal over to `claude --resume`.
+    os.execv REPLACES this script with claude — wwid is gone after this.
+    """
+    if cwd and os.path.isdir(cwd):
+        os.chdir(cwd)
+    claude = shutil.which("claude")
+    if not claude:
+        die("`claude` not found on PATH")
+    os.execv(claude, [claude, "--resume", session_id])
+
+
+def fzf_line(s):
+    """
+    One input line for fzf: id <TAB> cwd <TAB> visible-columns.
+    fzf is told to DISPLAY only the 3rd field, so the id and cwd ride along
+    invisibly — we read them back out of whatever line the user selects.
+    """
+    return TAB.join([s["id"], s["cwd"] or "", row(s)])
+
+
+def run_picker(sessions, query=None):
+    """Show the interactive fuzzy picker; resume whatever the user selects."""
+    if not shutil.which("fzf"):
+        die("`fzf` not found on PATH. Install it: brew install fzf")
+    if not sessions:
+        die("no chats found", 0)
+
+    # The column header and the separator rule are sent as the first two input
+    # lines and marked as "header lines". That way fzf formats them through the
+    # exact same column pipeline as the data, so everything lines up perfectly.
+    header_cols = TAB.join(["", "", header_row()])
+    header_sep = TAB.join(["", "", sep_row()])
+    lines = "\n".join([header_cols, header_sep] + [fzf_line(s) for s in sessions])
+
+    args = [
+        "fzf",
+        "--delimiter", TAB,        # split each line into fields on TAB
+        "--with-nth", "3",         # ...but only display the 3rd field
+        "--header-lines", "2",     # first two lines are a fixed header
+        "--header", "enter: resume in original folder   ·   esc: cancel\n\n",
+        "--color", "header:bold:15",   # bold bright-white header for contrast
+        "--ansi",
+        "--no-sort",               # keep our newest-first ordering
+        "--height", "90%",
+        "--reverse",               # prompt on top, list below
+        "--border",
+        "--padding", "0,1",
+        "--prompt", "chat ❯ ",
+        "--pointer", "▶",
+    ]
+    if query:
+        args += ["--query", query]  # pre-fill the search box
+
+    # Run fzf, feeding it our lines on stdin and capturing the chosen line.
+    proc = subprocess.run(args, input=lines, capture_output=True, text=True)
+    if proc.returncode != 0 or not proc.stdout.strip():
+        sys.exit(0)  # user pressed Esc / picked nothing
+
+    chosen = proc.stdout.strip().split("\n")[0]
+    fields = chosen.split(TAB)
+    session_id = fields[0]
+    cwd = fields[1] if len(fields) > 1 else ""
+    resume(session_id, cwd)
+
+
+def cmd_list(sessions):
+    """Print the same table as plain text (no fzf) — handy for scripts/grep."""
+    if not sessions:
+        print("(no chats found)")
+        return
+    print("ID        " + header_row())
+    for s in sessions:
+        print(f"{s['id'][:8]}  {row(s)}")
+
+
+def cmd_pr(sessions, needle):
+    """
+    Find chats linked to a PR. `needle` may be a number ("651"), a "#651",
+    or a full PR URL. Resume immediately if exactly one chat matches;
+    otherwise open the picker on the matches.
+    """
+    # Pull the last run of digits out of the input as the PR number.
+    match = re.search(r"(\d+)(?!.*\d)", needle)
+    number = int(match.group(1)) if match else None
+    url = needle if needle.startswith("http") else None
+
+    matches = []
+    for s in sessions:
+        for pr in s["prs"].values():
+            if (number is not None and pr["number"] == number) or (url and pr["url"] == url):
+                matches.append(s)
+                break  # this chat already counts; move to the next chat
+
+    if not matches:
+        die(f"no chat found for PR {needle}", 1)
+    if len(matches) == 1:
+        resume(matches[0]["id"], matches[0]["cwd"])
+    run_picker(matches)
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# Entry point: decide what to do based on the command-line arguments
+# ──────────────────────────────────────────────────────────────────────────
+
+def main():
+    argv = sys.argv[1:]  # everything the user typed after "wwid"
+
+    if argv and argv[0] in ("-h", "--help"):
+        print(__doc__)
+        return
+    if not os.path.isdir(PROJECTS):
+        die(f"no Claude projects dir at {PROJECTS}")
+
+    sessions = scan()
+
+    if not argv:
+        run_picker(sessions)                       # wwid
+    elif argv[0] == "list":
+        cmd_list(sessions)                          # wwid list
+    elif argv[0] == "pr":
+        if len(argv) < 2:
+            die("usage: wwid pr <number|url>")
+        cmd_pr(sessions, argv[1])                   # wwid pr <num|url>
+    else:
+        run_picker(sessions, query=" ".join(argv))  # wwid <query>
+
+
+if __name__ == "__main__":
+    main()
