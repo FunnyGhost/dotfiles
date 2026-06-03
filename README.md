@@ -24,7 +24,7 @@ If you'd rather do it by hand without Claude, just open [CLAUDE.md](CLAUDE.md) a
 
 ## 📦 What's included
 
-- **Editors / dev tools**: Neovim (Lazy.nvim), Git, Claude Code, 21 custom git commands (submodule)
+- **Editors / dev tools**: Neovim (Lazy.nvim), Git, Claude Code, 21 custom git commands (submodule), `wwid` (find & resume Claude Code chats from anywhere — see `config/wwid`)
 - **Terminal / shell**: Zsh, Starship, Ghostty, WezTerm, Kitty, plus `bat`, `eza`, `fzf`, `zoxide`
 - **Window management**: Aerospace, JankyBorders, Karabiner Elements. Yabai, skhd, Sketchybar configs are kept around but not active.
 - **Packages**: ~194 brews, casks, fonts, and VS Code extensions managed via `Brewfile`

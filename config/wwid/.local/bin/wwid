@@ -10,8 +10,9 @@ WHAT IT DOES
   • When you pick one, it re-opens that chat with `claude --resume`.
   • You can also jump straight to the chat that created a given pull request.
 
-It is READ-ONLY: it only reads Claude's transcript files and never changes
-them.
+It is READ-ONLY by default — it only reads Claude's transcript files — with
+ONE exception: `wwid --rename` gives a short, content-based name to chats you
+never named yourself (it backs up each file before writing).
 
 HOW IT WORKS (the short version)
   Claude Code saves each conversation as a ".jsonl" file — a text file with
@@ -30,6 +31,8 @@ USAGE
   wwid <query>         picker pre-filtered by a search query
   wwid pr <num|url>    find chat(s) by attached PR; resume if there's one
   wwid list            print a plain text table (good for scripts / grep)
+  wwid --rename        name every chat you never named, from its content
+  wwid --rename --dry-run   preview those names without writing anything
   wwid -h | --help
 """
 
@@ -444,6 +447,182 @@ def cmd_pr(sessions, needle):
 
 
 # ──────────────────────────────────────────────────────────────────────────
+# Renaming  (`wwid --rename`) — the ONLY part of wwid that writes.
+# For every chat you never named, it asks a cheap headless `claude -p` for a
+# 4-5 word title and appends a `custom-title` record (exactly what `/rename`
+# writes), after backing the file up. Chats you DID name are left untouched.
+# ──────────────────────────────────────────────────────────────────────────
+
+# Where Claude records which sessions are running right now.
+SESSIONS = os.path.expanduser("~/.claude/sessions")
+
+# A fast, side-effect-free title call: cheap model, no saved session, no MCP
+# servers, no tools — just text in, a title out.
+TITLE_CMD = [
+    "claude", "-p",
+    "--model", "haiku",
+    "--no-session-persistence",
+    "--strict-mcp-config", "--mcp-config", '{"mcpServers":{}}',
+    "--tools", "",
+]
+TITLE_PROMPT = (
+    "Give a concise 4-5 word title (Title Case, no quotes, no trailing "
+    "punctuation) describing this coding chat. Reply with ONLY the title.\n\n"
+)
+
+
+def active_session_ids():
+    """Ids of chats running right now — we must never write to their files."""
+    ids = set()
+    for path in glob.glob(os.path.join(SESSIONS, "*.json")):
+        try:
+            ids.add(json.load(open(path)).get("sessionId"))
+        except (OSError, json.JSONDecodeError):
+            pass
+    return ids
+
+
+def build_digest(path):
+    """A short summary of a chat (its auto-title + first few messages)."""
+    ai_title, user_msgs, first_reply = None, [], None
+    with open(path, encoding="utf-8") as fh:
+        for line in fh:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                record = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if not isinstance(record, dict):
+                continue
+            kind = record.get("type")
+            if kind == "ai-title":
+                ai_title = record.get("aiTitle") or ai_title
+            elif kind == "user" and not record.get("isMeta") and len(user_msgs) < 3:
+                txt = first_text(record.get("message", {}).get("content")).strip()
+                if txt and not is_trivial(txt):
+                    user_msgs.append(txt)
+            elif kind == "assistant" and first_reply is None:
+                txt = first_text(record.get("message", {}).get("content")).strip()
+                if txt:
+                    first_reply = txt
+
+    parts = []
+    if ai_title:
+        parts.append(f"Existing auto-title: {ai_title}")
+    for i, msg in enumerate(user_msgs):
+        parts.append(f"User message {i + 1}: {msg[:400]}")
+    if first_reply:
+        parts.append(f"Assistant reply: {first_reply[:300]}")
+    return "\n".join(parts)[:1800]
+
+
+def generate_title(digest):
+    """
+    Ask the model for a 4-5 word title for one chat.
+
+    Returns "" if THIS chat can't be titled (timed out, or empty answer) so
+    the batch can skip it and move on. Raises RuntimeError on a SYSTEMIC
+    failure (e.g. `claude` not authenticated) — the caller stops the run
+    instead of silently "skipping" every chat.
+    """
+    try:
+        result = subprocess.run(
+            TITLE_CMD, input=TITLE_PROMPT + digest,
+            capture_output=True, text=True, timeout=120,
+        )
+    except subprocess.TimeoutExpired:
+        return ""
+    if result.returncode != 0:
+        raise RuntimeError(result.stderr.strip() or "claude exited non-zero")
+
+    # First non-empty output line, sanitized so nothing odd from a transcript
+    # ends up in the stored name or your terminal.
+    line = next((l for l in result.stdout.splitlines() if l.strip()), "")
+    title = re.sub(r"\x1b\[[0-9;]*[A-Za-z]", "", line)  # strip ANSI escapes
+    title = re.sub(r"\s+", " ", title)                  # tabs/newlines -> spaces
+    title = re.sub(r"[\x00-\x1f\x7f]", "", title)       # drop any other controls
+    title = title.strip().strip("\"' ").rstrip(".").strip()
+    words = title.split()
+    if len(words) > 6:                                  # keep it genuinely short
+        title = " ".join(words[:6])
+    return title[:60]
+
+
+def append_custom_title(path, session_id, title):
+    """Append a custom-title record — the same thing `/rename` writes."""
+    record = {"type": "custom-title", "customTitle": title, "sessionId": session_id}
+    with open(path, "a", encoding="utf-8") as fh:
+        fh.write(json.dumps(record) + "\n")
+
+
+def cmd_rename(sessions, args):
+    """
+    Name every chat you never named, based on its content.
+
+    Skips chats that already have a custom name (your /rename names are safe)
+    and chats that are currently running. Backs up each file before writing.
+    Flags: --dry-run (preview only), --yes/-y (skip the confirmation).
+    """
+    if not shutil.which("claude"):
+        die("`claude` not found on PATH")
+
+    dry_run = "--dry-run" in args
+    assume_yes = "--yes" in args or "-y" in args
+
+    active = active_session_ids()
+    todo = [s for s in sessions if not s["custom_title"] and s["id"] not in active]
+
+    if not todo:
+        print("Nothing to rename — every chat is already named or active.")
+        return
+
+    print(f"{len(todo)} chat(s) to name "
+          f"({len(sessions) - len(todo)} skipped: already named or active).")
+
+    if dry_run:
+        print("(dry run — nothing will be written)\n")
+    elif not assume_yes:
+        try:
+            answer = input("Generate titles and write them? [y/N] ").strip().lower()
+        except EOFError:
+            answer = ""
+        if answer not in ("y", "yes"):
+            print("Aborted.")
+            return
+        print()  # blank line before the list
+
+    backup_dir = os.path.expanduser(f"~/.claude/.wwid-rename-backup-{int(time.time())}")
+    renamed = 0
+    for s in todo:
+        try:
+            title = generate_title(build_digest(s["path"]))
+        except RuntimeError as e:
+            # Systemic failure (e.g. auth) — stop rather than mislabel everything.
+            die(f"`claude -p` failed: {e}\n"
+                f"Stopped after {renamed} rename(s)."
+                + (f" Backups: {backup_dir}" if renamed else ""))
+
+        old = s["ai_title"] or s["first_prompt"] or "(untitled)"
+        if not title:
+            print(f"  SKIP {s['id'][:8]}  (no title produced)")
+            continue
+        print(f"  {fit(old, 46)}  ->  {title}")
+        if dry_run:
+            continue
+        os.makedirs(backup_dir, exist_ok=True)
+        # Copy the original aside before we append anything.
+        shutil.copy2(s["path"], os.path.join(backup_dir, os.path.basename(s["path"])))
+        append_custom_title(s["path"], s["id"], title)
+        renamed += 1
+
+    if renamed:
+        print(f"\nRenamed {renamed} chat(s). Originals backed up to:\n  {backup_dir}")
+        print("Open `claude` → /resume to confirm the new names show there too.")
+
+
+# ──────────────────────────────────────────────────────────────────────────
 # Entry point: decide what to do based on the command-line arguments
 # ──────────────────────────────────────────────────────────────────────────
 
@@ -460,6 +639,8 @@ def main():
 
     if not argv:
         run_picker(sessions)                       # wwid
+    elif argv[0] == "--rename":
+        cmd_rename(sessions, argv[1:])              # wwid --rename [--dry-run|-y]
     elif argv[0] == "list":
         cmd_list(sessions)                          # wwid list
     elif argv[0] == "pr":

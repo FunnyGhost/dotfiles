@@ -6,8 +6,9 @@
 fuzzy-search them by name, PR, project, or first prompt — then re-opens the one
 you pick with `claude --resume`, in its original folder.
 
-It is **read-only**: it only reads Claude's transcript files under
-`~/.claude/projects/` and never modifies them.
+It is **read-only** by default — it only reads Claude's transcript files under
+`~/.claude/projects/` — with one opt-in exception, `wwid --rename`, which names
+un-named chats (and backs them up first). See *Renaming* below.
 
 ## 📦 What's in here
 
@@ -44,7 +45,7 @@ stow -d config -t ~ wwid
 |-----------|---------------------------------------|----------------------|
 | `python3` | runs the script (stdlib only)         | preinstalled / brew  |
 | `fzf`     | the interactive picker                | `brew install fzf`   |
-| `claude`  | the resume target                     | Claude Code          |
+| `claude`  | resume target + `--rename` titles     | Claude Code          |
 
 All three are already in the repo's `Brewfile` / setup, so a stowed machine has
 them.
@@ -63,8 +64,32 @@ wwid                 # fuzzy picker over all chats; Enter resumes the one you pi
 wwid <query>         # same picker, pre-filtered by <query>
 wwid pr <num|url>    # find chat(s) linked to a PR; resume if there's exactly one
 wwid list            # plain text table (good for scripts / grep)
+wwid --rename        # name every chat you never named, from its content
 wwid -h | --help     # usage
 ```
+
+### Renaming un-named chats (`wwid --rename`)
+
+`wwid` is read-only **except** for this one command. It gives a short
+(4–5 word) content-based name to every chat you never named yourself:
+
+- **Skips** any chat that already has a `/rename` name, and any chat that's
+  currently running.
+- Generates each title with a cheap, side-effect-free `claude -p` call
+  (Haiku, no saved session, no MCP, no tools).
+- Writes the name by appending a `custom-title` record — exactly what
+  `/rename` does — so it sticks and shows in Claude's `/resume` picker too.
+- **Backs up** every file it touches to `~/.claude/.wwid-rename-backup-<ts>/`
+  before writing, and asks for confirmation first.
+
+```bash
+wwid --rename --dry-run   # preview the new names, write nothing
+wwid --rename             # do it (prompts before writing)
+wwid --rename --yes       # do it without the confirmation prompt
+```
+
+To undo: restore the matching files from the backup folder (the title is the
+last line of each touched transcript).
 
 ### In the picker
 
