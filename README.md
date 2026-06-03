@@ -92,6 +92,13 @@ Added to PATH via the stowed `~/.git-commands` directory. Sourced from the [git-
 ### File ops
 - **`git open`** — open all changed files in `$EDITOR`
 
+## 🐚 Custom Shell Functions
+
+Defined in `config/zsh/.zshrc`.
+
+- **`btconnect`** — pick a paired Bluetooth device from an fzf list (shows connection status + name) and connect to it. Requires `blueutil` + `fzf`.
+- **`mkcd`** — make a directory and `cd` into it in one step.
+
 ## 🪟 Aerospace Keybindings
 
 Tiling window manager configured under `config/aerospace`. Key bindings:
