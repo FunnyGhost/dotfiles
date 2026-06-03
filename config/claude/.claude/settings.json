@@ -15,13 +15,13 @@
       "WebSearch"
     ]
   },
-  "model": "claude-sonnet-4-6[1m]",
   "statusLine": {
     "type": "command",
     "command": "~/.claude/statusline.sh"
   },
   "enabledPlugins": {
-    "plannotator@plannotator": true
+    "plannotator@plannotator": true,
+    "slack@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "plannotator": {
