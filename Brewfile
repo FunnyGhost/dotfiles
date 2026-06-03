@@ -13,6 +13,8 @@ tap "nikitabobko/tap"
 brew "jpeg-xl"
 # Codec library for encoding and decoding AV1 video streams
 brew "aom"
+# CLI for managing Bluetooth power and connections (used by btconnect)
+brew "blueutil"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
 # Core application library for C

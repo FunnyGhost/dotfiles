@@ -25,6 +25,25 @@ function mkcd() {
 	mkdir -p "$@" && cd "$_";
 }
 
+# Pick a paired Bluetooth device from an fzf list and connect to it.
+# Usage: btconnect
+function btconnect() {
+	command -v blueutil >/dev/null 2>&1 || { echo "blueutil not installed (brew install blueutil)"; return 1; }
+	command -v fzf >/dev/null 2>&1 || { echo "fzf not installed (brew install fzf)"; return 1; }
+	blueutil -p 1
+	local sel addr name
+	# Each line: <address>\t<status>\t<name> ; show status+name in fzf, keep address for connecting.
+	sel=$(blueutil --paired \
+		| sed -E 's/^address: ([0-9a-f:-]+), (not connected|connected)( \([^)]*\))?,.*name: "([^"]+)".*/\1\t\2\t\4/' \
+		| fzf --delimiter='\t' --with-nth=2,3 --nth=3 \
+		      --prompt='Connect to > ' --header='Paired Bluetooth devices') || return
+	addr=${sel%%$'\t'*}
+	name=${sel##*$'\t'}
+	[[ -z "$addr" ]] && return 1
+	echo "Connecting to $name ($addr)…"
+	blueutil --connect "$addr"
+}
+
 # Advanced customization of fzf options via _fzf_comprun function
 # - The first argument to the function is the name of the command.
 # - You should make sure to pass the rest of the arguments to fzf.
