@@ -1,5 +1,6 @@
 tap "eth-p/software"
 tap "felixkratz/formulae"
+tap "funnyghost/tap"
 tap "homebrew/bundle"
 # tap "homebrew/cask-fonts"  # Deprecated
 # tap "homebrew/cask-versions"  # Deprecated
@@ -101,6 +102,8 @@ brew "eth-p/software/bat-extras"
 brew "felixkratz/formulae/borders"
 # Custom macOS statusbar with shell plugin, interaction and graph support
 brew "felixkratz/formulae/sketchybar"
+# Find & resume Claude Code chats from anywhere (fzf picker)
+brew "funnyghost/tap/wwid"
 # brew "miroapp-dev/miro/miro-emu"  # Repository not found
 # AeroSpace is an i3-like tiling window manager for macOS
 cask "aerospace"
