@@ -109,7 +109,7 @@ outer.left = 10
 # '''
 
 # App shortcuts
-alt-b = 'exec-and-forget open -a /Applications/Safari.app'           # [B]rowser (Safari)
+alt-b = 'exec-and-forget open -a /Applications/Zen.app'              # [B]rowser (Zen)
 alt-a = 'exec-and-forget open -a /Applications/Claude.app'           # Cl[a]ude
 alt-d = 'exec-and-forget open -a /Applications/Cursor.app'           # [D]evelopment
 alt-c = 'exec-and-forget open -a /Applications/Notion\ Calendar.app' # [C]alendar
@@ -232,7 +232,7 @@ run = ['move-node-to-workspace 3']
 
 # Browsing Space (4)
 [[on-window-detected]]
-if.app-id = 'com.apple.Safari'  # Safari
+if.app-id = 'app.zen-browser.zen'  # Zen
 run = ['move-node-to-workspace 4']
 
 # Claude Space (5)
