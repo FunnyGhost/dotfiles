@@ -26,6 +26,15 @@ function icon_map() {
   "Comet")
     icon_result="󰚩"
     ;;
+  "Zen")
+    icon_result="󰈹"
+    ;;
+  "WezTerm")
+    icon_result="󰆍"
+    ;;
+  "Claude")
+    icon_result="󱙺"
+    ;;
   *)
     icon_result="󰏗"
     ;;
