@@ -106,6 +106,25 @@ stow source**:
 **Never** put `.zshrc.local` inside `config/zsh/`. Stow would try to
 symlink it over the real one and the stow command would fail.
 
+### Never regenerate the Brewfiles with `brew bundle dump`
+
+Both `Brewfile` and `Brewfile.local` are maintained **by hand**. A dump
+enumerates the whole machine, which breaks the split two ways:
+
+- It writes work-specific entries (the private work tap and its
+  formulae/casks) into the public `Brewfile`, publishing internal repo and
+  package names.
+- It **silently omits** formulae from untrusted third-party taps — no warning,
+  exit 0. Only taps listed by `brew trust --list` survive, so `bat-extras`,
+  `borders`, and `sketchybar` disappear even though they're installed. Run
+  `brew trust <tap>` if you ever want a dump to see them.
+
+Dumping into `Brewfile.local` is worse still: it replaces the work-only
+overrides with a full copy of the system, destroying the separation.
+
+The `bbd` alias therefore dumps to `/tmp/Brewfile.new` and shows a diff only.
+Merge anything you want by hand.
+
 ### Claude statusline
 
 `config/claude/.claude/statusline.sh` is a bash + jq script, stowed to

@@ -67,7 +67,10 @@ alias lt='eza --tree --level=2 --long --icons --git'
 if [[ -o interactive ]]; then
     alias cd='z'
 fi
-alias bbd='brew bundle dump --force --describe && [[ -f Brewfile.local ]] && brew bundle dump --force --describe --file=Brewfile.local'
+# Preview what a Brewfile dump would change; never writes to the repo.
+# Dumps are lossy (formulae from untrusted taps are silently omitted) and would
+# pull work-specific entries into the public Brewfile — merge by hand.
+alias bbd='brew bundle dump --force --file=/tmp/Brewfile.new && { diff -u ~/dotfiles/Brewfile /tmp/Brewfile.new || true; }'
 alias man=batman
 alias trail='<<<${(F)path}'
 alias rm=trash
