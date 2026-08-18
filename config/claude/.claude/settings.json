@@ -15,6 +15,7 @@
       "WebSearch"
     ]
   },
+  "model": "opus[1m]",
   "hooks": {
     "SessionStart": [
       {
@@ -46,5 +47,7 @@
     }
   },
   "alwaysThinkingEnabled": true,
-  "theme": "dark-daltonized"
+  "skipWorkflowUsageWarning": true,
+  "theme": "custom:eldritch",
+  "tui": "fullscreen"
 }
