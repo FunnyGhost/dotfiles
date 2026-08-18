@@ -1,0 +1,60 @@
+# herdr — agent multiplexer (https://herdr.dev/docs/)
+# Stowed to ~/.config/herdr/config.toml. Only deliberate overrides live here;
+# see `herdr --default-config` for everything else.
+
+# Skip the first-run notification wizard; notifications are configured below.
+onboarding = false
+
+[theme]
+# Inherit the host terminal's ANSI palette — WezTerm/Ghostty run Eldritch,
+# so herdr follows it. No native Eldritch port exists yet.
+name = "terminal"
+
+# Eldritch's ANSI black equals its background (#212337), so terminal-derived
+# surface colors vanish (e.g. the picker's selection highlight). Explicit
+# contrast ladder, darkest → brightest, all Eldritch-tinted:
+[theme.custom]
+panel_bg = "#1a1c2b"
+surface_dim = "#191b2a"
+surface0 = "#323449"
+surface1 = "#464b70"
+overlay0 = "#565f89"
+overlay1 = "#7081d0"
+subtext0 = "#a9b4e8"
+text = "#ebfafa"
+red = "#f16c75"
+green = "#37f499"
+yellow = "#f7c67f"
+blue = "#04d1f9"
+teal = "#66e4fd"
+mauve = "#a48cf2"
+peach = "#e9f941"
+
+[keys]
+# Cycle focus through agent rows without the goto list's arrow-key crawl.
+# (alt+N indexed bindings would conflict with Aerospace's global alt+1..7.)
+next_agent = "prefix+]"
+previous_agent = "prefix+["
+
+# Global back-and-forth between the last two panes (alt-tab style).
+# Takes prefix+tab from cycle_pane_next; h/j/k/l covers directional focus.
+last_pane = "prefix+tab"
+cycle_pane_next = ""
+
+[ui]
+# Focused-pane border + highlights. Eldritch green — herdr has no
+# inactive-pane dimming, so the accent border is the focus signal.
+accent = "#37f499"
+
+# Wider sidebar: the secondary labels (branch/task) were truncating, and
+# side-by-side panes are rare here anyway. The sidebar auto-scales to the
+# longest workspace NAME, ignoring sidebar_width when names are short —
+# so the minimum is what actually forces the width up.
+sidebar_width = 36
+sidebar_min_width = 36
+sidebar_max_width = 48
+
+[ui.toast]
+# In-app toast when an agent in a background pane finishes or blocks.
+# ("system" delivery got eaten by macOS DND — in-app is immune to Focus modes.)
+delivery = "herdr"

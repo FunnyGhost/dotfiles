@@ -41,12 +41,15 @@ brew bundle install
 ### 1.3 Stow every config
 
 ```bash
+mkdir -p ~/.config/herdr
 stow -d config -t ~ $(command ls config)
 stow -d . -t ~ git-commands
 ```
 
 `command ls` bypasses the `eza` alias defined in `.zshrc`. Stowing everything
-under `config/` is intentional — see section 2.
+under `config/` is intentional — see section 2. The `mkdir` prevents stow from
+folding `~/.config/herdr` into a symlink — herdr writes runtime files (socket,
+logs) next to its config, and those must not land in the repo (see section 2).
 
 ### 1.4 Restore local overrides (manual, per machine)
 
@@ -115,12 +118,26 @@ script — not `settings.json`.
 
 - `git-commands/.git-commands` → `FunnyGhost/git-commands`
 
+### herdr runtime files live next to its config
+
+`~/.config/herdr/` must stay a **real directory** with only `config.toml`
+symlinked into the repo (that's what the `mkdir -p` in section 1.3 ensures).
+The herdr server writes its socket and logs into that same directory; if stow
+folds it into a symlink, those runtime files land inside the repo. A
+`.gitignore` backstop covers `*.sock` / `*.log` under `config/herdr/` in case
+that ever happens.
+
 ### After-stow gotcha for `~/.claude/`
 
 `~/.claude/` is a real directory (Claude Code owns it), not a stow-folded
 symlink. Files inside are symlinked individually. **Adding a new file
 under `config/claude/.claude/` requires `stow -d config -t ~ --restow claude`**
 for the new symlink to appear in `~/.claude/`.
+
+herdr's Claude integration (hook script + `SessionStart` entry in
+`settings.json`) is tracked and stowed — don't rerun
+`herdr integration install claude`; it rewrites `settings.json` with absolute
+paths and reordered keys.
 
 ## 3. What this file does NOT cover
 

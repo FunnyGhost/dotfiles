@@ -5,3 +5,8 @@ Brewfile.local
 
 # Environment secrets
 .zshrc.local
+
+# herdr runtime files (backstop: if stow ever folds ~/.config/herdr into the
+# repo, the server's socket/logs land here — never commit them)
+config/herdr/.config/herdr/*.sock
+config/herdr/.config/herdr/*.log
