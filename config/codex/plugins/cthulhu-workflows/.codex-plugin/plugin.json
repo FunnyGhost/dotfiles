@@ -1,0 +1,25 @@
+{
+  "name": "cthulhu-workflows",
+  "version": "0.1.0",
+  "description": "Personal development workflows migrated from Cthulhu's Claude Code setup.",
+  "author": {
+    "name": "Cthulhu"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Cthulhu Workflows",
+    "shortDescription": "Verify, review, orient, plan, and ship with personal guardrails.",
+    "longDescription": "Codex-native versions of the workflows that proved useful in Cthulhu's Claude Code history: repo-aware verification, tightly scoped draft PRs, plan-grounded review, domain orientation, persistent plans, and research reports.",
+    "developerName": "Cthulhu",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Verify the current change with the narrowest correct checks",
+      "Commit only this change and open a draft PR",
+      "Save the plan we agreed so a fresh session can resume it"
+    ]
+  }
+}

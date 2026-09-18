@@ -146,6 +146,31 @@ folds it into a symlink, those runtime files land inside the repo. A
 `.gitignore` backstop covers `*.sock` / `*.log` under `config/herdr/` in case
 that ever happens.
 
+### Codex config stows to three places
+
+`config/codex/` is one stow package covering three targets:
+
+| repo path | stows to |
+|---|---|
+| `.codex/AGENTS.md` | `~/.codex/AGENTS.md` |
+| `.agents/plugins/marketplace.json` | `~/.agents/plugins/marketplace.json` |
+| `plugins/cthulhu-workflows/` | `~/plugins/cthulhu-workflows/` |
+
+`~/plugins` being outside a dot-directory is **intentional, not a mistake**.
+The `personal` marketplace resolves its relative `source.path` against its
+root, and that root is `$HOME` — confirm with `codex plugin marketplace list`.
+Moving the plugin under `.agents/` would require editing `marketplace.json`
+to match, so leave it unless `codex plugin list` says the plugin is missing.
+
+Two consequences worth knowing:
+
+- `~/.agents/plugins` is a stow-**folded** symlink into this repo, so anything
+  Codex writes there (lock files, plugin state) lands inside the repo. A
+  `.gitignore` backstop covers the known cases.
+- Work-specific skills that name internal repos or services are gitignored,
+  not committed — this repo is public. They still stow and load normally;
+  they just never reach GitHub. Keep new work-specific skills out the same way.
+
 ### After-stow gotcha for `~/.claude/`
 
 `~/.claude/` is a real directory (Claude Code owns it), not a stow-folded

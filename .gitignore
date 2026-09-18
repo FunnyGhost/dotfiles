@@ -10,3 +10,16 @@ Brewfile.local
 # repo, the server's socket/logs land here — never commit them)
 config/herdr/.config/herdr/*.sock
 config/herdr/.config/herdr/*.log
+
+# Work-specific Codex skills. These describe internal architecture (repo
+# names, service topology), so they stay on disk and stow normally but are
+# never committed to this public repo. See section 2 of CLAUDE.md.
+config/codex/plugins/cthulhu-workflows/skills/learn-ip/
+config/codex/plugins/cthulhu-workflows/skills/learn-sdk/
+config/codex/plugins/cthulhu-workflows/commands/learn-ip.md
+config/codex/plugins/cthulhu-workflows/commands/learn-sdk.md
+
+# Codex writes plugin state into ~/.agents/plugins, which stow folds into this
+# repo — backstop so that state never gets committed.
+config/codex/.agents/plugins/*.lock.json
+config/codex/.agents/plugins/.skill-lock.json
