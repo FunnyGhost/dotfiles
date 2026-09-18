@@ -184,6 +184,22 @@ herdr's Claude integration (hook script + `SessionStart` entry in
 `herdr integration install claude`; it rewrites `settings.json` with absolute
 paths and reordered keys.
 
+### Claude slash commands are split public/local
+
+`~/.claude/commands/` holds both tracked and local-only commands:
+
+- Tracked in `config/claude/.claude/commands/` and symlinked out: `verify`,
+  `scoped-pr`, `pr-review`, `save-plan`, `research-html`.
+- Real files that live only in `~/.claude/commands/`: the work-specific ones
+  that name internal repos or services. Gitignored as a backstop.
+
+Keep at least one local-only real file in that directory. It's what stops stow
+from folding `~/.claude/commands` into a symlink into this repo — if it folds,
+anything Claude Code writes there lands inside the repo.
+
+The Codex equivalents under `config/codex/` are **separate, diverged files**,
+not copies. Changing a workflow means updating both if you want parity.
+
 ## 3. What this file does NOT cover
 
 - macOS system preferences (Dock, keyboard repeat, trackpad) — set manually.

@@ -23,3 +23,9 @@ config/codex/plugins/cthulhu-workflows/commands/learn-sdk.md
 # repo — backstop so that state never gets committed.
 config/codex/.agents/plugins/*.lock.json
 config/codex/.agents/plugins/.skill-lock.json
+
+# Work-specific Claude slash commands — same rule as the Codex skills above:
+# they name internal repos/services, so they stay local-only in ~/.claude/
+# commands/ and are never committed. Backstop in case one is copied in here.
+config/claude/.claude/commands/learn-ip.md
+config/claude/.claude/commands/learn-sdk.md
