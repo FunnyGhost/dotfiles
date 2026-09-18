@@ -58,3 +58,10 @@ sidebar_max_width = 48
 # In-app toast when an agent in a background pane finishes or blocks.
 # ("system" delivery got eaten by macOS DND — in-app is immune to Focus modes.)
 delivery = "herdr"
+
+# Show a 📦 on panes running inside a work sandbox. A shell wrapper in
+# ~/.zshrc.local reports the $box token on attach and clears it on exit, so
+# host panes stay clean. (The sandbox tool reports its own $sandbox token, but
+# a token renders its literal value and there is no value-to-glyph map.)
+[ui.sidebar.agents]
+rows = [["state_icon", "workspace", "tab"], ["$box", "agent"]]

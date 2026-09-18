@@ -56,7 +56,8 @@ logs) next to its config, and those must not land in the repo (see section 2).
 These files are gitignored and must be restored from your previous laptop,
 password manager, or 1Password:
 
-- `~/.zshrc.local` — work env vars, tokens. Sourced by the stowed `~/.zshrc`.
+- `~/.zshrc.local` — work env vars, tokens, and work-only shell helpers
+  (anything naming internal repos or tooling). Sourced by the stowed `~/.zshrc`.
 - `~/dotfiles/Brewfile.local` — work-specific casks and taps.
 
 If absent, shell startup tolerates it. Brewfile.local is also tolerated by
