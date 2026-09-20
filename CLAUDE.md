@@ -59,6 +59,9 @@ password manager, or 1Password:
 - `~/.zshrc.local` — work env vars, tokens, and work-only shell helpers
   (anything naming internal repos or tooling). Sourced by the stowed `~/.zshrc`.
 - `~/dotfiles/Brewfile.local` — work-specific casks and taps.
+- `Raycast-<date>.rayconfig` — Raycast settings. Restore with Raycast's
+  **Import Settings & Data**, or by double-clicking the file. See section 2
+  for why it isn't stowed.
 
 If absent, shell startup tolerates it. Brewfile.local is also tolerated by
 step 1.2 (the `[[ -f ... ]]` guard).
@@ -125,6 +128,32 @@ overrides with a full copy of the system, destroying the separation.
 
 The `bbd` alias therefore dumps to `/tmp/Brewfile.new` and shows a diff only.
 Merge anything you want by hand.
+
+### Raycast settings can't be stowed — use its own export
+
+Raycast keeps its configuration in **encrypted** SQLite databases under
+`~/Library/Application Support/com.raycast.macos/`; `main.db` doesn't even
+start with `SQLite format 3`. The plist at
+`~/Library/Preferences/com.raycast.macos.plist` holds only machine-local
+state — window frames, per-monitor cached positions, a telemetry id, audio
+device ids. Neither is a candidate for stow:
+
+- macOS `cfprefsd` caches preferences in memory and rewrites plists wholesale,
+  replacing symlinks with real files — a stowed plist silently stops tracking
+  this repo.
+- The databases are binary, constantly changing, and total ~377M, of which
+  ~208M is clipboard history.
+
+Use Raycast's own commands instead: **Export Settings & Data** writes a
+password-encrypted `.rayconfig` (~2MB, `RAYCFG3` container, AES-256 with a
+salt-derived key), and **Import Settings & Data** restores it.
+
+That file stays **out of this repo**, which is public. The export bundles
+preferences, commands and aliases, quicklinks, snippets, and AI commands —
+extension preferences included, and that's where extension API keys live. Its
+only protection is the password, so publishing it would create a permanent
+offline cracking target that no later key rotation can undo. Keep it in
+1Password with a strong random password, per section 1.4.
 
 ### Claude statusline
 
