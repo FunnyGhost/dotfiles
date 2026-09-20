@@ -146,3 +146,9 @@ cask "slack"
 cask "wezterm"
 # Privacy-focused web browser
 cask "zen"
+
+# Agent CLIs. Only these two npm globals are tracked — the rest of the global
+# npm set is machine noise and work tooling. brew bundle installs them with
+# whatever npm is first on PATH, which may differ from your `n`-managed node.
+npm "@anthropic-ai/claude-code"
+npm "@openai/codex"

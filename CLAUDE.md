@@ -90,6 +90,39 @@ echo '{}' | ~/.claude/statusline.sh                        # prints a status lin
 
 If any check fails, fix it before declaring the laptop ready.
 
+### 1.8 Updating a machine that already has this repo
+
+For a machine that was set up earlier and has fallen behind. Safe to rerun.
+
+```bash
+cd ~/dotfiles
+git pull
+git submodule update --init --recursive
+brew bundle install
+
+# must exist before stow, or stow folds them into symlinks into the repo
+mkdir -p ~/.config/herdr ~/.claude/commands
+
+stow -d config -t ~ --restow $(command ls config)
+stow -d . -t ~ --restow git-commands
+exec zsh
+```
+
+`--restow` is the point: plain `stow` won't reliably pick up files added to a
+package that's already stowed. New packages under `config/` are picked up
+automatically by the `command ls` expansion.
+
+Not covered by the above, because it's gitignored or manual:
+
+- `~/.zshrc.local` and `Brewfile.local` — copy from the other machine.
+- Work-specific `~/.claude/commands/learn-*.md` and the Codex `learn-*`
+  skills — gitignored, so `git pull` won't bring them.
+- `op signin`, for `rayconfig-backup`.
+
+`brew bundle install` only adds. It won't remove packages dropped from the
+Brewfile, which is fine. Don't run `brew bundle cleanup`: it uninstalls
+anything not listed, including everything in `Brewfile.local`.
+
 ## 2. Working conventions
 
 ### Stow auto-discovers everything in `config/`
@@ -207,9 +240,11 @@ paths and reordered keys.
 - Real files that live only in `~/.claude/commands/`: the work-specific ones
   that name internal repos or services. Gitignored as a backstop.
 
-Keep at least one local-only real file in that directory. It's what stops stow
-from folding `~/.claude/commands` into a symlink into this repo — if it folds,
-anything Claude Code writes there lands inside the repo.
+The directory must exist before stowing. Stow folds a subdirectory into a
+single symlink only when the target doesn't exist, so `mkdir -p
+~/.claude/commands` is enough — an existing directory gets its files linked
+individually. If it ever folds, anything Claude Code writes there lands
+inside this repo.
 
 The Codex equivalents under `config/codex/` are **separate, diverged files**,
 not copies. Changing a workflow means updating both if you want parity.
