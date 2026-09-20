@@ -111,6 +111,8 @@ brew "felixkratz/formulae/sketchybar"
 # Find & resume Claude Code chats from anywhere (fzf picker)
 brew "funnyghost/tap/wwid"
 # Work-specific formulae and casks live in Brewfile.local
+# Command-line interface for 1Password
+cask "1password-cli"
 # AeroSpace is an i3-like tiling window manager for macOS
 cask "aerospace"
 # Keyboard customization for macOS

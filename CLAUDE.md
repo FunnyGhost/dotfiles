@@ -136,7 +136,8 @@ state that macOS rewrites — stow can't usefully track either. Use Raycast's
 
 The exported `.rayconfig` stays out of this repo: it's protected only by its
 password and includes extension preferences, where extension API keys live.
-Keep it in 1Password.
+Keep it in 1Password — `rayconfig-backup` uploads the newest export and
+deletes the local copy.
 
 ### Claude statusline
 

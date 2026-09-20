@@ -44,6 +44,27 @@ function btconnect() {
 	blueutil --connect "$addr"
 }
 
+# Back up the newest Raycast export to 1Password, then remove the local copy.
+# Raycast's export is GUI-only: run "Export Settings & Data" first.
+# Usage: rayconfig-backup [path]
+function rayconfig-backup() {
+	local title="Raycast Settings Export" vault="Private" acct="my.1password.eu"
+	local -a found=( ~/Desktop/*.rayconfig(Nom) ~/Downloads/*.rayconfig(Nom) )
+	local f=${1:-${found[1]}}
+	if [[ ! -f "$f" ]]; then
+		print -u2 "rayconfig-backup: no .rayconfig found — export from Raycast first"
+		return 1
+	fi
+	if op item get "$title" --vault "$vault" --account "$acct" >/dev/null 2>&1; then
+		op document edit "$title" "$f" --vault "$vault" --account "$acct" >/dev/null || return 1
+		print "updated \"$title\" in 1Password"
+	else
+		op document create "$f" --title "$title" --vault "$vault" --account "$acct" >/dev/null || return 1
+		print "created \"$title\" in 1Password"
+	fi
+	rm -P "$f" && print "removed ${f:t}"
+}
+
 # Advanced customization of fzf options via _fzf_comprun function
 # - The first argument to the function is the name of the command.
 # - You should make sure to pass the rest of the arguments to fzf.
