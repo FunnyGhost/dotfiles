@@ -37,9 +37,8 @@ git submodule update --init --recursive
 brew bundle install
 ```
 
-Public packages only. The work packages in `Brewfile.local` come later, in
-step 1.4 — their tap is Artifactory-gated and needs credentials that don't
-exist yet.
+Public packages only. `Brewfile.local` comes later, in step 1.4 — its taps
+may need credentials that don't exist yet.
 
 ### 1.3 Stow every config
 
@@ -74,13 +73,12 @@ password manager, or 1Password:
 Then install the work packages, which step 1.2 deliberately skipped:
 
 ```bash
-source ~/.zshrc.local                 # exports HOMEBREW_ARTIFACTORY_USER / _PASS
+source ~/.zshrc.local
 [[ -f Brewfile.local ]] && brew bundle install --file=Brewfile.local
 ```
 
-The work tap refuses to load without those two variables, and the short
-`_PASS` spelling is the one it wants — `_PASSWORD` alone is not enough. The
-`source` is needed because `~/.zshrc` won't have run yet this early.
+A private tap can refuse to load without credentials exported from
+`~/.zshrc.local`, so source it first — `~/.zshrc` won't have run this early.
 
 If either file is absent, shell startup and the `[[ -f ... ]]` guard both
 tolerate it.
