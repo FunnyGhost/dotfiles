@@ -35,21 +35,26 @@ git submodule update --init --recursive
 
 ```bash
 brew bundle install
-[[ -f Brewfile.local ]] && brew bundle install --file=Brewfile.local
 ```
+
+Public packages only. The work packages in `Brewfile.local` come later, in
+step 1.4 — their tap is Artifactory-gated and needs credentials that don't
+exist yet.
 
 ### 1.3 Stow every config
 
 ```bash
-mkdir -p ~/.config/herdr
+mkdir -p ~/.config/herdr ~/.claude/commands
 stow -d config -t ~ $(command ls config)
 stow -d . -t ~ git-commands
 ```
 
 `command ls` bypasses the `eza` alias defined in `.zshrc`. Stowing everything
 under `config/` is intentional — see section 2. The `mkdir` prevents stow from
-folding `~/.config/herdr` into a symlink — herdr writes runtime files (socket,
-logs) next to its config, and those must not land in the repo (see section 2).
+folding those into symlinks pointing at the repo. Both are directories the
+tools themselves write into — herdr drops a socket and logs beside its config,
+Claude Code writes commands — and that output must not land here (see
+section 2).
 
 ### 1.4 Restore local overrides (manual, per machine)
 
@@ -62,9 +67,23 @@ password manager, or 1Password:
 - Raycast settings — in 1Password as the **Raycast Settings Export** document
   (Private vault), plus its export password. Restore via Raycast's
   **Import Settings & Data**.
+- Work-specific `~/.claude/commands/learn-*.md` and the Codex `learn-*` skills
+  under `config/codex/` — gitignored, so a clone won't bring them. Copy from
+  the old machine.
 
-If absent, shell startup tolerates it. Brewfile.local is also tolerated by
-step 1.2 (the `[[ -f ... ]]` guard).
+Then install the work packages, which step 1.2 deliberately skipped:
+
+```bash
+source ~/.zshrc.local                 # exports HOMEBREW_ARTIFACTORY_USER / _PASS
+[[ -f Brewfile.local ]] && brew bundle install --file=Brewfile.local
+```
+
+The work tap refuses to load without those two variables, and the short
+`_PASS` spelling is the one it wants — `_PASSWORD` alone is not enough. The
+`source` is needed because `~/.zshrc` won't have run yet this early.
+
+If either file is absent, shell startup and the `[[ -f ... ]]` guard both
+tolerate it.
 
 ### 1.5 Terminal font
 
@@ -254,5 +273,7 @@ not copies. Changing a workflow means updating both if you want parity.
 - macOS system preferences (Dock, keyboard repeat, trackpad) — set manually.
 - App logins (1Password, Slack, browsers, Cursor, Raycast extensions).
 - SSH and GPG keys — restore from secure backup.
+- Claude Code MCP servers (`~/.claude.json`) and installed plugins and
+  marketplaces — not captured anywhere; re-add by hand.
 - Accessibility / Input Monitoring permissions — granted on first launch
   of Karabiner, Aerospace, Sketchybar.
