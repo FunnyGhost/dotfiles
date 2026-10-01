@@ -118,7 +118,7 @@ eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
 
 # Added by Windsurf
-export PATH="/Users/cthulhu/.codeium/windsurf/bin:$PATH"
+export PATH="$HOME/.codeium/windsurf/bin:$PATH"
 
 # ------------- VI Mode Configuration -------------
 # Enable VI mode
@@ -143,7 +143,7 @@ bindkey '^n' down-history
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
 # bun completions
-[ -s "/Users/cthulhu/.bun/_bun" ] && source "/Users/cthulhu/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
