@@ -102,7 +102,13 @@ in its own GUI settings (Ghostty, WezTerm, Kitty).
 ```bash
 open -a AeroSpace
 open -a Karabiner-Elements
+defaults write com.apple.dock expose-group-apps -bool true && killall Dock
 ```
+
+The `defaults` line turns on Mission Control's **Group windows by
+application**. AeroSpace hides other workspaces' windows in a screen corner,
+and without grouping Mission Control shrinks everything to tiny, scattered
+thumbnails.
 
 `brew bundle` already registered sketchybar as a login service
 (`start_service: true`). AeroSpace adds itself to login items
