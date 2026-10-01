@@ -36,7 +36,8 @@
   },
   "enabledPlugins": {
     "plannotator@plannotator": true,
-    "slack@claude-plugins-official": true
+    "slack@claude-plugins-official": true,
+    "miro@miro-ai": true
   },
   "extraKnownMarketplaces": {
     "plannotator": {
@@ -44,10 +45,16 @@
         "source": "github",
         "repo": "backnotprop/plannotator"
       }
+    },
+    "miro-ai": {
+      "source": {
+        "source": "github",
+        "repo": "miroapp/miro-ai"
+      }
     }
   },
   "alwaysThinkingEnabled": true,
+  "tui": "fullscreen",
   "skipWorkflowUsageWarning": true,
-  "theme": "custom:eldritch",
-  "tui": "fullscreen"
+  "theme": "custom:eldritch"
 }
