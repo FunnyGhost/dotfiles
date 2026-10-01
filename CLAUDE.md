@@ -34,8 +34,16 @@ git submodule update --init --recursive
 ### 1.2 Install Homebrew packages
 
 ```bash
+export XDG_CONFIG_HOME=~/.config
+brew trust eth-p/software felixkratz/formulae funnyghost/tap nikitabobko/tap
 brew bundle install
 ```
+
+Homebrew refuses to load formulae from third-party taps until they're
+trusted. It stores that list under `$XDG_CONFIG_HOME/homebrew/`, falling back
+to `~/.homebrew/` when the variable is unset. The stowed `~/.zshrc` sets it
+to `~/.config`, but only in shells started after step 1.3 — export it now, or
+every tap trusted here silently reverts to untrusted later.
 
 Public packages only. `Brewfile.local` comes later, in step 1.4 — its taps
 may need credentials that don't exist yet.
@@ -89,13 +97,32 @@ Set your terminal app's font to **Hack Nerd Font**, 12–14pt. The font is
 installed by `brew bundle`, but each terminal stores its font preference
 in its own GUI settings (Ghostty, WezTerm, Kitty).
 
-### 1.6 Restart shell
+### 1.6 Start the background apps
+
+```bash
+open -a AeroSpace
+open -a Karabiner-Elements
+```
+
+`brew bundle` already registered sketchybar as a login service
+(`start_service: true`). AeroSpace adds itself to login items
+(`start-at-login` in `.aerospace.toml`) and, on every startup, launches
+borders and reloads sketchybar. Neither does anything until macOS grants
+the permissions below — one-time GUI approvals, nothing can automate them.
+In System Settings > Privacy & Security:
+
+- **Accessibility** — AeroSpace. Restart it afterwards so its startup
+  commands run.
+- **Karabiner** — follow its setup window: enable the driver extension under
+  Login Items & Extensions, and grant Input Monitoring.
+
+### 1.7 Restart shell
 
 ```bash
 exec zsh
 ```
 
-### 1.7 Verification
+### 1.8 Verification
 
 ```bash
 command -v stow nvim starship gh fzf eza zoxide bat jq    # all resolve
@@ -103,11 +130,13 @@ readlink ~/.zshrc ~/.gitconfig ~/.claude/CLAUDE.md         # all point into ~/do
 git -C ~/dotfiles status                                   # clean (or only *.local untracked)
 git -C ~/dotfiles submodule status                         # git-commands populated
 echo '{}' | ~/.claude/statusline.sh                        # prints a status line
+brew services list | command grep sketchybar               # started
+pgrep -x borders                                           # running (AeroSpace starts it)
 ```
 
 If any check fails, fix it before declaring the laptop ready.
 
-### 1.8 Updating a machine that already has this repo
+### 1.9 Updating a machine that already has this repo
 
 For a machine that was set up earlier and has fallen behind. Safe to rerun.
 

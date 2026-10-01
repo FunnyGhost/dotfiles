@@ -107,7 +107,7 @@ brew "eth-p/software/bat-extras"
 # A window border system for macOS
 brew "felixkratz/formulae/borders"
 # Custom macOS statusbar with shell plugin, interaction and graph support
-brew "felixkratz/formulae/sketchybar"
+brew "felixkratz/formulae/sketchybar", start_service: true
 # Find & resume Claude Code chats from anywhere (fzf picker)
 brew "funnyghost/tap/wwid"
 # Work-specific formulae and casks live in Brewfile.local
@@ -132,6 +132,8 @@ cask "font-hack-nerd-font"
 cask "font-monaspace"
 cask "font-mononoki"
 cask "font-mononoki-nerd-font"
+# App icons for sketchybar's workspace items
+cask "font-sketchybar-app-font"
 # Utility to hide menu bar items
 cask "hiddenbar"
 # Calendar for professionals and teams
