@@ -51,17 +51,33 @@ may need credentials that don't exist yet.
 ### 1.3 Stow every config
 
 ```bash
-mkdir -p ~/.config/herdr ~/.claude/commands
+mkdir -p ~/.config/herdr ~/.claude/commands \
+  ~/.config/herdr-app/themes ~/.config/herdr-app/mods/my-prefix
 stow -d config -t ~ $(command ls config)
 stow -d . -t ~ git-commands
 ```
 
 `command ls` bypasses the `eza` alias defined in `.zshrc`. Stowing everything
 under `config/` is intentional — see section 2. The `mkdir` prevents stow from
-folding those into symlinks pointing at the repo. Both are directories the
+folding those into symlinks pointing at the repo. All are directories the
 tools themselves write into — herdr drops a socket and logs beside its config,
-Claude Code writes commands — and that output must not land here (see
+Claude Code writes commands, Herdr.app keeps all its state and generated files
+in `~/.config/herdr-app/` — and that output must not land here (see
 section 2).
+
+Then the Plannotator skills for Codex. They're third-party, so they're
+installed rather than tracked (`config/codex/.agents/skills/` is gitignored):
+
+```bash
+curl -fsSL https://plannotator.ai/install.sh | bash
+npx skills add https://github.com/backnotprop/plannotator/tree/main/apps/skills/extra \
+  -g -a codex -s '*' -y
+```
+
+The installer brings the CLI, the Claude plugin, a Codex hook and the core
+skills (`plannotator`, `-annotate`, `-last`, `-review`); `npx skills` adds the
+extras (`-compound`, `-setup-goal`, `-visual-explainer`). Run both after
+stowing — they write into `~/.agents`, which must already be the stow symlink.
 
 ### 1.4 Restore local overrides (manual, per machine)
 
@@ -132,7 +148,8 @@ exec zsh
 
 ```bash
 command -v stow nvim starship gh fzf eza zoxide bat jq    # all resolve
-readlink ~/.zshrc ~/.gitconfig ~/.claude/CLAUDE.md         # all point into ~/dotfiles
+readlink ~/.zshrc ~/.gitconfig ~/.claude/CLAUDE.md \
+  ~/.config/herdr-app/keys.json                           # all point into ~/dotfiles
 git -C ~/dotfiles status                                   # clean (or only *.local untracked)
 git -C ~/dotfiles submodule status                         # git-commands populated
 echo '{}' | ~/.claude/statusline.sh                        # prints a status line
@@ -153,7 +170,8 @@ git submodule update --init --recursive
 brew bundle install
 
 # must exist before stow, or stow folds them into symlinks into the repo
-mkdir -p ~/.config/herdr ~/.claude/commands
+mkdir -p ~/.config/herdr ~/.claude/commands \
+  ~/.config/herdr-app/themes ~/.config/herdr-app/mods/my-prefix
 
 stow -d config -t ~ --restow $(command ls config)
 stow -d . -t ~ --restow git-commands
@@ -237,14 +255,30 @@ script — not `settings.json`.
 
 - `git-commands/.git-commands` → `FunnyGhost/git-commands`
 
-### herdr runtime files live next to its config
+### Herdr.app, not the herdr TUI
 
-`~/.config/herdr/` must stay a **real directory** with only `config.toml`
-symlinked into the repo (that's what the `mkdir -p` in section 1.3 ensures).
-The herdr server writes its socket and logs into that same directory; if stow
-folds it into a symlink, those runtime files land inside the repo. A
-`.gitignore` backstop covers `*.sock` / `*.log` under `config/herdr/` in case
-that ever happens.
+The agent multiplexer in use is **Herdr.app** (`cask "herdr-app"`).
+`config/herdr/` is the old TUI's config, kept per the rule above; the TUI
+itself is no longer in the Brewfile.
+
+`config/herdr-app/` tracks only the deliberate overrides — everything else in
+`~/.config/herdr-app/` is written by the app:
+
+- `keys.json` — the app's full keymap, plus `ctrl-b` → the `my-prefix` popup
+  (tmux-style prefix: `]`/`[` agents, `hjkl` focus, `v`/`-` split, …).
+- `mods/my-prefix/` — that popup. Only `main.js` and `mod.json` are ours; the
+  app drops `gpui-kit.d.ts` / `jsconfig.json` beside them (gitignored).
+- `settings.json`, `themes/eldritch.json` — Eldritch look.
+
+Stay on the shipped `main` layout. Shipped layouts can't be edited (the app
+moves edits aside on start), and a cloned layout never receives updates —
+that trade wasn't worth it for one shortcut (a last-pane jump).
+
+`~/.config/herdr-app/`, `themes/` and `mods/my-prefix/` must be **real
+directories** (the `mkdir -p` in section 1.3); folded, the app's state lands
+in the repo. The app writes through the symlinks fine (e.g. zoom updates
+`settings.json`). Delete one of those files, though, and the app instantly
+recreates it with defaults — replace with `ln -sf`, not `rm` + stow.
 
 ### Codex config stows to three places
 
@@ -264,9 +298,10 @@ to match, so leave it unless `codex plugin list` says the plugin is missing.
 
 Two consequences worth knowing:
 
-- `~/.agents/plugins` is a stow-**folded** symlink into this repo, so anything
-  Codex writes there (lock files, plugin state) lands inside the repo. A
-  `.gitignore` backstop covers the known cases.
+- `~/.agents` itself is a stow-**folded** symlink into this repo, so anything
+  tools write there (lock files, plugin state, installed skills) lands inside
+  the repo. A `.gitignore` backstop covers the known cases, including the
+  third-party skills from section 1.3.
 - Work-specific skills that name internal repos or services are gitignored,
   not committed — this repo is public. They still stow and load normally;
   they just never reach GitHub. Keep new work-specific skills out the same way.
@@ -278,10 +313,13 @@ symlink. Files inside are symlinked individually. **Adding a new file
 under `config/claude/.claude/` requires `stow -d config -t ~ --restow claude`**
 for the new symlink to appear in `~/.claude/`.
 
-herdr's Claude integration (hook script + `SessionStart` entry in
-`settings.json`) is tracked and stowed — don't rerun
-`herdr integration install claude`; it rewrites `settings.json` with absolute
-paths and reordered keys.
+Herdr.app lists a terminal as an agent only once its program reports status
+via OSC 7501, which Claude Code doesn't emit. `hooks/herdr-app-status.sh` does
+it from the lifecycle hooks in `settings.json` (idle / working / blocked /
+done / clear), writing to the claude process's tty since hooks have no
+`/dev/tty`. Agents started before the hooks existed stay invisible until
+restarted. Don't run the old TUI's `herdr integration install claude` — it
+targets the TUI only and rewrites `settings.json` with absolute paths.
 
 ### Claude slash commands are split public/local
 

@@ -117,8 +117,9 @@ outer.left = 10
 alt-b = 'exec-and-forget open -a /Applications/Zen.app'              # [B]rowser (Zen)
 alt-a = 'exec-and-forget open -a /Applications/Claude.app'           # Cl[a]ude
 alt-d = 'exec-and-forget open -a /Applications/Cursor.app'           # [D]evelopment
-alt-c = 'exec-and-forget open -a /Applications/Notion\ Calendar.app' # [C]alendar
+alt-c = 'exec-and-forget open -a /System/Applications/Calendar.app'  # [C]alendar
 alt-w = 'exec-and-forget open -a /Applications/WezTerm.app'          # [W]ezterm
+alt-i = 'exec-and-forget open -a /Applications/Herdr.app'            # Herdr (agents)
 alt-s = 'exec-and-forget open -a /Applications/Slack.app'            # [S]lack
 alt-m = 'exec-and-forget open -a /System/Applications/Mail.app'      # [M]ail
 alt-n = 'exec-and-forget open -a /Applications/Craft.app'            # [N]otes (Craft)
@@ -217,6 +218,10 @@ run = ['move-node-to-workspace 1']
 if.app-id = 'com.github.wez.wezterm'  # Wezterm
 run = ['move-node-to-workspace 1']
 
+[[on-window-detected]]
+if.app-id = 'dev.herdr.app'  # Herdr
+run = ['move-node-to-workspace 1']
+
 # Notes Space (2)
 [[on-window-detected]]
 if.app-id = 'com.lukilabs.lukiapp'  # Craft
@@ -232,7 +237,7 @@ if.app-id = 'com.apple.mail'  # Mail
 run = ['move-node-to-workspace 3']
 
 [[on-window-detected]]
-if.app-id = 'com.cron.electron'  # Notion Calendar
+if.app-id = 'com.apple.iCal'  # Calendar
 run = ['move-node-to-workspace 3']
 
 # Browsing Space (4)

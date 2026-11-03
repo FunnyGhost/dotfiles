@@ -150,3 +150,8 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export HERDR_BIN_PATH="$(command -v herdr)"
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/catalin/.docker/completions $fpath)
+autoload -Uz compinit
+(( ${+_comps[docker]} )) || compinit
+# End of Docker CLI completions

@@ -32,6 +32,9 @@ function icon_map() {
   "WezTerm")
     icon_result="󰆍"
     ;;
+  "Herdr")
+    icon_result="󰳆"
+    ;;
   "Claude")
     icon_result="󱙺"
     ;;
