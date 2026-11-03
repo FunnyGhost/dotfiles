@@ -278,10 +278,13 @@ symlink. Files inside are symlinked individually. **Adding a new file
 under `config/claude/.claude/` requires `stow -d config -t ~ --restow claude`**
 for the new symlink to appear in `~/.claude/`.
 
-herdr's Claude integration (hook script + `SessionStart` entry in
-`settings.json`) is tracked and stowed — don't rerun
-`herdr integration install claude`; it rewrites `settings.json` with absolute
-paths and reordered keys.
+Herdr.app lists a terminal as an agent only once its program reports status
+via OSC 7501, which Claude Code doesn't emit. `hooks/herdr-app-status.sh` does
+it from the lifecycle hooks in `settings.json` (idle / working / blocked /
+done / clear), writing to the claude process's tty since hooks have no
+`/dev/tty`. Agents started before the hooks existed stay invisible until
+restarted. Don't run the old TUI's `herdr integration install claude` — it
+targets the TUI only and rewrites `settings.json` with absolute paths.
 
 ### Claude slash commands are split public/local
 
