@@ -24,10 +24,13 @@ config/codex/plugins/cthulhu-workflows/skills/learn-sdk/
 config/codex/plugins/cthulhu-workflows/commands/learn-ip.md
 config/codex/plugins/cthulhu-workflows/commands/learn-sdk.md
 
-# Codex writes plugin state into ~/.agents/plugins, which stow folds into this
-# repo — backstop so that state never gets committed.
+# ~/.agents is stow-folded into this repo, so whatever tools install there lands
+# here — backstop so that state never gets committed.
 config/codex/.agents/plugins/*.lock.json
 config/codex/.agents/plugins/.skill-lock.json
+# Third-party skills, reinstalled by the commands in CLAUDE.md section 1.3.
+config/codex/.agents/skills/
+config/codex/.agents/.skill-lock.json
 
 # Work-specific Claude slash commands — same rule as the Codex skills above:
 # they name internal repos/services, so they stay local-only in ~/.claude/

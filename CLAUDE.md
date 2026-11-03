@@ -65,6 +65,20 @@ Claude Code writes commands, Herdr.app keeps all its state and generated files
 in `~/.config/herdr-app/` — and that output must not land here (see
 section 2).
 
+Then the Plannotator skills for Codex. They're third-party, so they're
+installed rather than tracked (`config/codex/.agents/skills/` is gitignored):
+
+```bash
+curl -fsSL https://plannotator.ai/install.sh | bash
+npx skills add https://github.com/backnotprop/plannotator/tree/main/apps/skills/extra \
+  -g -a codex -s '*' -y
+```
+
+The installer brings the CLI, the Claude plugin, a Codex hook and the core
+skills (`plannotator`, `-annotate`, `-last`, `-review`); `npx skills` adds the
+extras (`-compound`, `-setup-goal`, `-visual-explainer`). Run both after
+stowing — they write into `~/.agents`, which must already be the stow symlink.
+
 ### 1.4 Restore local overrides (manual, per machine)
 
 These files are gitignored and must be restored from your previous laptop,
@@ -284,9 +298,10 @@ to match, so leave it unless `codex plugin list` says the plugin is missing.
 
 Two consequences worth knowing:
 
-- `~/.agents/plugins` is a stow-**folded** symlink into this repo, so anything
-  Codex writes there (lock files, plugin state) lands inside the repo. A
-  `.gitignore` backstop covers the known cases.
+- `~/.agents` itself is a stow-**folded** symlink into this repo, so anything
+  tools write there (lock files, plugin state, installed skills) lands inside
+  the repo. A `.gitignore` backstop covers the known cases, including the
+  third-party skills from section 1.3.
 - Work-specific skills that name internal repos or services are gitignored,
   not committed — this repo is public. They still stow and load normally;
   they just never reach GitHub. Keep new work-specific skills out the same way.
