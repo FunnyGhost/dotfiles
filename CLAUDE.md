@@ -51,16 +51,18 @@ may need credentials that don't exist yet.
 ### 1.3 Stow every config
 
 ```bash
-mkdir -p ~/.config/herdr ~/.claude/commands
+mkdir -p ~/.config/herdr ~/.claude/commands \
+  ~/.config/herdr-app/themes ~/.config/herdr-app/mods/my-prefix
 stow -d config -t ~ $(command ls config)
 stow -d . -t ~ git-commands
 ```
 
 `command ls` bypasses the `eza` alias defined in `.zshrc`. Stowing everything
 under `config/` is intentional — see section 2. The `mkdir` prevents stow from
-folding those into symlinks pointing at the repo. Both are directories the
+folding those into symlinks pointing at the repo. All are directories the
 tools themselves write into — herdr drops a socket and logs beside its config,
-Claude Code writes commands — and that output must not land here (see
+Claude Code writes commands, Herdr.app keeps all its state and generated files
+in `~/.config/herdr-app/` — and that output must not land here (see
 section 2).
 
 ### 1.4 Restore local overrides (manual, per machine)
@@ -132,7 +134,8 @@ exec zsh
 
 ```bash
 command -v stow nvim starship gh fzf eza zoxide bat jq    # all resolve
-readlink ~/.zshrc ~/.gitconfig ~/.claude/CLAUDE.md         # all point into ~/dotfiles
+readlink ~/.zshrc ~/.gitconfig ~/.claude/CLAUDE.md \
+  ~/.config/herdr-app/keys.json                           # all point into ~/dotfiles
 git -C ~/dotfiles status                                   # clean (or only *.local untracked)
 git -C ~/dotfiles submodule status                         # git-commands populated
 echo '{}' | ~/.claude/statusline.sh                        # prints a status line
@@ -153,7 +156,8 @@ git submodule update --init --recursive
 brew bundle install
 
 # must exist before stow, or stow folds them into symlinks into the repo
-mkdir -p ~/.config/herdr ~/.claude/commands
+mkdir -p ~/.config/herdr ~/.claude/commands \
+  ~/.config/herdr-app/themes ~/.config/herdr-app/mods/my-prefix
 
 stow -d config -t ~ --restow $(command ls config)
 stow -d . -t ~ --restow git-commands
@@ -237,14 +241,30 @@ script — not `settings.json`.
 
 - `git-commands/.git-commands` → `FunnyGhost/git-commands`
 
-### herdr runtime files live next to its config
+### Herdr.app, not the herdr TUI
 
-`~/.config/herdr/` must stay a **real directory** with only `config.toml`
-symlinked into the repo (that's what the `mkdir -p` in section 1.3 ensures).
-The herdr server writes its socket and logs into that same directory; if stow
-folds it into a symlink, those runtime files land inside the repo. A
-`.gitignore` backstop covers `*.sock` / `*.log` under `config/herdr/` in case
-that ever happens.
+The agent multiplexer in use is **Herdr.app** (`cask "herdr-app"`).
+`config/herdr/` is the old TUI's config, kept per the rule above; the TUI
+itself is no longer in the Brewfile.
+
+`config/herdr-app/` tracks only the deliberate overrides — everything else in
+`~/.config/herdr-app/` is written by the app:
+
+- `keys.json` — the app's full keymap, plus `ctrl-b` → the `my-prefix` popup
+  (tmux-style prefix: `]`/`[` agents, `hjkl` focus, `v`/`-` split, …).
+- `mods/my-prefix/` — that popup. Only `main.js` and `mod.json` are ours; the
+  app drops `gpui-kit.d.ts` / `jsconfig.json` beside them (gitignored).
+- `settings.json`, `themes/eldritch.json` — Eldritch look.
+
+Stay on the shipped `main` layout. Shipped layouts can't be edited (the app
+moves edits aside on start), and a cloned layout never receives updates —
+that trade wasn't worth it for one shortcut (a last-pane jump).
+
+`~/.config/herdr-app/`, `themes/` and `mods/my-prefix/` must be **real
+directories** (the `mkdir -p` in section 1.3); folded, the app's state lands
+in the repo. The app writes through the symlinks fine (e.g. zoom updates
+`settings.json`). Delete one of those files, though, and the app instantly
+recreates it with defaults — replace with `ln -sf`, not `rm` + stow.
 
 ### Codex config stows to three places
 

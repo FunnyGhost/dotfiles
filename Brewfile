@@ -54,8 +54,6 @@ brew "gnupg"
 brew "go"
 # Task is a task runner/build tool that aims to be simpler and easier to use
 brew "go-task"
-# Agent multiplexer that lives in your terminal
-brew "herdr"
 # Improved top (interactive process viewer)
 brew "htop"
 # Database of common MIME types
@@ -134,6 +132,8 @@ cask "font-mononoki"
 cask "font-mononoki-nerd-font"
 # App icons for sketchybar's workspace items
 cask "font-sketchybar-app-font"
+# Desktop app for terminals and coding agents
+cask "herdr-app"
 # Utility to hide menu bar items
 cask "hiddenbar"
 # Calendar for professionals and teams

@@ -11,6 +11,11 @@ Brewfile.local
 config/herdr/.config/herdr/*.sock
 config/herdr/.config/herdr/*.log
 
+# Herdr.app writes these beside every mod (backstop: if stow ever folds a mod
+# dir into the repo)
+config/herdr-app/**/gpui-kit.d.ts
+config/herdr-app/**/jsconfig.json
+
 # Work-specific Codex skills. These describe internal architecture (repo
 # names, service topology), so they stay on disk and stow normally but are
 # never committed to this public repo. See section 2 of CLAUDE.md.
