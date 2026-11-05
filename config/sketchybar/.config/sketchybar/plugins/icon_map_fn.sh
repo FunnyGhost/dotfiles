@@ -32,7 +32,7 @@ function icon_map() {
   "WezTerm")
     icon_result="󰆍"
     ;;
-  "Herdr")
+  "Rex Beta" | "Rex")
     icon_result="󰳆"
     ;;
   "Claude")
