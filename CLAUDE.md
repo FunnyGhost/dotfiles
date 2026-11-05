@@ -51,7 +51,7 @@ may need credentials that don't exist yet.
 ### 1.3 Stow every config
 
 ```bash
-mkdir -p ~/.config/herdr ~/.claude/commands \
+mkdir -p ~/.config/herdr ~/.claude/commands ~/.claude/skills \
   ~/.config/herdr-app/themes ~/.config/herdr-app/mods/my-prefix
 stow -d config -t ~ $(command ls config)
 stow -d . -t ~ git-commands
@@ -61,9 +61,9 @@ stow -d . -t ~ git-commands
 under `config/` is intentional — see section 2. The `mkdir` prevents stow from
 folding those into symlinks pointing at the repo. All are directories the
 tools themselves write into — herdr drops a socket and logs beside its config,
-Claude Code writes commands, Herdr.app keeps all its state and generated files
-in `~/.config/herdr-app/` — and that output must not land here (see
-section 2).
+Claude Code writes commands and Plannotator installs skills, Herdr.app keeps
+all its state and generated files in `~/.config/herdr-app/` — and that output
+must not land here (see section 2).
 
 Then the Plannotator skills for Codex. They're third-party, so they're
 installed rather than tracked (`config/codex/.agents/skills/` is gitignored):
@@ -170,7 +170,7 @@ git submodule update --init --recursive
 brew bundle install
 
 # must exist before stow, or stow folds them into symlinks into the repo
-mkdir -p ~/.config/herdr ~/.claude/commands \
+mkdir -p ~/.config/herdr ~/.claude/commands ~/.claude/skills \
   ~/.config/herdr-app/themes ~/.config/herdr-app/mods/my-prefix
 
 stow -d config -t ~ --restow $(command ls config)
@@ -340,6 +340,12 @@ single symlink only when the target doesn't exist, so `mkdir -p
 ~/.claude/commands` is enough — an existing directory gets its files linked
 individually. If it ever folds, anything Claude Code writes there lands
 inside this repo.
+
+Skills work the same way: `config/claude/.claude/skills/explain-diff-html/` is
+symlinked into the real `~/.claude/skills/`, beside the installed Plannotator
+skills. It's a pinned copy of
+[Geoffrey Litt's gist](https://gist.github.com/geoffreylitt/a29df1b5f9865506e8952488eac3d524),
+tracked so a fresh laptop gets it, since nothing installs it.
 
 The Codex equivalents under `config/codex/` are **separate, diverged files**,
 not copies. Changing a workflow means updating both if you want parity.
