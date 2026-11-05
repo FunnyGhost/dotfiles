@@ -321,6 +321,11 @@ done / clear), writing to the claude process's tty since hooks have no
 restarted. Don't run the old TUI's `herdr integration install claude` — it
 targets the TUI only and rewrites `settings.json` with absolute paths.
 
+The `rex __internal session-start` hook is **Rex's**, not ours — Rex wrote it
+into `settings.json` (through the symlink) on setup. It tells Claude it's in a
+Rex pane and to name the session. Rex itself is installed manually (not in the
+Brewfile); without it the hook is a silent no-op (`|| true`).
+
 ### Claude slash commands are split public/local
 
 `~/.claude/commands/` holds both tracked and local-only commands:
