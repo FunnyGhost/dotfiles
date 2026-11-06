@@ -378,6 +378,11 @@ skills. It's a pinned copy of
 [Geoffrey Litt's gist](https://gist.github.com/geoffreylitt/a29df1b5f9865506e8952488eac3d524),
 tracked so a fresh laptop gets it, since nothing installs it.
 
+`skills/new-project/` holds the default side-project stack (Bun, Hono, Zod,
+Drizzle, SQLite via Shibumi Stack) and how it should evolve. Its Codex twin
+lives in `config/codex/plugins/cthulhu-workflows/skills/new-project/` — when a
+decision changes, update both.
+
 The Codex equivalents under `config/codex/` are **separate, diverged files**,
 not copies. Changing a workflow means updating both if you want parity.
 
