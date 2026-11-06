@@ -51,7 +51,7 @@ may need credentials that don't exist yet.
 ### 1.3 Stow every config
 
 ```bash
-mkdir -p ~/.config/herdr ~/.claude/commands ~/.claude/skills \
+mkdir -p ~/.config/herdr ~/.claude/commands ~/.claude/skills ~/.config/rex \
   ~/.config/herdr-app/themes ~/.config/herdr-app/mods/my-prefix
 stow -d config -t ~ $(command ls config)
 stow -d . -t ~ git-commands
@@ -170,7 +170,7 @@ git submodule update --init --recursive
 brew bundle install
 
 # must exist before stow, or stow folds them into symlinks into the repo
-mkdir -p ~/.config/herdr ~/.claude/commands ~/.claude/skills \
+mkdir -p ~/.config/herdr ~/.claude/commands ~/.claude/skills ~/.config/rex \
   ~/.config/herdr-app/themes ~/.config/herdr-app/mods/my-prefix
 
 stow -d config -t ~ --restow $(command ls config)
@@ -325,6 +325,20 @@ The `rex __internal session-start` hook is **Rex's**, not ours — Rex wrote it
 into `settings.json` (through the symlink) on setup. It tells Claude it's in a
 Rex pane and to name the session. Rex itself is installed manually (not in the
 Brewfile); without it the hook is a silent no-op (`|| true`).
+
+### Rex: only `init.lua` is tracked
+
+`config/rex/` stows `~/.config/rex/init.lua` (keybindings). The directory must
+be real (the `mkdir -p` in section 1.3): Rex writes `themes/` beside it.
+
+`ctrl+h/j/k/l` is smart navigation, split across two files:
+
+- `init.lua` moves between Rex panes, except when the pane's foreground program
+  is nvim, vim or fzf — those get the key.
+- nvim's `lua/keymaps.lua` moves between splits and, at the edge split, runs
+  `rex focus <direction>` to continue into the next pane.
+
+To add a program that should keep ctrl+hjkl, extend `passthrough` in `init.lua`.
 
 ### Claude slash commands are split public/local
 

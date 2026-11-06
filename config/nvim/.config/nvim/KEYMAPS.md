@@ -187,6 +187,7 @@ A comprehensive guide to all keybindings in our Neovim setup. Leader key is set 
 - `<C-l>` - Move to right window
 - `<C-j>` - Move to bottom window
 - `<C-k>` - Move to top window
+- At the edge window, these move on to the neighbouring Rex pane
 
 ### Window Operations
 - `<C-w>v` or `:vsp` - Split vertically

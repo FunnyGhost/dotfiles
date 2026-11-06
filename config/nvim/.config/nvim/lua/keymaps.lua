@@ -49,11 +49,21 @@ keymap("n", "<leader>cr", ':let @+ = expand("%")<CR>', {
 })
 
 -- WINDOW MANAGEMENT
--- Better window navigation
-keymap("n", "<C-h>", "<C-w><C-h>", { desc = "Move to left window" })
-keymap("n", "<C-l>", "<C-w><C-l>", { desc = "Move to right window" })
-keymap("n", "<C-j>", "<C-w><C-j>", { desc = "Move to bottom window" })
-keymap("n", "<C-k>", "<C-w><C-k>", { desc = "Move to top window" })
+-- Better window navigation. At the edge split, hand off to the Rex pane
+-- beyond it (see ~/.config/rex/init.lua).
+local function navigate(wincmd, direction)
+  return function()
+    local win = vim.api.nvim_get_current_win()
+    vim.cmd("wincmd " .. wincmd)
+    if win == vim.api.nvim_get_current_win() and vim.env.REX_SESSION then
+      vim.system({ "rex", "focus", direction })
+    end
+  end
+end
+keymap("n", "<C-h>", navigate("h", "left"), { desc = "Move to left window" })
+keymap("n", "<C-l>", navigate("l", "right"), { desc = "Move to right window" })
+keymap("n", "<C-j>", navigate("j", "down"), { desc = "Move to bottom window" })
+keymap("n", "<C-k>", navigate("k", "up"), { desc = "Move to top window" })
 
 -- Resize windows
 keymap("n", "<C-Up>", ":resize +2<CR>", { desc = "Increase window height" })
