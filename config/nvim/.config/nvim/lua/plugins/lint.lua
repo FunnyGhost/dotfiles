@@ -19,7 +19,21 @@ return {
 			vue = { "eslint" },
 		}
 
-		-- Configure eslint to use local installation first
+		-- Find the project's own eslint by walking up from the file, not from
+		-- nvim's cwd. Returns the binary and the project root, or nil.
+		local function find_eslint(bufnr)
+			for dir in vim.fs.parents(vim.api.nvim_buf_get_name(bufnr)) do
+				local bin = dir .. "/node_modules/.bin/eslint"
+				if vim.uv.fs_stat(bin) then
+					return bin, dir
+				end
+			end
+		end
+
+		lint.linters.eslint.cmd = function()
+			return find_eslint(0) or "eslint"
+		end
+
 		lint.linters.eslint.args = {
 			"--format",
 			"json",
@@ -38,9 +52,15 @@ return {
 			group = lint_augroup,
 			callback = function()
 				-- Only lint if the buffer is modifiable
-				if vim.bo.modifiable then
-					lint.try_lint()
+				if not vim.bo.modifiable then
+					return
 				end
+				-- Projects without eslint installed are skipped, not errored
+				local _, root = find_eslint(0)
+				if vim.tbl_contains(lint.linters_by_ft[vim.bo.filetype] or {}, "eslint") and not root then
+					return
+				end
+				lint.try_lint(nil, { cwd = root })
 			end,
 		})
 	end,
