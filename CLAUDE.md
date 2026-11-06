@@ -51,8 +51,9 @@ may need credentials that don't exist yet.
 ### 1.3 Stow every config
 
 ```bash
-mkdir -p ~/.config/herdr ~/.claude/commands ~/.claude/skills ~/.config/rex \
-  ~/.config/herdr-app/themes ~/.config/herdr-app/mods/my-prefix
+mkdir -p ~/.config/herdr ~/.claude/commands ~/.claude/skills \
+  ~/.config/herdr-app/themes ~/.config/herdr-app/mods/my-prefix \
+  ~/.config/rex/themes
 stow -d config -t ~ $(command ls config)
 stow -d . -t ~ git-commands
 ```
@@ -170,8 +171,9 @@ git submodule update --init --recursive
 brew bundle install
 
 # must exist before stow, or stow folds them into symlinks into the repo
-mkdir -p ~/.config/herdr ~/.claude/commands ~/.claude/skills ~/.config/rex \
-  ~/.config/herdr-app/themes ~/.config/herdr-app/mods/my-prefix
+mkdir -p ~/.config/herdr ~/.claude/commands ~/.claude/skills \
+  ~/.config/herdr-app/themes ~/.config/herdr-app/mods/my-prefix \
+  ~/.config/rex/themes
 
 stow -d config -t ~ --restow $(command ls config)
 stow -d . -t ~ --restow git-commands
@@ -326,10 +328,19 @@ into `settings.json` (through the symlink) on setup. It tells Claude it's in a
 Rex pane and to name the session. Rex itself is installed manually (not in the
 Brewfile); without it the hook is a silent no-op (`|| true`).
 
-### Rex: only `init.lua` is tracked
+### Rex: keybindings and theme tracked, Settings window not
 
-`config/rex/` stows `~/.config/rex/init.lua` (keybindings). The directory must
-be real (the `mkdir -p` in section 1.3): Rex writes `themes/` beside it.
+`config/rex/` stows `~/.config/rex/init.lua` (keybindings) and
+`themes/Eldritch`. Both `~/.config/rex/` and `themes/` must be real
+directories (the `mkdir -p` in section 1.3) — Rex writes imported themes there.
+
+Everything set in Rex's Settings window (interface style, fades, tabs, the
+selected theme) lives in `~/Library/Preferences/com.superlogical.rex.plist`.
+It isn't tracked: it's mixed with machine state and agent activity history,
+and the selected theme is an ID generated at import. On a fresh laptop, import
+`themes/Eldritch` via **Settings › Themes › Import Theme**, select it, and set
+**Interface › Appearance › Interface style** to Classic — the blended style
+washes the background out to grey.
 
 `ctrl+h/j/k/l` is smart navigation, split across two files:
 
