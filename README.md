@@ -31,9 +31,9 @@ If you'd rather do it by hand without Claude, just open [CLAUDE.md](CLAUDE.md) a
 
 ## 🎨 Included Fonts
 
-All installed via Brewfile. Set your terminal's font in its GUI preferences.
+All installed via Brewfile. Ghostty and WezTerm set Mononoki in their tracked configs; Rex needs it set in its Settings window.
 
-### **Hack Nerd Font** ⭐ *Recommended*
+### **Hack Nerd Font**
 - [Font Specimen](https://github.com/source-foundry/Hack) · [Nerd Font Version](https://www.nerdfonts.com/font-downloads)
 - Clean monospace designed for source code. Best general-purpose choice.
 
@@ -41,7 +41,7 @@ All installed via Brewfile. Set your terminal's font in its GUI preferences.
 - [Specimen](https://github.com/microsoft/cascadia-code) · [Releases](https://github.com/microsoft/cascadia-code/releases)
 - Microsoft's Cascadia Code with ligatures and Nerd Font icons.
 
-### **Mononoki Nerd Font**
+### **Mononoki Nerd Font** ⭐ *In use*
 - [Specimen](https://madmalik.github.io/mononoki/) · [GitHub](https://github.com/madmalik/mononoki)
 - Warm, friendly monospace for long sessions.
 

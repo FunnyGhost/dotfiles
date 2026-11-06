@@ -110,9 +110,10 @@ tolerate it.
 
 ### 1.5 Terminal font
 
-Set your terminal app's font to **Hack Nerd Font**, 12–14pt. The font is
-installed by `brew bundle`, but each terminal stores its font preference
-in its own GUI settings (Ghostty, WezTerm, Kitty).
+The font everywhere is **Mononoki**, 16pt, with extra line height. `brew
+bundle` installs it, and Ghostty and WezTerm already set it in their tracked
+configs. Rex keeps its font in its Settings window — see the Rex section in
+section 2.
 
 ### 1.6 Start the background apps
 
@@ -340,7 +341,12 @@ It isn't tracked: it's mixed with machine state and agent activity history,
 and the selected theme is an ID generated at import. On a fresh laptop, import
 `themes/Eldritch` via **Settings › Themes › Import Theme**, select it, and set
 **Interface › Appearance › Interface style** to Classic — the blended style
-washes the background out to grey.
+washes the background out to grey. Then, under **Terminal › Typography**:
+
+- Font **Mononoki Nerd Font** (not "Mono", which shrinks icons; not "Propo"),
+  16pt. Plain Mononoki lacks the icons Starship, eza and nvim use.
+- **Advanced Font Settings:** line height +15–20%, character spacing +2%,
+  font smoothing on — matching Ghostty's `adjust-cell-*`.
 
 `ctrl+h/j/k/l` is smart navigation, split across two files:
 
