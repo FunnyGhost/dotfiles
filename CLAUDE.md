@@ -325,9 +325,13 @@ restarted. Don't run the old TUI's `herdr integration install claude` — it
 targets the TUI only and rewrites `settings.json` with absolute paths.
 
 The `rex __internal session-start` hook is **Rex's**, not ours — Rex wrote it
-into `settings.json` (through the symlink) on setup. It tells Claude it's in a
-Rex pane and to name the session. Rex itself is installed manually (not in the
-Brewfile); without it the hook is a silent no-op (`|| true`).
+into `settings.json` (through the symlink) on setup. It gives Claude context
+at startup: that it's in a Rex pane, its session and pane IDs, and how to use
+`rex`. We added `--feature-session-naming=false`: without it, Rex also tells
+the agent to rename the session on every start and resume, overwriting names
+you set. Re-running `rex skill setup` or **Install Rex for Agents** rewrites
+the hook without that flag — add it back. Rex itself is installed manually
+(not in the Brewfile); without it the hook is a silent no-op (`|| true`).
 
 ### Rex: keybindings and theme tracked, Settings window not
 
