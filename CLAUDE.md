@@ -361,6 +361,17 @@ washes the background out to grey. Then, under **Terminal › Typography**:
 
 To add a program that should keep ctrl+hjkl, extend `passthrough` in `init.lua`.
 
+`ctrl+b w` opens **Wayfinder**, a Herdr-style tab picker, loaded with
+`require("wayfinder")`. It lives in `wayfinder/` as a self-contained module
+meant to be shared — its `README.md` is the user-facing doc and setup guide,
+so keep it in sync with the code. Keep the module free of anything specific
+to this machine: no dotfiles paths, palette colors rather than Eldritch hex,
+and the Nerd Font glyphs written as escaped bytes in `picker.sh` (editors and
+tools have dropped them as literal characters).
+
+`~/.config/rex/wayfinder` is a stow-folded symlink into the repo; nothing
+writes there.
+
 ### Claude slash commands are split public/local
 
 `~/.claude/commands/` holds both tracked and local-only commands:

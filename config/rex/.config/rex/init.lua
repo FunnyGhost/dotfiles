@@ -32,7 +32,9 @@ rex.bind("ctrl+b>x", "pane.close")
 rex.bind("ctrl+b>z", "pane.zoom")
 rex.bind("ctrl+b>b", "client.sidebar.toggle")
 rex.bind("ctrl+b>s", "client.settings")
-rex.bind("ctrl+b>w", "session.switch")
+-- w: Wayfinder, every tab grouped by session (wayfinder/, see its README).
+-- g: Rex's session-only picker.
+require("wayfinder").setup{ key = "ctrl+b>w" }
 rex.bind("ctrl+b>g", "session.switch")
 
 -- Smart pane navigation (vim-tmux-navigator style). Programs that use
