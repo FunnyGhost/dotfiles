@@ -379,6 +379,52 @@ tools have dropped them as literal characters).
 `~/.config/rex/wayfinder` is a stow-folded symlink into the repo; nothing
 writes there.
 
+### Sketchybar: Eldritch pills on a transparent bar
+
+Items sit in floating pills (brackets); most open a popup on click. The
+palette, font and shared pill/popup styles live in `theme.sh`, sourced by
+`sketchybarrc` and the plugins — restyle there, not per item. Nerd Font
+glyphs in scripts are written as escaped bytes (`printf '\357\211\200'`),
+since tools drop them as literal characters.
+
+- **agents**: coding agents in Rex tabs, from the OSC 7501 status Rex keeps
+  per pane. The popup groups them by session and follows Wayfinder's rules
+  (tiled panes, most urgent pane wins, unnamed tabs show their title) —
+  change one, check the other. Clicking a tab jumps to it with the same
+  `rex do session.select` Wayfinder uses (`plugins/rex_jump.sh`).
+  `plugins/rex_watch.sh` is a long-running `rex events` listener, so updates
+  are pushed, not polled. `rex` isn't on sketchybar's PATH, so
+  `plugins/rex_cmd.sh` points into the Rex app bundle, always with
+  `--autostart=false`: the bar must never start a Rex server. Without Rex
+  the item stays hidden.
+- **codex**: 5h and weekly plan use, from the newest
+  `~/.codex/sessions/**/rollout-*.jsonl` that recorded `rate_limits`. Codex
+  doesn't log them every turn, so the value can lag a little. There's no
+  Claude equivalent: on this machine Claude Code bills by usage, so there are
+  no windows to show.
+- **calendar**, folded into the clock: while an event is on or starts within
+  15 minutes, `clock.event` replaces the date; clicking the clock lists the
+  rest of today, and a row opens its meeting link (Zoom, Meet, Teams, Webex)
+  or the event. Reads Calendar.app, so only calendars added there show.
+  `helper/events.swift` reads EventKit; `plugins/calendar.sh` compiles it on
+  first use (and whenever it changes) into `~/.cache/sketchybar/events`, with
+  `helper/Info.plist` embedded — macOS won't ask for Calendar access without
+  its usage description. Needs `swiftc` (Xcode Command Line Tools, which
+  Homebrew already requires). To preview without real events,
+  `touch ~/.cache/sketchybar/calendar.demo`; delete it to go back.
+- **cat**: a calico left of the notch (position `q`), animated faster with
+  CPU load by `plugins/cat.sh`, a second background loop beside
+  `rex_watch.sh`. The sprite is ASCII in `plugins/cat_frames.py`, drawn into
+  `~/.cache/sketchybar/cat/` and redrawn whenever that file changes.
+- **battery / volume**: Low Power Mode (`pmset powermode`, so macOS asks for
+  your password on each toggle); a volume slider and mute.
+- **recover** (invisible): reloads on display changes, and after wake
+  restarts sketchybar via launchd if its windows went missing. Logs to
+  `~/.cache/sketchybar/recover.log`.
+
+The background loops and the compiled helper live outside the repo
+(`~/.cache/sketchybar/`), so nothing the bar writes lands here.
+
 ### Claude slash commands are split public/local
 
 `~/.claude/commands/` holds both tracked and local-only commands:

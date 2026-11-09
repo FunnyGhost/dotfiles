@@ -1,10 +1,15 @@
 #!/usr/bin/env bash
 
-# make sure it's executable with:
-# chmod +x ~/.config/sketchybar/plugins/aerospace.sh
+# Focus styling for a workspace item: highlighted with a bright number when
+# focused, dim otherwise. Usage: aerospace.sh <workspace id>
 
-if [ "$1" = "$FOCUSED_WORKSPACE" ]; then
-  sketchybar --set $NAME background.color=0x88FF00FF label.shadow.drawing=on icon.shadow.drawing=on background.border_width=2
+source "$CONFIG_DIR/theme.sh"
+
+# --update and system events run this without FOCUSED_WORKSPACE; ask AeroSpace
+focused=${FOCUSED_WORKSPACE:-$(aerospace list-workspaces --focused)}
+
+if [ "$1" = "$focused" ]; then
+  sketchybar --set "$NAME" background.drawing=on icon.color=$PURPLE label.color=$TEXT
 else
-  sketchybar --set $NAME background.color=0x44FFFFFF label.shadow.drawing=off icon.shadow.drawing=off background.border_width=0
+  sketchybar --set "$NAME" background.drawing=off icon.color=$DIM label.color=$DIM
 fi

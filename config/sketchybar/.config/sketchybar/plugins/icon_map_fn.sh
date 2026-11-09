@@ -33,7 +33,10 @@ function icon_map() {
     icon_result="󰆍"
     ;;
   "Rex Beta" | "Rex")
-    icon_result="󰳆"
+    icon_result=$(printf '\363\261\215\242') # md-google_downasaur
+    ;;
+  "ChatGPT")
+    icon_result=$(printf '\356\262\201') # cod-openai
     ;;
   "Claude")
     icon_result="󱙺"

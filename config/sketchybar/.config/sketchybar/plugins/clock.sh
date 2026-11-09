@@ -1,8 +1,12 @@
 #!/bin/sh
 
-# The $NAME variable is passed from sketchybar and holds the name of
-# the item invoking this script:
-# https://felixkratz.github.io/SketchyBar/config/events#events-and-scripting
+# Date (dim) and time (bright) as two items, so they can differ in colour.
+# Click either: today's agenda, filled in by plugins/calendar.sh.
 
-sketchybar --set "$NAME" label="$(date '+%a %d %b   %H:%M')"
+case "$SENDER" in
+  mouse.clicked) sketchybar --set clock.time popup.drawing=toggle; exit 0 ;;
+  mouse.exited.global) sketchybar --set clock.time popup.drawing=off; exit 0 ;;
+esac
 
+sketchybar --set clock.date label="$(date '+%a %d %b')" \
+  --set clock.time label="$(date '+%H:%M')"

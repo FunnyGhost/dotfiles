@@ -1,31 +1,20 @@
-# A simple sketchybar config for aerospace users to get started with
-# Not too different from the base starting config!
+# Sketchybar for AeroSpace: floating Eldritch pills on a transparent bar.
+# Left: workspaces, front app. Right: Codex limits, Rex agents, system.
+# The look lives in theme.sh; each item's logic in plugins/.
 
 PLUGIN_DIR="$CONFIG_DIR/plugins"
 ITEM_DIR="$CONFIG_DIR/items"
+source "$CONFIG_DIR/theme.sh"
 
-
-##### Bar Appearance #####
-# Configuring the general appearance of the bar.
-# These are only some of the options available. For all options see:
-# https://felixkratz.github.io/SketchyBar/config/bar
-# If you are looking for other colors, see the color picker:
-# https://felixkratz.github.io/SketchyBar/config/tricks#color-picker
-
-sketchybar --bar position=top height=40 blur_radius=30 color=0x40000000
-
-##### Changing Defaults #####
-# We now change some default values, which are applied to all further items.
-# For a full list of all available item properties see:
-# https://felixkratz.github.io/SketchyBar/config/items
+sketchybar --bar position=top height=40 color=$CLEAR
 
 default=(
-  padding_left=5
-  padding_right=5
-  icon.font="Hack Nerd Font:Bold:17.0"
-  label.font="Hack Nerd Font:Regular:14.0"
-  icon.color=0xffffffff
-  label.color=0xffffffff
+  padding_left=0
+  padding_right=0
+  icon.font="$FONT:Bold:13.0"
+  label.font="$FONT:Regular:13.0"
+  icon.color=$TEXT
+  label.color=$TEXT
   icon.padding_left=4
   icon.padding_right=4
   label.padding_left=4
@@ -34,12 +23,16 @@ default=(
 )
 sketchybar --default "${default[@]}"
 
-##### Adding aeropsace layouts #####
+# A transparent gap between pills, or a pill's inner edge
+spacer() { sketchybar --add item "$1" "$2" --set "$1" width="$3" icon.drawing=off label.drawing=off; }
 
-# Add the aerospace_workspace_change event we specified in aerospace.toml
+##### Workspaces #####
+# Number plus the icons of the apps in it; the focused one is highlighted.
+# plugins/aerospace.sh styles focus, plugins/update_workspace_icons.sh the icons.
+
 sketchybar --add event aerospace_workspace_change
+spacer space.start left 4
 
-# Add workspaces for all monitors
 for monitor in $(aerospace list-monitors --format "%{monitor-appkit-nsscreen-screens-id}"); do
   for sid in $(aerospace list-workspaces --monitor "$monitor"); do
     # Determine which display this workspace should be shown on
@@ -47,83 +40,187 @@ for monitor in $(aerospace list-monitors --format "%{monitor-appkit-nsscreen-scr
     if [ "$sid" -ge 6 ] && [ "$sid" -le 7 ]; then
       display_id="2"
     fi
-    
+
     sketchybar --add item space.$sid left \
-      --set space.$sid display="$display_id" \
       --subscribe space.$sid aerospace_workspace_change \
-      --set space.$sid \
-      drawing=on \
-      background.color=0x44ffffff \
-      background.corner_radius=5 \
-      background.drawing=on \
-      background.border_color=0xAAFFFFFF \
-      background.border_width=0 \
-      background.height=25 \
+      --set space.$sid display="$display_id" \
       icon="$sid" \
-      icon.padding_left=10 \
-      icon.shadow.distance=4 \
-      icon.shadow.color=0xA0000000 \
-      label.font="sketchybar-app-font:Regular:16.0" \
-      label.padding_right=20 \
-      label.padding_left=0 \
+      icon.padding_left=9 \
+      icon.padding_right=4 \
+      label.font="$FONT:Regular:14.0" \
+      label.padding_left=2 \
+      label.padding_right=9 \
       label.y_offset=-1 \
-      label.shadow.drawing=off \
-      label.shadow.color=0xA0000000 \
-      label.shadow.distance=4 \
+      background.color=0x33a48cf2 \
+      background.corner_radius=7 \
+      background.height=22 \
+      background.drawing=off \
       click_script="aerospace workspace $sid" \
-      script="$CONFIG_DIR/plugins/aerospace.sh $sid"
+      script="$PLUGIN_DIR/aerospace.sh $sid"
   done
 done
 
-# Load Icons on startup for all monitors
-for monitor in $(aerospace list-monitors); do
-  for sid in $(aerospace list-workspaces --monitor "$monitor" --empty no); do
-    apps=$(aerospace list-windows --workspace "$sid" | awk -F'|' '{gsub(/^ *| *$/, "", $2); print $2}')
+spacer space.end left 4
+sketchybar --add bracket spaces.pill '/space\..*/' --set spaces.pill "${pill[@]}"
 
-    sketchybar --set space.$sid drawing=on
+"$PLUGIN_DIR/update_workspace_icons.sh"
 
-    icon_strip=" "
-    if [ "${apps}" != "" ]; then
-      while read -r app; do
-        icon_strip+="  $($CONFIG_DIR/plugins/icon_map_fn.sh "$app")  "
-      done <<<"${apps}"
-    else
-      icon_strip=""
-    fi
-    sketchybar --set space.$sid label="$icon_strip"
-  done
-done
+##### Front app #####
 
-
-#front app
+spacer gap.left left 8
 source "$ITEM_DIR/front_app.sh"
 
+##### Cat #####
+# Left of the notch (or the screen centre), on its own: runs faster the
+# busier the CPU (plugins/cat.sh). Click for CPU, memory and disk.
 
-##### Adding Right Items #####
-# In the same way as the left items we can add items to the right side.
-# Additional position (e.g. center) are available, see:
-# https://felixkratz.github.io/SketchyBar/config/items#adding-items-to-sketchybar
+sketchybar --add item cat q \
+  --set cat padding_right=12 label.drawing=off \
+  icon.background.drawing=on icon.background.image.scale=0.5 icon.width=48 \
+  script="$PLUGIN_DIR/cat_stats.sh" "${popup[@]}" popup.align=right \
+  --subscribe cat mouse.clicked mouse.exited.global \
+  --add item catpop.header popup.cat --set catpop.header "${popup_header[@]}" label=SYSTEM
+for stat in cpu mem disk; do
+  sketchybar --add item catpop.$stat popup.cat \
+    --set catpop.$stat "${row[@]}" icon.font="$FONT:Bold:12.0" icon.width=64 icon.padding_left=12 \
+    label.font="$FONT:Regular:12.0" label.color=$DIM label.padding_right=12
+done
+sketchybar --set catpop.cpu icon=cpu --set catpop.mem icon=memory --set catpop.disk icon=disk \
+  --add item catpop.pad popup.cat --set catpop.pad "${popup_pad[@]}"
 
-# Some items refresh on a fixed cycle, e.g. the clock runs its script once
-# every 10s. Other gititems respond to events they subscribe to, e.g. the
-# volume.sh script is only executed once an actual change in system audio
-# volume is registered. More info about the event system can be found here:
-# https://felixkratz.github.io/SketchyBar/config/events
+##### System: battery, volume, date (or next meeting) and time #####
+# Added right to left, so the clock ends up rightmost. clock.event replaces
+# the date while a meeting is on or starts within 15 minutes
+# (plugins/calendar.sh). Click the clock: today's agenda.
 
-sketchybar --add item clock right \
-  --set clock update_freq=10 script="$PLUGIN_DIR/clock.sh" \
+sketchybar --add item clock.time right \
+  --set clock.time icon.drawing=off label.font="$FONT:Bold:13.0" padding_right=10 \
+  update_freq=10 script="$PLUGIN_DIR/clock.sh" "${popup[@]}" popup.align=right \
+  --subscribe clock.time mouse.clicked mouse.exited.global \
+  --add item calpop.header popup.clock.time --set calpop.header "${popup_header[@]}" label=TODAY \
+  --add item clock.date right \
+  --set clock.date icon.drawing=off label.color=$DIM label.padding_right=2 \
+  script="$PLUGIN_DIR/clock.sh" --subscribe clock.date mouse.clicked \
+  --add item clock.event right \
+  --set clock.event drawing=off icon.font="$FONT:Regular:15.0" label.padding_right=2 \
+  update_freq=30 script="$PLUGIN_DIR/calendar.sh" \
+  --subscribe clock.event system_woke mouse.clicked \
   --add item volume right \
-  --set volume script="$PLUGIN_DIR/volume.sh" \
+  --set volume "${value[@]}" icon.font="$FONT:Regular:15.0" icon.color=$DIM \
+  label.color=$TEXT label.padding_left=2 padding_right=12 \
+  script="$PLUGIN_DIR/volume.sh" \
   --subscribe volume volume_change \
   --add item battery right \
-  --set battery update_freq=120 script="$PLUGIN_DIR/battery.sh" \
-  --subscribe battery system_woke power_source_change \
-  --add item swap e \
-  icon="" \
-  label.font="Hack Nerd Font:Italic:13.0" \
-  icon.color=0x44FFFFFF \
-  label.color=0x44FFFFFF
+  --set battery "${value[@]}" icon.font="$FONT:Regular:15.0" \
+  label.color=$TEXT label.padding_left=2 padding_left=10 padding_right=12 \
+  update_freq=120 script="$PLUGIN_DIR/battery.sh" \
+  --subscribe battery system_woke power_source_change
+
+# Battery popup: time left, a Low Power Mode switch, the settings pane
+sketchybar --set battery "${popup[@]}" popup.align=right \
+  --subscribe battery mouse.clicked mouse.exited.global \
+  --add item batpop.header popup.battery --set batpop.header "${popup_header[@]}" label=BATTERY \
+  --add item batpop.state popup.battery \
+  --set batpop.state "${row[@]}" icon.drawing=off label.color=$DIM label.padding_left=12 label.padding_right=12 \
+  --add item batpop.lowpower popup.battery \
+  --set batpop.lowpower "${row[@]}" icon="$(printf '\363\260\214\252')" icon.padding_left=12 \
+  label.padding_right=12 click_script="$PLUGIN_DIR/lowpower.sh" \
+  --add item batpop.settings popup.battery \
+  --set batpop.settings "${row[@]}" icon="$(printf '\363\260\222\223')" icon.color=$DIM icon.padding_left=12 \
+  label="Battery settings…" label.color=$DIM label.padding_right=12 \
+  click_script="open 'x-apple.systempreferences:com.apple.Battery-Settings.extension'; sketchybar --set battery popup.drawing=off" \
+  --add item batpop.pad popup.battery --set batpop.pad "${popup_pad[@]}"
+
+# Volume popup: a slider, a mute switch, the settings pane
+sketchybar --set volume "${popup[@]}" popup.align=right \
+  --subscribe volume mouse.clicked mouse.exited.global \
+  --add item volpop.header popup.volume --set volpop.header "${popup_header[@]}" label=SOUND \
+  --add slider volpop.slider popup.volume 160 \
+  --set volpop.slider padding_left=12 padding_right=12 \
+  slider.highlight_color=$PURPLE slider.background.height=6 slider.background.corner_radius=3 \
+  slider.background.color=0x33ffffff slider.knob="●" slider.knob.font="$FONT:Regular:16.0" \
+  slider.knob.color=$TEXT script="$PLUGIN_DIR/volume_ctl.sh" \
+  --subscribe volpop.slider mouse.clicked \
+  --add item volpop.mute popup.volume \
+  --set volpop.mute "${row[@]}" icon.padding_left=12 label.padding_right=12 \
+  click_script="$PLUGIN_DIR/volume_ctl.sh" \
+  --add item volpop.settings popup.volume \
+  --set volpop.settings "${row[@]}" icon="$(printf '\363\260\222\223')" icon.color=$DIM icon.padding_left=12 \
+  label="Sound settings…" label.color=$DIM label.padding_right=12 \
+  click_script="open 'x-apple.systempreferences:com.apple.Sound-Settings.extension'; sketchybar --set volume popup.drawing=off" \
+  --add item volpop.pad popup.volume --set volpop.pad "${popup_pad[@]}"
+
+sketchybar --add bracket system.pill battery volume clock.event clock.date clock.time \
+  --set system.pill "${pill[@]}"
+
+spacer gap.right right 8
+
+##### Agents #####
+# Coding agents in Rex tabs (pushed by rex_watch.sh; update_freq is a
+# fallback). Hidden when there are none.
+
+# Added right to left: the robot ends up leftmost, counts follow it
+# agents.end: the pill's right padding, whichever count is last
+sketchybar --add event rex_agents_change \
+  --add item agents.end right --set agents.end drawing=off width=6 icon.drawing=off label.drawing=off
+for state in working done error blocked; do
+  sketchybar --add item agents.$state right --set agents.$state "${value[@]}" drawing=off \
+    script="$PLUGIN_DIR/rex_agents.sh" --subscribe agents.$state mouse.clicked
+done
+sketchybar --set agents.blocked label=waiting icon.color=$RED \
+  --set agents.error label=failed icon.color=$RED \
+  --set agents.done label=done icon.color=$GREEN \
+  --set agents.working label=working icon.color=$CYAN \
+  --add item agents right \
+  --set agents drawing=off update_freq=60 padding_left=10 \
+  icon="$(printf '\363\260\232\251')" icon.font="$FONT:Regular:16.0" \
+  label.drawing=off script="$PLUGIN_DIR/rex_agents.sh" "${popup[@]}" \
+  --subscribe agents rex_agents_change system_woke mouse.clicked mouse.exited.global \
+  --add item agentpop.header popup.agents --set agentpop.header "${popup_header[@]}" label=AGENTS \
+  --add bracket agents.pill agents agents.blocked agents.error agents.done agents.working agents.end \
+  --set agents.pill "${pill[@]}"
+
+##### Codex limits #####
+# 5-hour and weekly plan use. Hidden without Codex session logs.
+
+spacer gap.agents right 8
+sketchybar --add item codex.wk right \
+  --set codex.wk "${value[@]}" drawing=off label=wk padding_right=10 \
+  script="$PLUGIN_DIR/codex_usage.sh" --subscribe codex.wk mouse.clicked \
+  --add item codex.5h right \
+  --set codex.5h "${value[@]}" drawing=off label=5h padding_right=8 \
+  script="$PLUGIN_DIR/codex_usage.sh" --subscribe codex.5h mouse.clicked \
+  --add item codex right \
+  --set codex drawing=off update_freq=120 padding_left=10 \
+  icon=codex icon.color=$PURPLE label.drawing=off \
+  script="$PLUGIN_DIR/codex_usage.sh" "${popup[@]}" \
+  --subscribe codex system_woke mouse.clicked mouse.exited.global \
+  --add bracket codex.pill codex codex.5h codex.wk --set codex.pill "${pill[@]}" \
+  --add item codexpop.header popup.codex --set codexpop.header "${popup_header[@]}" label="CODEX LIMITS"
+for w in 5h wk; do
+  sketchybar --add item codexpop.$w popup.codex \
+    --set codexpop.$w "${row[@]}" icon.font="$FONT:Bold:12.0" icon.width=56 \
+    icon.padding_left=12 label.font="$FONT:Regular:12.0" label.color=$DIM label.padding_right=12 \
+    --add item codexpop.$w.bar popup.codex \
+    --set codexpop.$w.bar "${row[@]}" background.height=18 padding_left=12 \
+    icon.font="$FONT:Regular:9.0" icon.padding_left=0 icon.padding_right=0 \
+    label.font="$FONT:Regular:9.0" label.color=0x33ffffff label.padding_left=0 label.padding_right=12
+done
+sketchybar --set codexpop.5h icon=5h --set codexpop.wk icon=week \
+  --add item codexpop.pad popup.codex --set codexpop.pad "${popup_pad[@]}"
+
+##### Recovery #####
+# Reload on display changes; restart if the bar vanished after sleep
+
+sketchybar --add item recover left --set recover drawing=off script="$PLUGIN_DIR/recover.sh" \
+  --subscribe recover display_change system_woke
+
+##### Background loops #####
+
+for loop in rex_watch cat; do
+  pkill -f "$PLUGIN_DIR/$loop.sh"
+  CONFIG_DIR="$CONFIG_DIR" "$PLUGIN_DIR/$loop.sh" >/dev/null 2>&1 &
+done
 
 ##### Force all scripts to run the first time (never do this in a script) #####
 sketchybar --update
-
