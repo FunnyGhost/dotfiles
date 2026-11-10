@@ -114,7 +114,8 @@
   "enabledPlugins": {
     "plannotator@plannotator": true,
     "slack@claude-plugins-official": true,
-    "miro@miro-ai": true
+    "miro@miro-ai": true,
+    "swift-lsp@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "plannotator": {
