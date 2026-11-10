@@ -155,3 +155,4 @@ fpath=(/Users/catalin/.docker/completions $fpath)
 autoload -Uz compinit
 (( ${+_comps[docker]} )) || compinit
 # End of Docker CLI completions
+export PATH=/opt/homebrew/opt/rustup/bin:$PATH
