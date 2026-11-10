@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-# Draws the running cat's frames as PNGs, standard library only.
+# Draws the cat's frames as PNGs, standard library only.
 # cat_frames.py <out dir> [pixels per cell]
-# Writes cat_1..4.png. A calico (brown, white and black), running right, with a
-# dark outline added around it so it reads on any wallpaper.
+# Writes cat_<name>.png for every frame below. A calico (brown, white and
+# black) facing right, with a dark outline added around it so it reads on any
+# wallpaper. plugins/cat.sh decides which frame shows when.
 
 import os
 import struct
@@ -18,49 +19,253 @@ PALETTE = {
     "w": 0xFFF4F1EA,  # white
     "k": 0xFF1B1B20,  # black
     "e": 0xFFB5E05A,  # eye
-    "p": 0xFFEFA0AE,  # nose and inner ear
+    "p": 0xFFEFA0AE,  # nose, inner ear, tongue
+    "z": 0xFF9AA5CE,  # the sleeping Z
 }
 OUTLINE = 0xE6101119
 
-# 30 wide: tail up at the back (black tip), brown and black patches on a
-# white body, round brown-capped head with one black ear, white muzzle
-BODY = [
-    ".....................b....k...",
-    ".kk.................bpb..kpk..",
-    "kkk.................bbbbbbkkk.",
-    ".kb.................bbbbbbkkkk",
-    "..bb................bbbbebkkkk",
-    "..db....wwbbbbbkkkkkbbbwwwwwww",
-    "...bb.wwwbbbbbbdkkkkbwwwwwwwwp",
-    "....bwwwwwbbbbbddkkkkwwwwwwww.",
-    "....wwwwwwwbbbbbbkkkwwwwwww...",
-    "....wwwwwwwwbbbbbwwwwwwwwww...",
-    "....wwwwwwwwwwwwwwwwwwwwwww...",
-    ".....wwwwwwwwwwwwwwwwwwwwww...",
-]
-LEGS = [  # a four-step gallop: stretched, passing, gathered, passing
-    [
+# Every frame is 30x15 cells, so poses swap without the cat jumping around
+FRAMES = {
+    "run_1": [  # gallop: stretched
+        ".....................b....k...",
+        ".kk.................bpb..kpk..",
+        "kkk.................bbbbbbkkk.",
+        ".kb.................bbbbbbkkkk",
+        "..bb................bbbbebkkkk",
+        "..db....wwbbbbbkkkkkbbbwwwwwww",
+        "...bb.wwwbbbbbbdkkkkbwwwwwwwwp",
+        "....bwwwwwbbbbbddkkkkwwwwwwww.",
+        "....wwwwwwwbbbbbbkkkwwwwwww...",
+        "....wwwwwwwwbbbbbwwwwwwwwww...",
+        "....wwwwwwwwwwwwwwwwwwwwwww...",
+        ".....wwwwwwwwwwwwwwwwwwwwww...",
         "....ww..ww.........ww..ww.....",
         "...ww....ww.......ww....ww....",
         "..ww......ww.....ww......ww...",
     ],
-    [
+    "run_2": [  # passing (walk uses 2 and 4)
+        ".....................b....k...",
+        ".kk.................bpb..kpk..",
+        "kkk.................bbbbbbkkk.",
+        ".kb.................bbbbbbkkkk",
+        "..bb................bbbbebkkkk",
+        "..db....wwbbbbbkkkkkbbbwwwwwww",
+        "...bb.wwwbbbbbbdkkkkbwwwwwwwwp",
+        "....bwwwwwbbbbbddkkkkwwwwwwww.",
+        "....wwwwwwwbbbbbbkkkwwwwwww...",
+        "....wwwwwwwwbbbbbwwwwwwwwww...",
+        "....wwwwwwwwwwwwwwwwwwwwwww...",
+        ".....wwwwwwwwwwwwwwwwwwwwww...",
         ".....ww.ww..........ww.ww.....",
         ".....ww..ww.........ww..ww....",
         "......ww..ww.........ww..ww...",
     ],
-    [
+    "run_3": [  # gathered
+        ".....................b....k...",
+        ".kk.................bpb..kpk..",
+        "kkk.................bbbbbbkkk.",
+        ".kb.................bbbbbbkkkk",
+        "..bb................bbbbebkkkk",
+        "..db....wwbbbbbkkkkkbbbwwwwwww",
+        "...bb.wwwbbbbbbdkkkkbwwwwwwwwp",
+        "....bwwwwwbbbbbddkkkkwwwwwwww.",
+        "....wwwwwwwbbbbbbkkkwwwwwww...",
+        "....wwwwwwwwbbbbbwwwwwwwwww...",
+        "....wwwwwwwwwwwwwwwwwwwwwww...",
+        ".....wwwwwwwwwwwwwwwwwwwwww...",
         ".......wwww..........wwww.....",
         "........ww............ww......",
         "........ww............ww......",
     ],
-    [
+    "run_4": [  # passing
+        ".....................b....k...",
+        ".kk.................bpb..kpk..",
+        "kkk.................bbbbbbkkk.",
+        ".kb.................bbbbbbkkkk",
+        "..bb................bbbbebkkkk",
+        "..db....wwbbbbbkkkkkbbbwwwwwww",
+        "...bb.wwwbbbbbbdkkkkbwwwwwwwwp",
+        "....bwwwwwbbbbbddkkkkwwwwwwww.",
+        "....wwwwwwwbbbbbbkkkwwwwwww...",
+        "....wwwwwwwwbbbbbwwwwwwwwww...",
+        "....wwwwwwwwwwwwwwwwwwwwwww...",
+        ".....wwwwwwwwwwwwwwwwwwwwww...",
         ".....ww.ww.........ww.ww......",
         "....ww..ww........ww..ww......",
         "....ww..ww........ww..ww......",
     ],
-]
-assert all(len(r) == 30 for r in BODY + sum(LEGS, []))
+    "sit": [
+        "...............b....k.........",
+        "..............bpb..kpk........",
+        "..............bbbbbbkkk.......",
+        "..............bbbbbbkkkk......",
+        "..............bbbbebkkkk......",
+        "...........bb.bbbwwwwwww......",
+        "..........bbbbbwwwwwwwwp......",
+        ".........bbbbkkwwwwwww........",
+        "........bbbbbkkwwwww..........",
+        "........dbbbbkkwwwww..........",
+        ".......wdbbbkwwwwwww..........",
+        ".......wwbbbwwww.ww...........",
+        ".......wwwwwwwww.ww...........",
+        ".k.....wwwwwwwww.ww...........",
+        ".kkbbbbbwwwwwww..wwww.........",
+    ],
+    "blink": [
+        "...............b....k.........",
+        "..............bpb..kpk........",
+        "..............bbbbbbkkk.......",
+        "..............bbbbbbkkkk......",
+        "..............bbbbbbkkkk......",
+        "...........bb.bbbwwwwwww......",
+        "..........bbbbbwwwwwwwwp......",
+        ".........bbbbkkwwwwwww........",
+        "........bbbbbkkwwwww..........",
+        "........dbbbbkkwwwww..........",
+        ".......wdbbbkwwwwwww..........",
+        ".......wwbbbwwww.ww...........",
+        ".......wwwwwwwww.ww...........",
+        ".k.....wwwwwwwww.ww...........",
+        ".kkbbbbbwwwwwww..wwww.........",
+    ],
+    "flick": [  # tail up
+        "...............b....k.........",
+        "..............bpb..kpk........",
+        "..............bbbbbbkkk.......",
+        "..............bbbbbbkkkk......",
+        "..............bbbbebkkkk......",
+        "...........bb.bbbwwwwwww......",
+        "..........bbbbbwwwwwwwwp......",
+        ".........bbbbkkwwwwwww........",
+        ".k......bbbbbkkwwwww..........",
+        ".kk.....dbbbbkkwwwww..........",
+        "..b....wdbbbkwwwwwww..........",
+        "..b....wwbbbwwww.ww...........",
+        "..bb...wwwwwwwww.ww...........",
+        "...bb..wwwwwwwww.ww...........",
+        "....bbbbwwwwwww..wwww.........",
+    ],
+    "groom_1": [  # paw to the face
+        "..............................",
+        "...............b....k.........",
+        "..............bpb..kpk........",
+        "..............bbbbbbkkk.......",
+        "..............bbbbbbkkkk......",
+        "...........bb.bbbbbbkkkk......",
+        "..........bbbbbbbwwwwwwwww....",
+        ".........bbbbkbwwwwwwwwpww....",
+        "........bbbbbkkwwwwwwwww......",
+        "........dbbbbkkwwwwww.........",
+        ".......wdbbbkwwwwwww..........",
+        ".......wwbbbwwww...ww.........",
+        ".......wwwwwwwww...ww.........",
+        ".k.....wwwwwwwww...ww.........",
+        ".kkbbbbbwwwwwww...www.........",
+    ],
+    "groom_2": [  # licking
+        "..............................",
+        "...............b....k.........",
+        "..............bpb..kpk........",
+        "..............bbbbbbkkk.......",
+        "..............bbbbbbkkkk......",
+        "...........bb.bbbbbbkkkk......",
+        "..........bbbbbbbwwwwwww......",
+        ".........bbbbkbwwwwwwwwppw....",
+        "........bbbbbkkwwwwwwwwwww....",
+        "........dbbbbkkwwwwww.........",
+        ".......wdbbbkwwwwwww..........",
+        ".......wwbbbwwww...ww.........",
+        ".......wwwwwwwww...ww.........",
+        ".k.....wwwwwwwww...ww.........",
+        ".kkbbbbbwwwwwww...www.........",
+    ],
+    "yawn": [
+        "...............b....k.........",
+        "..............bpb..kpk........",
+        "..............bbbbbbkkk.......",
+        "..............bbbbbbkkkk......",
+        "..............bbbbbbkkkk......",
+        "...........bb.bbbwwwwkppp.....",
+        "..........bbbbbwwwwwwwkpp.....",
+        ".........bbbbkkwwwwwwwwww.....",
+        "........bbbbbkkwwwww..........",
+        "........dbbbbkkwwwww..........",
+        ".......wdbbbkwwwwwww..........",
+        ".......wwbbbwwww.ww...........",
+        ".......wwwwwwwww.ww...........",
+        ".k.....wwwwwwwww.ww...........",
+        ".kkbbbbbwwwwwww..wwww.........",
+    ],
+    "stretch": [  # play bow, after waking
+        ".kk...........................",
+        "..kb..........................",
+        "...b..........................",
+        "....bb........................",
+        ".....bbbbb....................",
+        ".....bbbbbbkk.................",
+        ".....wbbbbbbkkkk.....b....k...",
+        ".....wwbbbbbbkkkkb..bpb..kpk..",
+        ".....wwwbbbbbbkkbbbbbbbbbbkkk.",
+        ".....wwwwwbbbbbbbbbbbbbbbbkkkk",
+        ".....ww.wwwwwwwwwwbbbbbbebkkkk",
+        ".....ww.ww.wwwwwwwwwbbbwwwwwww",
+        ".....ww.ww..........bwwwwwwwwp",
+        ".....ww.ww...........wwwwwww..",
+        "....www.www.....wwwwwwwwwwwwww",
+    ],
+    "sleep_1": [  # curled up
+        "..............................",
+        "..............................",
+        "..............................",
+        "..............................",
+        "..............................",
+        "..............................",
+        ".................b....k.......",
+        "................bpb..kpk......",
+        ".........bbbbbb.bbbbbbkkk.....",
+        ".......bbbbbbkkdbbbbbbkkkk....",
+        "......bbbbbkkkkdbbbddbkkkk....",
+        ".....wbbbbbkkkdbbbwwwwwww.....",
+        ".....wwwwwwwwwwwwwwwwwwwp.....",
+        ".....wwwwwwwwwwwwwwwwwww......",
+        "...kkbbbbbbbbbbbbbbbbb........",
+    ],
+    "sleep_2": [  # breathing in, a Z
+        "..............................",
+        "..............................",
+        "........................zzzzz.",
+        "...........................z..",
+        "..........................z...",
+        ".........................z....",
+        ".................b....k.zzzzz.",
+        ".........bbbbbb.bpb..kpk......",
+        ".........bbbbbb.bbbbbbkkk.....",
+        ".......bbbbbbkkdbbbbbbkkkk....",
+        "......bbbbbkkkkdbbbddbkkkk....",
+        ".....wbbbbbkkkdbbbwwwwwww.....",
+        ".....wwwwwwwwwwwwwwwwwwwp.....",
+        ".....wwwwwwwwwwwwwwwwwww......",
+        "...kkbbbbbbbbbbbbbbbbb........",
+    ],
+    "sleep_3": [  # the Z floats up
+        ".........................zzzzz",
+        "............................z.",
+        "...........................z..",
+        "..........................z...",
+        ".........................zzzzz",
+        "..............................",
+        ".................b....k.......",
+        ".........bbbbbb.bpb..kpk......",
+        ".........bbbbbb.bbbbbbkkk.....",
+        ".......bbbbbbkkdbbbbbbkkkk....",
+        "......bbbbbkkkkdbbbddbkkkk....",
+        ".....wbbbbbkkkdbbbwwwwwww.....",
+        ".....wwwwwwwwwwwwwwwwwwwp.....",
+        ".....wwwwwwwwwwwwwwwwwww......",
+        "...kkbbbbbbbbbbbbbbbbb........",
+    ],
+}
+assert all(len(f) == 15 and all(len(r) == 30 for r in f) for f in FRAMES.values())
 
 
 def rgba(v):
@@ -68,7 +273,7 @@ def rgba(v):
 
 
 def outlined(rows):
-    # pad by one cell, then outline every empty cell touching the cat
+    # pad by one cell, then outline every empty cell touching the drawing
     w = len(rows[0]) + 2
     grid = ["." * w] + ["." + r + "." for r in rows] + ["." * w]
     res = []
@@ -106,5 +311,5 @@ def png(path, cells):
 
 
 os.makedirs(out, exist_ok=True)
-for n, legs in enumerate(LEGS, 1):
-    png(f"{out}/cat_{n}.png", outlined(BODY + legs))
+for name, rows in FRAMES.items():
+    png(f"{out}/cat_{name}.png", outlined(rows))

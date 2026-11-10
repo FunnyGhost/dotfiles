@@ -412,9 +412,11 @@ since tools drop them as literal characters.
   its usage description. Needs `swiftc` (Xcode Command Line Tools, which
   Homebrew already requires). To preview without real events,
   `touch ~/.cache/sketchybar/calendar.demo`; delete it to go back.
-- **cat**: a calico left of the notch (position `q`), animated faster with
-  CPU load by `plugins/cat.sh`, a second background loop beside
-  `rex_watch.sh`. The sprite is ASCII in `plugins/cat_frames.py`, drawn into
+- **cat**: a calico left of the notch (position `q`). `plugins/cat.sh`, a
+  second background loop beside `rex_watch.sh`, picks its mood from the CPU:
+  idle under 15% (sits and blinks, grooms, yawns, naps), then walks, runs and
+  sprints. Idle frames change every few seconds at most, which keeps it cheap.
+  Every frame is ASCII art in `plugins/cat_frames.py`, drawn into
   `~/.cache/sketchybar/cat/` and redrawn whenever that file changes.
 - **battery / volume**: Low Power Mode (`pmset powermode`, so macOS asks for
   your password on each toggle); a volume slider and mute.
