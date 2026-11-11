@@ -1,16 +1,18 @@
 ---
+name: verify
 description: Repo-aware verify — typecheck, lint, prettier, and affected tests, scoped to what changed
 argument-hint: [optional: "all" for full (non-affected) run, or a path/workspace to scope to]
-allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git rev-parse:*), Bash(git merge-base:*), Bash(cat:*), Bash(ls:*), Bash(n:*), Bash(node:*), Bash(yarn:*), Bash(pnpm:*), Bash(npm:*), Bash(npx:*), Bash(nx:*), Bash(tsc:*), Bash(prettier:*), Bash(jest:*), Bash(vitest:*), Bash(eslint:*), Bash(backstage-cli:*), Read, Glob
+allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git rev-parse:*), Bash(git merge-base:*), Bash(cat:*), Bash(ls:*), Bash(nx:*), Bash(tsc:*), Bash(prettier:*), Bash(jest:*), Bash(vitest:*), Bash(eslint:*), Bash(backstage-cli:*), Read, Glob
 ---
 
-Verify the change we just made: **typecheck**, **lint**, **prettier/format**, and **affected tests** — using whatever each repo actually uses. Scope to what changed — do not run the whole suite unless the user passed `all`. Optional arg: $ARGUMENTS
+Verify the change we just made: **typecheck**, **lint**, **prettier/format**, and **affected tests** — using whatever each repo actually uses. Scope to what changed — do not run the whole suite unless the user asked for `all`. The user may pass a scope: `all`, a path, or a workspace.
 
 ## 0. Figure out the change set
 - `git rev-parse --show-toplevel` for the repo root; `cd` there.
 - Determine changed files: staged + unstaged + untracked vs the base branch
   (`git diff --name-only $(git merge-base HEAD origin/main 2>/dev/null || git merge-base HEAD origin/master) HEAD` plus `git status --porcelain`). Dedupe into one list.
-- If `$ARGUMENTS` is a path/workspace, scope to it. If it's `all`, run full (non-affected) checks.
+- If the user's scope is a path/workspace, scope to it. If it's `all`, run full (non-affected) checks.
+- If nothing meaningful changed, say so and stop.
 - Classify the changed files: any `.ts/.tsx` (→ typecheck), any source/test files (→ affected tests), any formattable files (→ prettier). **Skip a check entirely if nothing relevant changed** (e.g. docs-only change → skip typecheck and tests).
 
 ## 1. Node version — use the repo's, without changing the global default
@@ -48,4 +50,4 @@ Verify the change we just made: **typecheck**, **lint**, **prettier/format**, an
 
 ## 7. Report — one scannable block
 - A line per check: ✅/❌ **typecheck**, **lint**, **tests** (with the scope used — affected/workspace/all), **prettier**. Skipped checks marked `— (no relevant changes)`.
-- On any ❌: show the failing output and the exact command, then ask whether to fix now (offer prettier `--write` for format fails; propose the typecheck/test fix for the rest). Do not commit anything — this only verifies.
+- On any ❌: show the failing output and the exact command, then ask whether to fix now (offer prettier `--write` for format fails; propose the smallest typecheck/test fix for the rest). Do not commit anything — this only verifies.

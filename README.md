@@ -24,7 +24,7 @@ If you'd rather do it by hand without Claude, just open [CLAUDE.md](CLAUDE.md) a
 
 ## 📦 What's included
 
-- **Editors / dev tools**: Neovim (Lazy.nvim), Git, Claude Code (5 custom slash commands, plus skills incl. a default side-project stack), Codex CLI (with a personal workflows plugin), 21 custom git commands (submodule), [`wwid`](https://github.com/FunnyGhost/wwid) (find & resume Claude Code chats from anywhere — installed via the `funnyghost/tap` Homebrew tap)
+- **Editors / dev tools**: Neovim (Lazy.nvim), Git, AI utilities for Claude Code and Codex, shared from one `ai/` folder (verify, scoped PRs, plan saving, PR review, research reports, diff explainers, a default side-project stack), Codex CLI (with a personal workflows plugin), 21 custom git commands (submodule), [`wwid`](https://github.com/FunnyGhost/wwid) (find & resume Claude Code chats from anywhere — installed via the `funnyghost/tap` Homebrew tap)
 - **Terminal / shell**: Zsh, Starship, Ghostty, WezTerm, Kitty, plus `bat`, `eza`, `fzf`, `zoxide`, [Herdr](https://herdr.dev) (desktop app for coding agents), and Rex (terminal multiplexer, with Ctrl+h/j/k/l moving between its panes and nvim splits)
 - **Window management**: Aerospace, JankyBorders, Sketchybar, Karabiner Elements. Yabai and skhd configs are kept around but not active.
 - **Packages**: ~82 taps, brews, casks, and fonts managed via `Brewfile`. Work-specific extras live in the gitignored `Brewfile.local`.

@@ -1,15 +1,17 @@
 ---
+name: research-html
 description: Deep-research a topic and write a cited, house-styled HTML report into ~/dev/research/<topic>/
+disable-model-invocation: true
 argument-hint: <research topic or question>
 ---
 
-Research this topic and produce a cited HTML report in my research hub: $ARGUMENTS
+Research the topic the user gives and produce a cited HTML report in my research hub.
 
 ## 1. Scope it first — ask before researching
-- Unless the topic is already specific and unambiguous, ask me **2–3 clarifying questions** before starting: what decision this informs, the depth/breadth I want, which platforms/sources matter, and the time horizon. Wait for my answers — don't start a deep dive on a vague prompt. (The deep-research skill also does this; this is a deliberate reinforcement — I'm annoyed when it's skipped.)
+- Unless the topic is already specific and unambiguous, ask me **2–3 clarifying questions** before starting: what decision this informs, the depth/breadth I want, which platforms/sources matter, and the time horizon. Wait for my answers — don't start a deep dive on a vague prompt. (This is a deliberate reinforcement — I'm annoyed when it's skipped.)
 
 ## 2. Run the research
-- Use the **deep-research** skill on the refined question: fan-out web search, fetch sources, adversarially verify claims, synthesize. Keep the citations — every non-obvious claim must trace to a source.
+- If a **deep-research** skill is available, use it on the refined question. Otherwise do the same by hand: fan-out web search, fetch sources, adversarially verify claims, synthesize. Keep the citations — every non-obvious claim must trace to a source.
 
 ## 3. Write it into the research hub — match the house style
 - **Location:** `~/dev/research/<topic-slug>/<topic-slug>.html` (kebab-case slug from the topic). Create the folder. Put any images/screenshots in that same folder, referenced relatively. Don't dump into `to-organize/`.

@@ -16,13 +16,11 @@ config/herdr/.config/herdr/*.log
 config/herdr-app/**/gpui-kit.d.ts
 config/herdr-app/**/jsconfig.json
 
-# Work-specific Codex skills. These describe internal architecture (repo
+# Work-specific AI utilities. They describe internal architecture (repo
 # names, service topology), so they stay on disk and stow normally but are
 # never committed to this public repo. See section 2 of CLAUDE.md.
-config/codex/plugins/cthulhu-workflows/skills/learn-ip/
-config/codex/plugins/cthulhu-workflows/skills/learn-sdk/
-config/codex/plugins/cthulhu-workflows/commands/learn-ip.md
-config/codex/plugins/cthulhu-workflows/commands/learn-sdk.md
+ai/learn-ip/
+ai/learn-sdk/
 
 # ~/.agents is stow-folded into this repo, so whatever tools install there lands
 # here — backstop so that state never gets committed.
@@ -32,8 +30,3 @@ config/codex/.agents/plugins/.skill-lock.json
 config/codex/.agents/skills/
 config/codex/.agents/.skill-lock.json
 
-# Work-specific Claude slash commands — same rule as the Codex skills above:
-# they name internal repos/services, so they stay local-only in ~/.claude/
-# commands/ and are never committed. Backstop in case one is copied in here.
-config/claude/.claude/commands/learn-ip.md
-config/claude/.claude/commands/learn-sdk.md

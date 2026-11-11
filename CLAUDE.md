@@ -51,18 +51,20 @@ may need credentials that don't exist yet.
 ### 1.3 Stow every config
 
 ```bash
-mkdir -p ~/.config/herdr ~/.claude/commands ~/.claude/skills \
+mkdir -p ~/.config/herdr ~/.claude/skills ~/.codex/skills \
   ~/.config/herdr-app/themes ~/.config/herdr-app/mods/my-prefix \
   ~/.config/rex/themes
 stow -d config -t ~ $(command ls config)
 stow -d . -t ~ git-commands
+stow -d . -t ~/.claude/skills ai
+stow -d . -t ~/.codex/skills ai
 ```
 
 `command ls` bypasses the `eza` alias defined in `.zshrc`. Stowing everything
 under `config/` is intentional — see section 2. The `mkdir` prevents stow from
 folding those into symlinks pointing at the repo. All are directories the
 tools themselves write into — herdr drops a socket and logs beside its config,
-Claude Code writes commands and Plannotator installs skills, Herdr.app keeps
+Plannotator installs skills beside ours, Herdr.app keeps
 all its state and generated files in `~/.config/herdr-app/` — and that output
 must not land here (see section 2).
 
@@ -98,9 +100,8 @@ password manager, or 1Password:
 - Raycast settings — in 1Password as the **Raycast Settings Export** document
   (Private vault), plus its export password. Restore via Raycast's
   **Import Settings & Data**.
-- Work-specific `~/.claude/commands/learn-*.md` and the Codex `learn-*` skills
-  under `config/codex/` — gitignored, so a clone won't bring them. Copy from
-  the old machine.
+- Work-specific AI utilities, `ai/learn-*/` — gitignored, so a clone won't
+  bring them. Copy from the old machine.
 
 Then install the work packages, which step 1.2 deliberately skipped:
 
@@ -158,7 +159,8 @@ exec zsh
 ```bash
 command -v stow nvim starship gh fzf eza zoxide bat jq    # all resolve
 readlink ~/.zshrc ~/.gitconfig ~/.claude/CLAUDE.md \
-  ~/.config/herdr-app/keys.json                           # all point into ~/dotfiles
+  ~/.config/herdr-app/keys.json \
+  ~/.claude/skills/verify ~/.codex/skills/verify          # all point into ~/dotfiles
 git -C ~/dotfiles status                                   # clean (or only *.local untracked)
 git -C ~/dotfiles submodule status                         # git-commands populated
 echo '{}' | ~/.claude/statusline.sh                        # prints a status line
@@ -179,12 +181,14 @@ git submodule update --init --recursive
 brew bundle install
 
 # must exist before stow, or stow folds them into symlinks into the repo
-mkdir -p ~/.config/herdr ~/.claude/commands ~/.claude/skills \
+mkdir -p ~/.config/herdr ~/.claude/skills ~/.codex/skills \
   ~/.config/herdr-app/themes ~/.config/herdr-app/mods/my-prefix \
   ~/.config/rex/themes
 
 stow -d config -t ~ --restow $(command ls config)
 stow -d . -t ~ --restow git-commands
+stow -d . -t ~/.claude/skills --restow ai
+stow -d . -t ~/.codex/skills --restow ai
 exec zsh
 ```
 
@@ -195,8 +199,8 @@ automatically by the `command ls` expansion.
 Not covered by the above, because it's gitignored or manual:
 
 - `~/.zshrc.local` and `Brewfile.local` — copy from the other machine.
-- Work-specific `~/.claude/commands/learn-*.md` and the Codex `learn-*`
-  skills — gitignored, so `git pull` won't bring them.
+- Work-specific AI utilities, `ai/learn-*/` — gitignored, so `git pull`
+  won't bring them.
 - `op signin`, for `rayconfig-backup`.
 
 `brew bundle install` only adds. It won't remove packages dropped from the
@@ -290,31 +294,16 @@ in the repo. The app writes through the symlinks fine (e.g. zoom updates
 `settings.json`). Delete one of those files, though, and the app instantly
 recreates it with defaults — replace with `ln -sf`, not `rm` + stow.
 
-### Codex config stows to three places
+### Codex config
 
-`config/codex/` is one stow package covering three targets:
+`config/codex/` stows `~/.codex/AGENTS.md` (global instructions) and folds
+`~/.agents` into this repo. Our AI utilities don't live here — they're in
+`ai/` (below).
 
-| repo path | stows to |
-|---|---|
-| `.codex/AGENTS.md` | `~/.codex/AGENTS.md` |
-| `.agents/plugins/marketplace.json` | `~/.agents/plugins/marketplace.json` |
-| `plugins/cthulhu-workflows/` | `~/plugins/cthulhu-workflows/` |
-
-`~/plugins` being outside a dot-directory is **intentional, not a mistake**.
-The `personal` marketplace resolves its relative `source.path` against its
-root, and that root is `$HOME` — confirm with `codex plugin marketplace list`.
-Moving the plugin under `.agents/` would require editing `marketplace.json`
-to match, so leave it unless `codex plugin list` says the plugin is missing.
-
-Two consequences worth knowing:
-
-- `~/.agents` itself is a stow-**folded** symlink into this repo, so anything
-  tools write there (lock files, plugin state, installed skills) lands inside
-  the repo. A `.gitignore` backstop covers the known cases, including the
-  third-party skills from section 1.3.
-- Work-specific skills that name internal repos or services are gitignored,
-  not committed — this repo is public. They still stow and load normally;
-  they just never reach GitHub. Keep new work-specific skills out the same way.
+`~/.agents` being a stow-**folded** symlink means anything tools write there
+(lock files, plugin state, installed skills) lands inside the repo. A
+`.gitignore` backstop covers the known cases, including the third-party
+skills from section 1.3.
 
 ### After-stow gotcha for `~/.claude/`
 
@@ -427,41 +416,45 @@ since tools drop them as literal characters.
 The background loops and the compiled helper live outside the repo
 (`~/.cache/sketchybar/`), so nothing the bar writes lands here.
 
-### Claude slash commands are split public/local
+### AI utilities: one folder, both tools
 
-`~/.claude/commands/` holds both tracked and local-only commands:
+`ai/` holds every AI utility we wrote, one folder each with a `SKILL.md` —
+the one format both Claude Code and Codex read. It's not under `config/`
+because it stows to two places (section 1.3): `~/.claude/skills/` for
+Claude and `~/.codex/skills/` for Codex. Edit a utility once and both tools
+see the change. Third-party ones (Plannotator, `rex`, `visual-explainer`)
+aren't here: their own installers put them in place (section 1.3).
 
-- Tracked in `config/claude/.claude/commands/` and symlinked out: `verify`,
-  `scoped-pr`, `pr-review`, `save-plan`, `research-html`.
-- Real files that live only in `~/.claude/commands/`: the work-specific ones
-  that name internal repos or services. Gitignored as a backstop.
+- Both targets must be **real directories**, each utility linked as its own
+  folder. **A new utility needs `stow -d . -t ~/.claude/skills --restow ai`
+  and the same for `~/.codex/skills`** before either tool sees it.
+- Write them tool-neutral: describe the user's input in words, not
+  `$ARGUMENTS` (Codex doesn't substitute it). Claude-only frontmatter
+  (`allowed-tools`, `argument-hint`) is fine; Codex ignores it.
+- `disable-model-invocation: true` makes a utility run only when you call
+  it (`/scoped-pr` in Claude): the AI can't start it by itself. Set on
+  everything with side effects or heavy work; `verify` stays callable by
+  the AI, since the global instructions have it run before commits.
+- Codex lists linked utilities by their real path (`…/dotfiles/ai/…`), not
+  by `~/.codex/skills/`.
+- **Work-only** utilities (`learn-ip`, `learn-sdk`) name internal repos and
+  services, so they're gitignored — on disk and stowed, never on GitHub.
+  Keep new work-specific ones out the same way.
 
-The directory must exist before stowing. Stow folds a subdirectory into a
-single symlink only when the target doesn't exist, so `mkdir -p
-~/.claude/commands` is enough — an existing directory gets its files linked
-individually. If it ever folds, anything Claude Code writes there lands
-inside this repo.
+Notes on specific utilities:
 
-Skills work the same way: `config/claude/.claude/skills/explain-diff-html/` is
-symlinked into the real `~/.claude/skills/`, beside the installed Plannotator
-skills. It's a pinned copy of
-[Geoffrey Litt's gist](https://gist.github.com/geoffreylitt/a29df1b5f9865506e8952488eac3d524),
-tracked so a fresh laptop gets it, since nothing installs it.
-
-`skills/explain-diff-visual/` is ours: `explain-diff-html`'s depth and quiz,
-drawn the way `plannotator-visual-explainer` draws non-plan visuals —
-`visual-explainer`'s kit and renderer, themed with Plannotator's
-`theme-override.md` (both installed, section 1.3, and read at run time). It
-writes to `~/.agent/diagrams/` and opens the page with `plannotator annotate`.
-`explain-diff-html` stays until the new one has proven itself.
-
-`skills/new-project/` holds the default side-project stack (Bun, Hono, Zod,
-Drizzle, SQLite via Shibumi Stack) and how it should evolve. Its Codex twin
-lives in `config/codex/plugins/cthulhu-workflows/skills/new-project/` — when a
-decision changes, update both.
-
-The Codex equivalents under `config/codex/` are **separate, diverged files**,
-not copies. Changing a workflow means updating both if you want parity.
+- `explain-diff-html` started as a pinned copy of
+  [Geoffrey Litt's gist](https://gist.github.com/geoffreylitt/a29df1b5f9865506e8952488eac3d524),
+  since expanded (evidence rules, accessible quiz, offline-only output).
+  `agents/openai.yaml` is its Codex display name.
+- `explain-diff-visual` is `explain-diff-html`'s depth and quiz, drawn the
+  way `plannotator-visual-explainer` draws non-plan visuals —
+  `visual-explainer`'s kit and renderer, themed with Plannotator's
+  `theme-override.md` (both installed, section 1.3, and read at run time). It
+  writes to `~/.agent/diagrams/` and opens the page with `plannotator
+  annotate`. `explain-diff-html` stays until the new one has proven itself.
+- `new-project` holds the default side-project stack (Bun, Hono, Zod,
+  Drizzle, SQLite via Shibumi Stack) and how it should evolve.
 
 ## 3. What this file does NOT cover
 

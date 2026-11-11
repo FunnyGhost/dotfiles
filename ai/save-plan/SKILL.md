@@ -1,16 +1,18 @@
 ---
+name: save-plan
 description: Persist the current plan/spec to ~/dev/research/<task>/plan.md so a multi-session task survives a fresh session
 argument-hint: [optional task name/slug]
+disable-model-invocation: true
 allowed-tools: Read, Write, Bash(mkdir:*), Bash(ls:*), Bash(date:*)
 ---
 
-Save the plan/spec we've been working on to disk so I can resume it cleanly in a fresh session. Optional task name: $ARGUMENTS
+Save the plan/spec we've been working on to disk so I can resume it cleanly in a fresh session. The user may give a task name.
 
 ## 1. Gather the plan
-- Use the plan/spec we've agreed on in this conversation. If we're in (or were in) plan mode and a plan file exists under `~/.claude/plans/`, read it as the source of truth. Otherwise synthesize from what we've decided so far.
+- Use the plan/spec we've agreed on in this conversation. If an approved plan file exists from a planning mode (Claude Code keeps them under `~/.claude/plans/`), read it as the source of truth. Otherwise synthesize from what we've decided so far.
 
 ## 2. Pick the location
-- Slug: kebab-case from `$ARGUMENTS` if given, else derive a short slug from the task.
+- Slug: kebab-case from the task name if given, else derive a short slug from the task.
 - Path: `~/dev/research/<slug>/plan.md`. Create the folder (`mkdir -p`).
 - If `plan.md` already exists there, **don't silently overwrite** — show me what's there and ask whether to update it (preferred: update the Status/Next sections in place) or write a dated variant.
 

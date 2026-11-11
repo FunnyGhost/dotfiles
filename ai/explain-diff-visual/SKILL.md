@@ -1,6 +1,7 @@
 ---
 name: explain-diff-visual
 description: Use when the user asks for a rich, visual explanation of a code change, diff, branch, or PR. Produces one self-contained, animated HTML page (visual-explainer's kit in Plannotator's theme) with background, intuition, a code walkthrough, and an interactive quiz, opened in Plannotator.
+disable-model-invocation: true
 ---
 
 # Explain Diff, Visually

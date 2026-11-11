@@ -1,10 +1,12 @@
 ---
+name: pr-review
 description: Review a PR against its /research plan — real bugs, overengineering, and comment bloat. Saves the review to the research folder.
 argument-hint: <PR url or number> [path or slug of the plan in ~/dev/research]
-allowed-tools: Bash(gh pr view:*), Bash(gh pr diff:*), Bash(gh pr checks:*), Bash(gh api:*), Bash(git rev-parse:*), Bash(git log:*), Bash(git diff:*), Bash(git show:*), Bash(ls:*), Bash(mkdir:*), Bash(date:*), Read, Glob, Grep, Write
+disable-model-invocation: true
+allowed-tools: Bash(gh pr view:*), Bash(gh pr diff:*), Bash(gh pr checks:*), Bash(git rev-parse:*), Bash(git log:*), Bash(git diff:*), Bash(git show:*), Bash(ls:*), Bash(mkdir:*), Bash(date:*), Read, Glob, Grep, Write
 ---
 
-Review this PR through three lenses: **real bugs**, **overengineering**, **comment bloat**. Args: $ARGUMENTS
+Review the PR the user gives (a URL or number, optionally with a plan path or slug) through three lenses: **real bugs**, **overengineering**, **comment bloat**.
 
 The plan is **context for intent** — it tells you what the change was *supposed* to do so you can judge the code against it. It is **not** a checklist to tick off; do not report "plan item X wasn't implemented" unless the omission is itself a bug.
 
@@ -117,4 +119,4 @@ Then **save the same review** as Markdown to `<plan-folder>/pr-<n>-review.md` (s
 ## 8. Close out
 - Print the absolute path to the saved review.
 - Note anything you deliberately skipped (large diff, generated files) and any finding you're genuinely unsure about, so I can weight it.
-- Do **not** post anything to GitHub. This command is read-only on the PR.
+- Do **not** post anything to GitHub. This is read-only on the PR.

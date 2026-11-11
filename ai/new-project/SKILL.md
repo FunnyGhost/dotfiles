@@ -73,5 +73,3 @@ template repo (not a fork). To feed that:
   added by hand, append one line to
   `~/dev/research/side-project-stack/friction.md`: date, project, what, why.
 - After 2–3 projects, or when asked, review that file and propose the template.
-- When a decision here changes, update this skill and its Claude Code twin in
-  `~/dotfiles/config/claude/.claude/skills/new-project/`.
