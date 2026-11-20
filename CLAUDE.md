@@ -397,11 +397,19 @@ since tools drop them as literal characters.
   sketchybar's PATH, so `plugins/rex_cmd.sh` points into the Rex app bundle,
   always with `--autostart=false`: the bar must never start a Rex server.
   Without Rex the item stays hidden.
-- **codex**: 5h and weekly plan use, from the newest
-  `~/.codex/sessions/**/rollout-*.jsonl` that recorded `rate_limits`. Codex
-  doesn't log them every turn, so the value can lag a little. There's no
-  Claude equivalent: on this machine Claude Code bills by usage, so there are
-  no windows to show.
+- **codex**: what's left of the 5h and weekly windows, always shown — the
+  same numbers the Codex/ChatGPT apps show, counting use from every app.
+  `plugins/codex_limits.py` asks `codex app-server` (Codex's own JSON-RPC
+  interface) for `account/rateLimits/read` every 5 minutes; Codex handles
+  the login, so nothing here touches its credentials, and only read-only
+  requests are sent. OpenAI's usage endpoint answers 503 now and then, so it
+  retries once, then keeps the last good answer
+  (`~/.cache/sketchybar/codex/live`). With no answer ever, it falls back to
+  the newest session log of the last week: `~/.codex/sessions/`, then the
+  zstd-compressed `~/.codex/archived_sessions/` (each unpacked once and
+  cached; `zstd` is in the Brewfile for this). There's no Claude
+  equivalent: on this machine Claude Code bills by usage, so there are no
+  windows to show.
 - **calendar**, folded into the clock: while an event is on or starts within
   15 minutes, `clock.event` replaces the date; clicking the clock lists the
   rest of today, and a row opens its meeting link (Zoom, Meet, Teams, Webex)

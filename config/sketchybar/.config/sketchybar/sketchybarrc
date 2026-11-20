@@ -209,7 +209,7 @@ sketchybar --set agents.blocked label=waiting icon.color=$RED \
   --set agents.pill "${pill[@]}"
 
 ##### Codex limits #####
-# 5-hour and weekly plan use. Hidden without Codex session logs.
+# What's left of the 5-hour and weekly windows, asked from Codex every 5 min.
 
 spacer gap.agents right 8
 sketchybar --add item codex.wk right \
@@ -219,7 +219,7 @@ sketchybar --add item codex.wk right \
   --set codex.5h "${value[@]}" drawing=off label=5h padding_right=8 \
   script="$PLUGIN_DIR/codex_usage.sh" --subscribe codex.5h mouse.clicked \
   --add item codex right \
-  --set codex drawing=off update_freq=120 padding_left=10 \
+  --set codex drawing=off update_freq=300 padding_left=10 \
   icon=codex icon.color=$PURPLE label.drawing=off \
   script="$PLUGIN_DIR/codex_usage.sh" "${popup[@]}" \
   --subscribe codex system_woke mouse.clicked mouse.exited.global \

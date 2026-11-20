@@ -94,6 +94,8 @@ brew "stow"
 brew "watchman"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
+# Zstandard compression; sketchybar's Codex pill reads Codex's archived logs
+brew "zstd"
 # UNIX shell (command interpreter)
 brew "zsh"
 # Fish-like fast/unobtrusive autosuggestions for zsh
