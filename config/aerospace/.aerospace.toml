@@ -227,6 +227,10 @@ run = ['move-node-to-workspace 1']
 if.app-id = 'com.lukilabs.lukiapp'  # Craft
 run = ['move-node-to-workspace 2']
 
+[[on-window-detected]]
+if.app-id = 'com.openai.codex'  # ChatGPT: the app shares Codex's bundle id
+run = ['move-node-to-workspace 2']
+
 # Social Space (3)
 [[on-window-detected]]
 if.app-id = 'com.tinyspeck.slackmacgap'  # Slack
