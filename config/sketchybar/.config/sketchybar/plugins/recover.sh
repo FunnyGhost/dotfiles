@@ -1,10 +1,13 @@
 #!/bin/bash
 
 # Keeps the bar right across display changes and sleep. Runs on the
-# invisible "recover" item's events.
+# invisible "recover" item's events, and as `recover.sh save` from
+# sketchybarrc.
 #
-# display_change: reload. Workspaces are assigned to displays when
-#   sketchybarrc runs, so a new monitor setup needs a fresh run.
+# save: record the displays the bar was just built for.
+# display_change: reload, but only if the displays really differ from that
+#   record. macOS also sends the event at login and on wake with nothing
+#   changed, and those reloads used to stack on top of the startup build.
 # system_woke: if the bar's windows went missing (the process stays alive,
 #   but nothing is drawn, and --reload doesn't fix it), restart sketchybar
 #   through launchd. At most once every 5 minutes, logged to recover.log.
@@ -12,14 +15,21 @@
 CACHE="$HOME/.cache/sketchybar"
 mkdir -p "$CACHE"
 log() { echo "$(date '+%F %T') $*" >>"$CACHE/recover.log"; }
+displays() { sketchybar --query displays | jq -c '[.[] | [.UUID, .frame.w, .frame.h]]'; }
+
+if [ "$1" = save ]; then
+  displays >"$CACHE/displays"
+  exit 0
+fi
 
 if [ "$SENDER" = "display_change" ]; then
-  # one physical change fires several events; let them settle, reload once
+  # one physical change fires several events; let them settle, check once
   stamp=$$
   echo "$stamp" >"$CACHE/recover.pending"
   sleep 2
   [ "$(cat "$CACHE/recover.pending")" = "$stamp" ] || exit 0
-  log "display change → reload"
+  [ "$(displays)" = "$(cat "$CACHE/displays" 2>/dev/null)" ] && exit 0
+  log "displays changed → reload"
   sketchybar --reload
   exit 0
 fi

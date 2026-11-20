@@ -137,9 +137,10 @@ and without grouping Mission Control shrinks everything to tiny, scattered
 thumbnails.
 
 `brew bundle` already registered sketchybar as a login service
-(`start_service: true`). AeroSpace adds itself to login items
-(`start-at-login` in `.aerospace.toml`) and, on every startup, launches
-borders and reloads sketchybar. Neither does anything until macOS grants
+(`start_service: true`); at login it waits for AeroSpace before drawing.
+AeroSpace adds itself to login items (`start-at-login` in
+`.aerospace.toml`) and, on every startup, launches borders — and reloads
+sketchybar only if the bar came up without workspaces. Neither does anything until macOS grants
 the permissions below — one-time GUI approvals, nothing can automate them.
 In System Settings > Privacy & Security:
 
@@ -376,6 +377,16 @@ palette, font and shared pill/popup styles live in `theme.sh`, sourced by
 glyphs in scripts are written as escaped bytes (`printf '\357\211\200'`),
 since tools drop them as literal characters.
 
+- **workspaces**: one pill, thin dividers between them. Each shows on the
+  display AeroSpace put it on; the ones `.aerospace.toml` pins to
+  `secondary` (6 and 7) only appear when a second monitor is connected.
+  The bar is built once at login: launchd starts it, and `sketchybarrc`
+  waits up to 20s for AeroSpace instead of being reloaded by it. AeroSpace's
+  startup reload is only a fallback (no workspaces drawn, no build running),
+  and `recover` ignores display events when the displays haven't changed.
+  As a backstop, `sketchybarrc` runs one at a time (a lock in
+  `~/.cache/sketchybar/`) and starts from an empty bar — overlapping runs
+  once scrambled the workspace order.
 - **agents**: coding agents in Rex tabs, from the OSC 7501 status Rex keeps
   per pane. The popup groups them by session and follows Wayfinder's rules
   (tiled panes, most urgent pane wins, unnamed tabs show their title) —
@@ -409,7 +420,8 @@ since tools drop them as literal characters.
   `~/.cache/sketchybar/cat/` and redrawn whenever that file changes.
 - **battery / volume**: Low Power Mode (`pmset powermode`, so macOS asks for
   your password on each toggle); a volume slider and mute.
-- **recover** (invisible): reloads on display changes, and after wake
+- **recover** (invisible): reloads when the displays really change (it
+  compares against the ones the last build recorded), and after wake
   restarts sketchybar via launchd if its windows went missing. Logs to
   `~/.cache/sketchybar/recover.log`.
 

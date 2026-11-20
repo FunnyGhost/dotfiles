@@ -16,10 +16,10 @@ after-login-command = []
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
 after-startup-command = [
     'exec-and-forget borders',
-    # Sketchybar is a brew LaunchAgent that starts before AeroSpace is ready,
-    # so its startup query for workspaces returns nothing and no space items
-    # get drawn. Reload it now that AeroSpace can answer list-workspaces.
-    'exec-and-forget sketchybar --reload'
+    # Sketchybar (a brew LaunchAgent) waits for AeroSpace on its own at login.
+    # This is the fallback for when it gave up, or AeroSpace restarted later:
+    # reload only if the bar has no workspaces and isn't mid-build.
+    'exec-and-forget [ -d ~/.cache/sketchybar/rc.lock ] || sketchybar --query space.1 >/dev/null 2>&1 || sketchybar --reload'
 ]
 # Start AeroSpace at login
 start-at-login = true 

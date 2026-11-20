@@ -14,15 +14,14 @@ update_space_icons() {
     while read -r app; do
       icons+="$("$CONFIG_DIR/plugins/icon_map_fn.sh" "$app") "
     done <<<"$apps"
-    sketchybar --set "space.$sid" label="${icons% }" label.drawing=on icon.padding_right=4
+    sketchybar --set "space.$sid" label="${icons% }" label.drawing=on icon.padding_right=4 >/dev/null 2>&1
   else
     # an empty workspace is just its number
-    sketchybar --set "space.$sid" label.drawing=off icon.padding_right=9
+    sketchybar --set "space.$sid" label.drawing=off icon.padding_right=9 >/dev/null 2>&1
   fi
 }
 
-for monitor in $(aerospace list-monitors --format "%{monitor-appkit-nsscreen-screens-id}"); do
-  for sid in $(aerospace list-workspaces --monitor "$monitor"); do
-    update_space_icons "$sid"
-  done
+# workspaces without an item (6 and 7 on one monitor) are skipped quietly
+for sid in $(aerospace list-workspaces --all); do
+  update_space_icons "$sid"
 done

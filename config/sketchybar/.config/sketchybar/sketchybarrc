@@ -6,6 +6,21 @@ PLUGIN_DIR="$CONFIG_DIR/plugins"
 ITEM_DIR="$CONFIG_DIR/items"
 source "$CONFIG_DIR/theme.sh"
 
+# One run at a time. At login several start together (launchd, AeroSpace's
+# startup reload, a display change), and interleaved runs leave items out of
+# order. Wait up to 10s for an earlier run, then start from an empty bar.
+LOCK="$HOME/.cache/sketchybar/rc.lock"
+mkdir -p "${LOCK%/*}"
+for _ in $(seq 50); do mkdir "$LOCK" 2>/dev/null && break; sleep 0.2; done
+trap 'rmdir "$LOCK" 2>/dev/null' EXIT
+
+# launchd starts the bar at login, usually before AeroSpace can answer, and
+# without AeroSpace there are no workspaces to draw: wait for it (up to 20s)
+# instead of being reloaded once it's up
+for _ in $(seq 40); do aerospace list-workspaces --focused >/dev/null 2>&1 && break; sleep 0.5; done
+
+sketchybar --remove '/.*/' 2>/dev/null
+
 sketchybar --bar position=top height=40 color=$CLEAR
 
 default=(
@@ -33,32 +48,44 @@ spacer() { sketchybar --add item "$1" "$2" --set "$1" width="$3" icon.drawing=of
 sketchybar --add event aerospace_workspace_change
 spacer space.start left 4
 
-for monitor in $(aerospace list-monitors --format "%{monitor-appkit-nsscreen-screens-id}"); do
-  for sid in $(aerospace list-workspaces --monitor "$monitor"); do
-    # Determine which display this workspace should be shown on
-    display_id="1"
-    if [ "$sid" -ge 6 ] && [ "$sid" -le 7 ]; then
-      display_id="2"
-    fi
+# Each workspace shows on the display AeroSpace put it on: AeroSpace's monitor
+# id picks the workspaces, the screen number is sketchybar's display.
+# Workspaces .aerospace.toml pins to 'secondary' (6 and 7) only show with a
+# second monitor; on one, AeroSpace would otherwise list them on the main one.
+secondary=" $(awk '/^\[workspace-to-monitor-force-assignment\]/ { f = 1; next } /^\[/ { f = 0 }
+  f && /secondary/ { printf "%s ", $1 }' "$(aerospace config --config-path)")"
+monitors=$(aerospace list-monitors | wc -l | tr -d ' ')
 
-    sketchybar --add item space.$sid left \
-      --subscribe space.$sid aerospace_workspace_change \
-      --set space.$sid display="$display_id" \
-      icon="$sid" \
-      icon.padding_left=9 \
-      icon.padding_right=4 \
-      label.font="$FONT:Regular:14.0" \
-      label.padding_left=2 \
-      label.padding_right=9 \
-      label.y_offset=-1 \
-      background.color=0x33a48cf2 \
-      background.corner_radius=7 \
-      background.height=22 \
-      background.drawing=off \
-      click_script="aerospace workspace $sid" \
-      script="$PLUGIN_DIR/aerospace.sh $sid"
+aerospace list-monitors --format "%{monitor-id} %{monitor-appkit-nsscreen-screens-id}" |
+  while read -r monitor display; do
+    first=1
+    for sid in $(aerospace list-workspaces --monitor "$monitor"); do
+      [ "$monitors" -eq 1 ] && [[ $secondary == *" $sid "* ]] && continue
+      # a thin dim divider between neighbouring workspaces, centred by their
+      # own 9pt inner padding
+      [ "$first" = 1 ] || sketchybar --add item space.sep.$sid left \
+        --set space.sep.$sid display="$display" icon.drawing=off \
+        label="│" label.color=0x557081d0 label.font="$FONT:Regular:13.0" \
+        label.padding_left=0 label.padding_right=0
+      first=0
+      sketchybar --add item space.$sid left \
+        --subscribe space.$sid aerospace_workspace_change \
+        --set space.$sid display="$display" \
+        icon="$sid" \
+        icon.padding_left=9 \
+        icon.padding_right=4 \
+        label.font="$FONT:Regular:14.0" \
+        label.padding_left=2 \
+        label.padding_right=9 \
+        label.y_offset=-1 \
+        background.color=0x33a48cf2 \
+        background.corner_radius=7 \
+        background.height=22 \
+        background.drawing=off \
+        click_script="aerospace workspace $sid" \
+        script="$PLUGIN_DIR/aerospace.sh $sid"
+    done
   done
-done
 
 spacer space.end left 4
 sketchybar --add bracket spaces.pill '/space\..*/' --set spaces.pill "${pill[@]}"
@@ -221,6 +248,9 @@ for loop in rex_watch cat; do
   pkill -f "$PLUGIN_DIR/$loop.sh"
   CONFIG_DIR="$CONFIG_DIR" "$PLUGIN_DIR/$loop.sh" >/dev/null 2>&1 &
 done
+
+# the displays this build is for; recover.sh rebuilds only when they change
+"$PLUGIN_DIR/recover.sh" save
 
 ##### Force all scripts to run the first time (never do this in a script) #####
 sketchybar --update
