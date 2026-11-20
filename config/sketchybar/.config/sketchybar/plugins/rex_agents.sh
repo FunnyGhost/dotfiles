@@ -2,9 +2,9 @@
 
 # Coding agents running in Rex tabs, from the status their panes report to Rex
 # (OSC 7501). Bar: the robot, coloured by the most urgent state, and a count
-# per state. Popup: grouped by session like Wayfinder (rex/wayfinder), most
-# urgent session and tab first; clicking a tab jumps to it. No agents hides
-# the item.
+# per state, idle ones included (dim). Popup: grouped by session like
+# Wayfinder (rex/wayfinder), most urgent session and tab first; clicking a tab
+# jumps to it. No agents hides the item.
 #
 # Same rules as Wayfinder: a tab is an agent when a tiled pane reports a status,
 # the most urgent pane wins, and an unnamed tab shows its terminal title.
@@ -19,7 +19,7 @@ esac
 
 
 # One line per agent tab: rank<TAB>session<TAB>tab<TAB>state<TAB>session id<TAB>window id
-# rank sorts by urgency: needs you, failed, busy, your turn
+# rank sorts by urgency: needs you, failed, busy, your turn, idle
 rows=$(
   rex ls --json 2>/dev/null | jq -r '.sessions[] | [.session_id, .label] | @tsv' |
     while IFS=$'\t' read -r sid session; do
@@ -30,8 +30,10 @@ rows=$(
           for bid in $panes; do
             # -s is required: without it, blocks outside the default session aren't found
             line=$(rex block call -s "$sid" -b "$bid" program_status 2>/dev/null | jq -r '
-              .records[]? | select(.id == null and .state != "idle")
-              | [({blocked: 1, error: 2, working: 3, done: 4}[.state] // 5), .state] | @tsv')
+              .records[]? | select(.id == null)
+              # an unknown state counts as idle, as the protocol says
+              | ({blocked: 1, error: 2, working: 3, done: 4}[.state] // 5) as $rank
+              | [$rank, (if $rank == 5 then "idle" else .state end)] | @tsv')
             if [ -n "$line" ] && { [ -z "$best" ] || [ "${line%%$'\t'*}" -lt "${best%%$'\t'*}" ]; }; then
               best=$line
             fi
@@ -56,16 +58,18 @@ blocked=$(count blocked)
 errors=$(count error)
 finished=$(count done)
 working=$(count working)
+idle=$(count idle)
 
 args=(--remove '/agentpop\.row\..*/')
 
-if [ $((blocked + errors + finished + working)) -eq 0 ]; then
+if [ $((blocked + errors + finished + working + idle)) -eq 0 ]; then
   sketchybar "${args[@]}" --set agents drawing=off popup.drawing=off \
     --set '/agents\..*/' drawing=off
   exit 0
 fi
 
-color=$GREEN
+color=$DIM
+[ "$finished" -gt 0 ] && color=$GREEN
 [ "$working" -gt 0 ] && color=$CYAN
 [ $((blocked + errors)) -gt 0 ] && color=$RED
 
@@ -85,6 +89,7 @@ while IFS=$'\t' read -r _ session tab state sid wid; do
   case "$state" in
     blocked | error) dot=$RED ;;
     done) dot=$GREEN ;;
+    idle) dot=$DIM ;;
     *) dot=$CYAN ;;
   esac
   args+=(--add item "agentpop.row.$i" popup.agents
@@ -101,4 +106,5 @@ sketchybar "${args[@]}" --set agents drawing=on icon.color="$color" --set agents
   --set agents.blocked $(show blocked "$blocked") \
   --set agents.error $(show error "$errors") \
   --set agents.done $(show done "$finished") \
-  --set agents.working $(show working "$working")
+  --set agents.working $(show working "$working") \
+  --set agents.idle $(show idle "$idle")

@@ -388,15 +388,15 @@ since tools drop them as literal characters.
   `~/.cache/sketchybar/`) and starts from an empty bar — overlapping runs
   once scrambled the workspace order.
 - **agents**: coding agents in Rex tabs, from the OSC 7501 status Rex keeps
-  per pane. The popup groups them by session and follows Wayfinder's rules
-  (tiled panes, most urgent pane wins, unnamed tabs show their title) —
-  change one, check the other. Clicking a tab jumps to it with the same
-  `rex do session.select` Wayfinder uses (`plugins/rex_jump.sh`).
-  `plugins/rex_watch.sh` is a long-running `rex events` listener, so updates
-  are pushed, not polled. `rex` isn't on sketchybar's PATH, so
-  `plugins/rex_cmd.sh` points into the Rex app bundle, always with
-  `--autostart=false`: the bar must never start a Rex server. Without Rex
-  the item stays hidden.
+  per pane, idle ones included (dim, listed last). The popup groups them by
+  session and follows Wayfinder's rules (tiled panes, most urgent pane wins,
+  unnamed tabs show their title) — change one, check the other. Clicking a tab
+  jumps to it with the same `rex do session.select` Wayfinder uses
+  (`plugins/rex_jump.sh`). `plugins/rex_watch.sh` is a long-running
+  `rex events` listener, so updates are pushed, not polled. `rex` isn't on
+  sketchybar's PATH, so `plugins/rex_cmd.sh` points into the Rex app bundle,
+  always with `--autostart=false`: the bar must never start a Rex server.
+  Without Rex the item stays hidden.
 - **codex**: 5h and weekly plan use, from the newest
   `~/.codex/sessions/**/rollout-*.jsonl` that recorded `rate_limits`. Codex
   doesn't log them every turn, so the value can lag a little. There's no

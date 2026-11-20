@@ -190,7 +190,7 @@ spacer gap.right right 8
 # agents.end: the pill's right padding, whichever count is last
 sketchybar --add event rex_agents_change \
   --add item agents.end right --set agents.end drawing=off width=6 icon.drawing=off label.drawing=off
-for state in working done error blocked; do
+for state in idle working done error blocked; do
   sketchybar --add item agents.$state right --set agents.$state "${value[@]}" drawing=off \
     script="$PLUGIN_DIR/rex_agents.sh" --subscribe agents.$state mouse.clicked
 done
@@ -198,13 +198,14 @@ sketchybar --set agents.blocked label=waiting icon.color=$RED \
   --set agents.error label=failed icon.color=$RED \
   --set agents.done label=done icon.color=$GREEN \
   --set agents.working label=working icon.color=$CYAN \
+  --set agents.idle label=idle icon.color=$DIM \
   --add item agents right \
   --set agents drawing=off update_freq=60 padding_left=10 \
   icon="$(printf '\363\260\232\251')" icon.font="$FONT:Regular:16.0" \
   label.drawing=off script="$PLUGIN_DIR/rex_agents.sh" "${popup[@]}" \
   --subscribe agents rex_agents_change system_woke mouse.clicked mouse.exited.global \
   --add item agentpop.header popup.agents --set agentpop.header "${popup_header[@]}" label=AGENTS \
-  --add bracket agents.pill agents agents.blocked agents.error agents.done agents.working agents.end \
+  --add bracket agents.pill agents agents.blocked agents.error agents.done agents.working agents.idle agents.end \
   --set agents.pill "${pill[@]}"
 
 ##### Codex limits #####
