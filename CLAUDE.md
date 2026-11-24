@@ -82,8 +82,8 @@ skills (`plannotator`, `-annotate`, `-last`, `-review`); `npx skills` adds the
 extras (`-compound`, `-setup-goal`, `-visual-explainer`). Run both after
 stowing — they write into `~/.agents`, which must already be the stow symlink.
 
-Then `visual-explainer`, which `plannotator-visual-explainer` and the tracked
-`explain-diff-visual` skill draw with — same installed-not-tracked rule:
+Then `visual-explainer`, which `plannotator-visual-explainer` draws with —
+same installed-not-tracked rule:
 
 ```bash
 npx skills add nicobailon/visual-explainer -g -a claude-code codex -y
@@ -466,13 +466,9 @@ Notes on specific utilities:
 - `explain-diff-html` started as a pinned copy of
   [Geoffrey Litt's gist](https://gist.github.com/geoffreylitt/a29df1b5f9865506e8952488eac3d524),
   since expanded (evidence rules, accessible quiz, offline-only output).
-  `agents/openai.yaml` is its Codex display name.
-- `explain-diff-visual` is `explain-diff-html`'s depth and quiz, drawn the
-  way `plannotator-visual-explainer` draws non-plan visuals —
-  `visual-explainer`'s kit and renderer, themed with Plannotator's
-  `theme-override.md` (both installed, section 1.3, and read at run time). It
-  writes to `~/.agent/diagrams/` and opens the page with `plannotator
-  annotate`. `explain-diff-html` stays until the new one has proven itself.
+  `agents/openai.yaml` is its Codex display name. It is the default code
+  explainer (Claude may invoke it on its own); runs start from its generic
+  `template.html` and target desktop screens only.
 - `new-project` holds the default side-project stack (Bun, Hono, Zod,
   Drizzle, SQLite via Shibumi Stack) and how it should evolve.
 
