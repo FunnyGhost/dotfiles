@@ -1,7 +1,6 @@
 ---
 name: explain-diff-html
-description: Use when the user asks for a rich explanation of a code change, diff, branch, or PR. Produces a self-contained interactive HTML guide with background, intuition, a code walkthrough, and a quiz.
-disable-model-invocation: true
+description: Use when the user asks to explain, walk through, or visualize code - a change, diff, commit, branch, PR, folder, or repo (including "as if it were one commit"). Preferred over visual-explainer for any code explanation. Produces a self-contained interactive HTML guide with background, intuition, a code walkthrough, and a quiz.
 ---
 
 # Explain Diff
@@ -46,7 +45,22 @@ Provide exactly five medium-difficulty multiple-choice questions. Each should te
 
 Write with the clarity and flow requested by the user: the concrete, carefully developed technical explanation exemplified by Martin Kleppmann, in engaging classic prose. Introduce the problem before the mechanism, define unfamiliar terms when needed, and make transitions between sections smooth. Do not invent quotes or imply authorship by another writer.
 
-Use callouts for key definitions, surprising implications, and important edge cases. Favor readable paragraph widths, generous spacing, clear hierarchy, visible focus indicators, and responsive layouts. Honor reduced-motion preferences. Color must not be the sole carrier of meaning.
+Use callouts for key definitions, surprising implications, and important edge cases. Favor readable paragraph widths, generous spacing, clear hierarchy, and visible focus indicators. Honor reduced-motion preferences. Color must not be the sole carrier of meaning.
+
+## Visual style
+
+Priorities, in order: it looks good, its diagrams move, it has a working quiz, and it is easy to scan.
+
+Start from `template.html` in this skill's directory. Copy its `<style>` and `<script>` unchanged and fill the `[bracketed]` placeholders. Duplicate or delete components as the change needs. Do not rewrite the CSS or JavaScript; writing content only is what keeps a run fast. The quiz renders from the `#quiz-data` JSON block, and every `figure.steps` gets a working step-through automatically.
+
+- **Desktop only:** pages are read on a desktop screen. Design for about 1280-1440px wide; do not design or test for phones or narrow windows.
+- **Layout:** a sticky sidebar table of contents that marks the section in view. The first screen is the answer: eyebrow, headline, one-line lead, scope line, and a commit card with four key numbers.
+- **Sections:** "Part N" label plus heading over a strong top rule. Paragraphs of 1-3 sentences at about 66ch.
+- **Figures:** inline SVG on a 24px grid stage. Rounded-rect nodes, one key node and one hot path in the accent, a verb on every edge, numbered callouts, and a "Fig. N" caption that states the claim.
+- **Motion:** a process gets a step-through (Prev / Play / Next, opens on the final state, captions listed when JavaScript is off).
+- **Comparisons:** before/after mockups side by side with a −/+/= delta list. Behavior across cases is a matrix of chips (symbol plus word), with each row a native `<details>` holding the code and exact output.
+- **Code walkthrough:** numbered group cards with status chips (template / edited / deleted), short excerpts, and a dashed "tip" footer.
+- **Look:** system sans and mono only (no web fonts). Warm neutral palette, one burnt-orange accent, light and dark via `prefers-color-scheme`. Status colors only mean status.
 
 ## Artifact requirements
 
@@ -57,6 +71,6 @@ Use callouts for key definitions, surprising implications, and important edge ca
 
 ## Verify and deliver
 
-Check the saved HTML for valid section links, unique IDs, offline dependencies, code whitespace, and exactly five complete quiz questions. Exercise correct and incorrect quiz choices, feedback, reset, and other interactive examples. Inspect desktop and narrow-screen rendering when browser tooling is available; report any unverified visual behavior honestly. Validate substantive examples against the implementation, not just their appearance.
+Check the saved HTML for valid section links, unique IDs, offline dependencies, code whitespace, and exactly five complete quiz questions. Exercise correct and incorrect quiz choices, feedback, reset, and other interactive examples. Inspect desktop rendering (about 1440px wide) when browser tooling is available; skip narrow-screen checks; report any unverified visual behavior honestly. Validate substantive examples against the implementation, not just their appearance.
 
 Return the clickable absolute path to the HTML. If the user's workflow uses an annotation viewer such as Plannotator, open the file there as an informational explanation; do not introduce a new approval gate unless requested. Creating an explanation does not authorize commits, pushes, PR comments, or other publication.

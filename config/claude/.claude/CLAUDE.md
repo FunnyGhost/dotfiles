@@ -59,3 +59,9 @@
 - Avoid walls of text, bloated lists, and over-explained background.
 - End-of-turn summary: one or two sentences, what changed and what's
   next. Nothing more.
+
+## Skills
+- To explain code (a diff, commit, branch, PR, folder, or repo), use the
+  `explain-diff-html` skill, not `visual-explainer`. Use
+  `visual-explainer` only when I name it or ask for something
+  explain-diff-html doesn't make (slides, video).

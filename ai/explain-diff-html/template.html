@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>[Change title]: [one-line effect]</title>
+<style>
+:root{
+  --bg:#f6f5f1;--surface:#fffefb;--surface-2:#efede7;--ink:#1c1b18;--dim:#666157;--rule:#e1ddd3;--rule-strong:#bdb6a8;
+  --accent:#b0460c;--accent-soft:#fbe8da;--ok:#2b6633;--ok-soft:#e2efe1;--risk:#ad2a1a;--risk-soft:#fae3de;--warn:#855700;--warn-soft:#f8edd1;--info:#1d5c82;--info-soft:#e1edf5;
+  --grid:rgba(40,30,10,.055);--lift:0 1px 2px rgba(30,20,0,.06),0 4px 14px rgba(30,20,0,.06);
+  --sans:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  --r1:4px;--r2:8px;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#131311;--surface:#1b1a18;--surface-2:#23221f;--ink:#ebe8e1;--dim:#a29c90;--rule:#33302b;--rule-strong:#57524a;
+  --accent:#f28c4c;--accent-soft:#3a2315;--ok:#8fd09a;--ok-soft:#172c1b;--risk:#f39a8a;--risk-soft:#3a1b16;--warn:#e7c36c;--warn-soft:#31270f;--info:#8fc5ea;--info-soft:#132739;
+  --grid:rgba(255,255,255,.045);--lift:0 1px 2px rgba(0,0,0,.4),0 4px 14px rgba(0,0,0,.35);
+}}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.62 var(--sans)}
+a{color:var(--accent);text-underline-offset:2px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:3px}
+code{font-family:var(--mono);font-size:.85em;background:var(--surface-2);padding:.1em .35em;border-radius:var(--r1)}
+pre{white-space:pre;overflow-x:auto;background:var(--surface);border:1px solid var(--rule);border-radius:var(--r2);padding:14px 16px;margin:0 0 16px;font:13.5px/1.6 var(--mono);max-width:100%}
+pre code{white-space:pre;background:none;padding:0;font-size:inherit;border-radius:0}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 14px;padding-left:1.3em}
+li{margin:4px 0}
+h1,h2,h3,h4{line-height:1.18;letter-spacing:-.015em;margin:0}
+.shell{display:grid;grid-template-columns:210px minmax(0,1fr);gap:56px;max-width:1260px;margin:0 auto;padding:36px 28px 120px}
+.toc{position:sticky;top:24px;align-self:start;font-size:14px}
+.toc .label{font:600 11px/1 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--dim);margin:6px 0 12px}
+.toc ol{list-style:none;margin:0;padding:0}
+.toc>nav>ol>li{margin:0 0 10px}
+.toc ol ol{margin:4px 0 0 0;padding-left:12px;border-left:1px solid var(--rule)}
+.toc a{color:var(--dim);text-decoration:none;display:block;padding:2px 0 2px 8px;margin-left:-9px;border-left:2px solid transparent}
+.toc>nav>ol>li>a{color:var(--ink);font-weight:600}
+.toc a:hover{color:var(--ink)}
+.toc a.on{color:var(--accent);border-left-color:var(--accent)}
+.content{min-width:0}
+.measure{max-width:66ch}
+@media (max-width:1000px){
+  .shell{grid-template-columns:1fr;gap:20px;padding:22px 18px 96px}
+  .toc{position:static;background:var(--surface);border:1px solid var(--rule);border-radius:var(--r2);padding:10px 14px}
+  .toc .label{margin:0 0 6px}
+  .toc ol ol{display:none}
+  .toc>nav>ol{display:flex;flex-wrap:wrap;gap:4px 16px}
+  .toc>nav>ol>li{margin:0}
+  .toc a{margin-left:0;padding:2px 0;border-left:0}
+  .toc a.on{text-decoration:underline;text-underline-offset:4px}
+}
+/* hero */
+.eyebrow{font:600 12px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0 0 12px}
+h1{font-size:clamp(2rem,4.2vw,3.05rem);font-weight:700;max-width:18ch;margin-bottom:16px}
+.lead{font-size:1.18rem;line-height:1.5;color:var(--ink);max-width:56ch;margin-bottom:12px}
+.lead b{color:var(--accent);font-weight:650}
+.meta{font:12.5px/1.55 var(--mono);color:var(--dim);max-width:90ch;overflow-wrap:anywhere;margin-bottom:26px}
+.commit{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r2);box-shadow:var(--lift);overflow:hidden;margin-bottom:28px}
+.commit-head{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline;padding:12px 18px;border-bottom:1px solid var(--rule);font:13px/1.4 var(--mono)}
+.commit-head .sha{color:var(--accent);font-weight:600}
+.commit-head .msg{color:var(--ink);font-weight:600}
+.commit-head .stat{color:var(--dim);margin-left:auto}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.kpi{padding:16px 18px;border-right:1px solid var(--rule)}
+.kpi:last-child{border-right:0}
+.kpi .k{font:600 11px/1.3 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+.kpi .v{font:700 2rem/1.15 var(--sans);font-variant-numeric:tabular-nums;margin:6px 0 2px}
+.kpi .v small{font-size:.95rem;font-weight:600;color:var(--dim);margin-left:3px}
+.kpi .n{font-size:13px;color:var(--dim);line-height:1.4}
+.kpi.key .v{color:var(--accent)}
+@media (max-width:720px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi:nth-child(2){border-right:0}.kpi:nth-child(-n+2){border-bottom:1px solid var(--rule)}}
+/* sections */
+.part{margin-top:84px}
+.part-head{display:flex;gap:14px;align-items:baseline;border-top:2px solid var(--ink);padding-top:14px;margin-bottom:22px}
+.part-n{font:600 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);white-space:nowrap}
+h2{font-size:clamp(1.55rem,2.6vw,2rem);font-weight:700}
+h3{font-size:1.25rem;font-weight:680;margin:52px 0 10px}
+h4{font-size:1rem;font-weight:650;margin:22px 0 8px}
+.sub{font-size:1.04rem;color:var(--dim);max-width:62ch;margin:-12px 0 22px}
+/* figures */
+figure{margin:24px 0 30px}
+.stage{position:relative;background-color:var(--surface);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;border:1px solid var(--rule);border-radius:var(--r2);padding:16px;overflow-x:auto}
+figcaption{font-size:14px;line-height:1.5;color:var(--dim);margin-top:10px;max-width:78ch}
+figcaption .fn{font:600 11.5px var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--ink);margin-right:8px}
+svg{display:block;max-width:100%;height:auto}
+svg text{font-family:var(--mono);font-size:14px;fill:var(--ink)}
+svg .t-dim{fill:var(--dim)}
+svg .t-sub{fill:var(--dim);font-size:12.5px}
+svg .t-acc{fill:var(--accent);font-weight:600}
+svg .t-lbl{font-family:var(--sans);font-size:13px;fill:var(--dim)}
+svg .node{fill:var(--surface);stroke:var(--rule-strong);stroke-width:1.5}
+svg .node.key{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2.25}
+svg .bnd{fill:none;stroke:var(--rule-strong);stroke-width:1.2;stroke-dasharray:5 5}
+svg .edge{fill:none;stroke:var(--rule-strong);stroke-width:1.6;transition:stroke .3s,stroke-width .3s}
+svg .edge.hot,svg .edge.lit{stroke:var(--accent);stroke-width:2.6}
+svg .ah{fill:var(--rule-strong)}
+svg .ah-hot{fill:var(--accent)}
+svg .val{fill:var(--surface-2);stroke:var(--rule);stroke-width:1}
+svg .callout circle{fill:var(--ink)}
+svg .callout text{fill:var(--bg);font:700 12px var(--sans);text-anchor:middle;dominant-baseline:central}
+.steps svg .edge.step{stroke:var(--rule-strong);stroke-width:1.6}
+.steps svg .edge.step.lit{stroke:var(--accent);stroke-width:2.6}
+.steps svg .callout.lit circle{fill:var(--accent)}
+.player{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px}
+.player button{font:600 13px var(--sans);padding:6px 12px;border:1px solid var(--rule-strong);border-radius:var(--r1);background:var(--surface);color:var(--ink);cursor:pointer}
+.player button:hover{border-color:var(--ink)}
+.player .pos{font:600 12px var(--mono);color:var(--dim);margin-left:4px;min-width:3.5em}
+.capline{font-size:15px;line-height:1.5;margin:10px 0 0;min-height:3em}
+.caplist{font-size:15px;margin:12px 0 0}
+.js .caplist{display:none}
+/* callouts */
+.note{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r2);padding:14px 18px;margin:20px 0;max-width:72ch}
+.note .chip{margin-bottom:8px}
+.note p:last-child{margin-bottom:0}
+.chip{display:inline-flex;align-items:center;gap:5px;font:650 11.5px/1 var(--sans);letter-spacing:.02em;padding:5px 8px;border-radius:var(--r1);white-space:nowrap;border:1px solid transparent}
+.chip.ok{background:var(--ok-soft);color:var(--ok)}
+.chip.risk{background:var(--risk-soft);color:var(--risk)}
+.chip.warn{background:var(--warn-soft);color:var(--warn)}
+.chip.info{background:var(--info-soft);color:var(--info)}
+.chip.acc{background:var(--accent-soft);color:var(--accent)}
+.chip.none{background:transparent;color:var(--dim);border-color:var(--rule-strong)}
+/* deep background disclosure */
+details.deep{border:1px solid var(--rule);border-radius:var(--r2);background:var(--surface);margin:0 0 26px}
+details.deep>summary{cursor:pointer;list-style:none;padding:14px 18px;display:flex;gap:12px;align-items:center;font-weight:650}
+details.deep>summary::-webkit-details-marker{display:none}
+details.deep>summary::before{content:"+";font:700 16px var(--mono);color:var(--accent);width:1em}
+details.deep[open]>summary::before{content:"−"}
+details.deep>summary .hint{font-weight:400;color:var(--dim);font-size:14px;margin-left:auto}
+details.deep .body{padding:0 18px 18px}
+.skip{font-size:14px;margin:0 0 12px}
+.roles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:8px 0 18px;list-style:none;padding:0}
+.roles li{margin:0;background:var(--bg);border:1px solid var(--rule);border-radius:var(--r2);padding:12px 14px;font-size:14.5px;line-height:1.5}
+.roles b{display:block;font-size:15px;margin-bottom:4px}
+.roles .does{font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:6px}
+@media (max-width:760px){.roles{grid-template-columns:minmax(0,1fr)}}
+/* composition bar */
+.bar{display:flex;height:30px;border-radius:var(--r1);overflow:hidden;border:1px solid var(--rule-strong)}
+.bar span{display:block;height:100%}
+.seg-lock{background:repeating-linear-gradient(135deg,var(--surface-2) 0 5px,var(--surface) 5px 10px)}
+.seg-cfg{background:var(--rule-strong)}
+.seg-doc{background:var(--info)}
+.seg-code{background:var(--accent)}
+.legend{list-style:none;padding:0;margin:12px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px 18px;font-size:14px}
+.legend li{margin:0;display:flex;gap:8px;align-items:baseline}
+.legend i{flex:none;width:12px;height:12px;border-radius:2px;border:1px solid var(--rule-strong);transform:translateY(1px)}
+.legend b{font-variant-numeric:tabular-nums}
+/* before/after */
+.ba{display:grid;grid-template-columns:minmax(0,1fr) 40px minmax(0,1fr);gap:10px;align-items:stretch}
+.ba .arrow{display:grid;place-items:center;color:var(--accent);font:700 22px var(--sans)}
+.ba h4{margin:0 0 8px;font:600 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+@media (max-width:760px){.ba{grid-template-columns:minmax(0,1fr)}.ba .arrow{transform:rotate(90deg);height:28px}}
+.browser{border:1px solid var(--rule-strong);border-radius:var(--r2);overflow:hidden;background:#fff;color:#111;box-shadow:var(--lift)}
+.browser .bar2{display:flex;gap:6px;align-items:center;background:#ecebe8;padding:7px 10px;border-bottom:1px solid #d6d4cf;font:11.5px var(--mono);color:#555}
+.browser .bar2 i{width:9px;height:9px;border-radius:50%;background:#cfccc6;display:inline-block}
+.browser .bar2 span{margin-left:8px}
+.browser .page{padding:18px;min-height:236px}
+.delta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 24px;list-style:none;padding:0;margin:16px 0 0;font-size:14.5px}
+.delta li{margin:0;display:flex;gap:8px;align-items:baseline}
+.delta .m{font:700 13px var(--mono);width:1.1em;flex:none}
+.delta .rm .m{color:var(--risk)}
+.delta .rm span{text-decoration:line-through;text-decoration-color:var(--risk);color:var(--dim)}
+.delta .kp .m{color:var(--ok)}
+@media (max-width:600px){.delta{grid-template-columns:minmax(0,1fr)}}
+/* checker matrix */
+.matrix{border:1px solid var(--rule);border-radius:var(--r2);background:var(--surface);overflow:hidden}
+.mrow{display:grid;grid-template-columns:minmax(0,1.5fr) repeat(3,minmax(0,1fr));gap:10px;align-items:center;padding:11px 16px}
+.mhead{background:var(--surface-2);font:600 11.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--dim);border-bottom:1px solid var(--rule)}
+.matrix details{border-bottom:1px solid var(--rule)}
+.matrix details:last-child{border-bottom:0}
+.matrix summary{list-style:none;cursor:pointer}
+.matrix summary::-webkit-details-marker{display:none}
+.matrix summary:hover{background:var(--bg)}
+.matrix summary .name{font-size:14.5px;font-weight:600;display:flex;gap:8px;align-items:baseline}
+.matrix summary .name::before{content:"▸";color:var(--accent);font-size:12px;transition:transform .2s;display:inline-block}
+.matrix details[open] summary .name::before{transform:rotate(90deg)}
+.matrix .detail{padding:2px 16px 16px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
+.matrix .detail pre{margin:0;font-size:12.5px}
+.matrix .detail .why{font-size:14px;line-height:1.5}
+.matrix .detail .why p{margin:0 0 8px}
+.cellh{display:none;font:600 10.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+@media (max-width:760px){
+  .mhead{display:none}
+  .mrow{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .mrow .name{grid-column:1/-1}
+  .cellh{display:block;margin-bottom:3px}
+  .matrix .detail{grid-template-columns:minmax(0,1fr)}
+}
+/* code groups */
+.group{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r2);padding:20px 22px 8px;margin:0 0 22px}
+.group-head{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin-bottom:14px}
+.group-head .num{font:700 12px var(--mono);color:var(--bg);background:var(--ink);border-radius:50%;width:24px;height:24px;display:grid;place-items:center;flex:none}
+.group-head h3{margin:0;font-size:1.15rem}
+.group-head .files{font:12.5px var(--mono);color:var(--dim);overflow-wrap:anywhere}
+.group-head .chips{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+.flabel{font:600 12px var(--mono);color:var(--dim);margin:0 0 5px;display:flex;gap:8px;align-items:center}
+.flabel a{color:var(--dim)}
+.tip{border-top:1px dashed var(--rule-strong);margin:4px -22px 0;padding:12px 22px 12px;font-size:14.5px;display:flex;gap:10px;align-items:baseline}
+.tip .chip{flex:none}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:6px 0 18px}
+.opt{border:1px solid var(--rule);border-radius:var(--r2);padding:12px 14px;background:var(--bg)}
+.opt h4{margin:0 0 6px;font:650 13.5px var(--mono);color:var(--accent)}
+.opt p{font-size:14px;line-height:1.5;margin:0 0 8px}
+.opt pre{font-size:12px;padding:8px 10px;margin:0}
+@media (max-width:760px){.opts{grid-template-columns:minmax(0,1fr)}}
+.paths{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin:8px 0 18px;list-style:none;padding:0}
+.paths li{margin:0;border:1px solid var(--rule);border-radius:var(--r2);padding:10px 12px;background:var(--bg);font-size:13.5px}
+.paths li.risky{border-color:var(--risk);border-width:2px}
+.paths .p{font:600 13px var(--mono);display:block;margin-bottom:6px;overflow-wrap:anywhere}
+.paths .rule{display:block;color:var(--dim);font-size:12.5px;margin-top:6px}
+.checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.checks>div{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r2);padding:14px 18px}
+.checks h4{margin:0 0 8px}
+.checks ul{list-style:none;padding:0;margin:0;font-size:14.5px}
+.checks li{display:flex;gap:10px;margin:7px 0;line-height:1.45}
+.checks li::before{flex:none;font:700 13px var(--mono);width:1em}
+.checks .done li::before{content:"✓";color:var(--ok)}
+.checks .todo li::before{content:"○";color:var(--dim)}
+@media (max-width:760px){.checks{grid-template-columns:minmax(0,1fr)}}
+/* quiz */
+.quiz-top{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:0 0 18px}
+.dots{display:flex;gap:6px;list-style:none;padding:0;margin:0}
+.dots li{margin:0;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--rule-strong);display:grid;place-items:center;font:700 12px var(--mono);color:var(--dim)}
+.dots li.ok{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.dots li.bad{background:var(--risk-soft);border-color:var(--risk);color:var(--risk)}
+.score{font:600 14px var(--sans);color:var(--dim)}
+.btn{font:600 13px var(--sans);padding:7px 13px;border:1px solid var(--rule-strong);border-radius:var(--r1);background:var(--surface);color:var(--ink);cursor:pointer;margin-left:auto}
+.btn:hover{border-color:var(--ink)}
+.q{border:1px solid var(--rule);border-radius:var(--r2);background:var(--surface);padding:16px 20px 14px;margin:0 0 16px;max-width:820px}
+.q legend{float:left;width:100%;padding:0;margin:0 0 12px;font:650 15.5px/1.45 var(--sans)}
+.q legend .qn{font:700 12px var(--mono);color:var(--accent);margin-right:8px}
+.q .opts-list{clear:both;counter-reset:opt}
+.q label{display:flex;gap:12px;align-items:flex-start;padding:9px 10px;margin:3px 0;border:1px solid transparent;border-radius:var(--r1);font-size:15px;line-height:1.45;cursor:pointer;counter-increment:opt}
+.q label::before{content:counter(opt,upper-alpha);flex:none;width:22px;height:22px;border-radius:50%;border:1px solid var(--rule-strong);display:grid;place-items:center;font:700 11px var(--mono);color:var(--dim)}
+.q label:hover{background:var(--bg)}
+.q input{position:absolute;opacity:0;width:1px;height:1px}
+.q label:has(input:focus-visible){outline:3px solid var(--accent);outline-offset:1px}
+.q label.is-correct{background:var(--ok-soft);border-color:var(--ok)}
+.q label.is-correct::before{content:"✓";background:var(--ok);border-color:var(--ok);color:var(--surface)}
+.q label.is-wrong{background:var(--risk-soft);border-color:var(--risk)}
+.q label.is-wrong::before{content:"✕";background:var(--risk);border-color:var(--risk);color:var(--surface)}
+.fb{font-size:14.5px;line-height:1.5;margin:10px 0 2px;padding-left:12px;border-left:3px solid var(--rule-strong)}
+.fb:empty{display:none}
+.fb.ok{border-left-color:var(--ok)}
+.fb.bad{border-left-color:var(--risk)}
+.fb .verdict{font-weight:700;margin-right:6px}
+.fb.ok .verdict{color:var(--ok)}
+.fb.bad .verdict{color:var(--risk)}
+</style>
+</head>
+<body>
+<!--
+  explain-diff-html template.
+  Copy this file, keep <style> and <script> as they are, and replace every [bracketed placeholder].
+  Duplicate or delete components as the change needs. Keep: sidebar TOC, the 4 Parts, at least one
+  step-through figure, and the quiz (exactly 5 questions in #quiz-data).
+-->
+<div class="shell">
+<aside class="toc">
+  <nav aria-label="Table of contents">
+    <p class="label">On this page</p>
+    <ol>
+      <li><a href="#top">Summary</a></li>
+      <li><a href="#background">Background</a>
+        <ol><li><a href="#background-deep">[Beginner topic]</a></li><li><a href="#background-change">Why this change</a></li></ol></li>
+      <li><a href="#intuition">Intuition</a>
+        <ol><li><a href="#intuition-a">[Short label]</a></li><li><a href="#intuition-b">[Short label]</a></li></ol></li>
+      <li><a href="#code">Code</a>
+        <ol><li><a href="#code-1">[Group 1]</a></li><li><a href="#code-verified">What was checked</a></li></ol></li>
+      <li><a href="#quiz">Quiz</a></li>
+    </ol>
+  </nav>
+</aside>
+
+<main class="content">
+<header id="top">
+  <p class="eyebrow">Explaining a change · [project]</p>
+  <h1>[The change's effect in under 10 words]</h1>
+  <p class="lead">[One sentence: what the change does. <b>The key phrase</b> in bold.]</p>
+  <p class="meta">base: [ref or "empty tree"] → head: [ref or path] · [scope notes] · [YYYY-MM-DD]</p>
+  <div class="commit" role="group" aria-label="Change summary">
+    <div class="commit-head"><span class="sha">[base → head]</span><span class="msg">[Commit or PR title]</span><span class="stat">[N files · +X −Y]</span></div>
+    <div class="kpis">
+      <div class="kpi key"><div class="k">[Label]</div><div class="v">[N]<small>[unit]</small></div><div class="n">[comparison, e.g. from 122]</div></div>
+      <div class="kpi"><div class="k">[Label]</div><div class="v">[N]</div><div class="n">[context]</div></div>
+      <div class="kpi"><div class="k">[Label]</div><div class="v">[N]</div><div class="n">[context]</div></div>
+      <div class="kpi"><div class="k">[Label]</div><div class="v">[N]<small>/ [M]</small></div><div class="n">[context]</div></div>
+    </div>
+  </div>
+</header>
+
+<section id="background" class="part" aria-labelledby="h-bg">
+  <div class="part-head"><span class="part-n">Part 1</span><h2 id="h-bg">Background</h2></div>
+  <p class="measure">[1-3 sentences framing the system before the change.]</p>
+  <p class="skip">[Familiar with X?] <a href="#background-change">Skip to why this change exists ↓</a></p>
+  <details class="deep" id="background-deep" open>
+    <summary>[Beginner topic] <span class="hint">beginner background</span></summary>
+    <div class="body">
+      <ul class="roles">
+        <li><span class="does">[what it does]</span><b>[Component]</b>[One or two sentences.]</li>
+        <li><span class="does">[what it does]</span><b>[Component]</b>[One or two sentences.]</li>
+        <li><span class="does">[what it does]</span><b>[Component]</b>[One or two sentences.]</li>
+      </ul>
+
+      <!-- STEP-THROUGH FIGURE. Parts with data-step="N" light up at step N. One .caplist li per step. -->
+      <figure class="steps">
+        <div class="stage">
+          <svg viewBox="0 0 920 230" role="img" aria-labelledby="f1-t">
+            <title id="f1-t">[Accessible description of the whole flow.]</title>
+            <defs>
+              <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 0L10 5L0 10z"/></marker>
+              <marker id="ah-hot" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-hot" d="M0 0L10 5L0 10z"/></marker>
+            </defs>
+            <rect class="bnd" x="240" y="30" width="660" height="132" rx="4"/>
+            <text class="t-sub" x="254" y="50">[BOUNDARY NAME]</text>
+            <path class="edge step lit" data-step="1" d="M160 108H258" marker-end="url(#ah)"/>
+            <text class="t-lbl" x="209" y="99" text-anchor="middle">[verb]</text>
+            <path class="edge step lit" data-step="2" d="M400 108H498" marker-end="url(#ah)"/>
+            <text class="t-lbl" x="449" y="99" text-anchor="middle">[verb]</text>
+            <path class="edge step lit" data-step="3" d="M640 108H738" marker-end="url(#ah-hot)"/>
+            <text class="t-lbl" x="689" y="99" text-anchor="middle">[verb]</text>
+            <rect class="node" x="20" y="80" width="140" height="56" rx="6"/><text x="90" y="104" text-anchor="middle">[Node]</text><text class="t-sub" x="90" y="123" text-anchor="middle">[detail]</text>
+            <rect class="node" x="260" y="80" width="140" height="56" rx="6"/><text x="330" y="104" text-anchor="middle">[Node]</text><text class="t-sub" x="330" y="123" text-anchor="middle">[detail]</text>
+            <rect class="node" x="500" y="80" width="140" height="56" rx="6"/><text x="570" y="104" text-anchor="middle">[Node]</text><text class="t-sub" x="570" y="123" text-anchor="middle">[detail]</text>
+            <rect class="node key" x="740" y="80" width="140" height="56" rx="6"/><text x="810" y="104" text-anchor="middle">[Changed node]</text><text class="t-sub" x="810" y="123" text-anchor="middle">[detail]</text>
+            <text class="t-acc" x="810" y="70" text-anchor="middle" font-size="12.5">[changed here]</text>
+            <g class="callout lit" data-step="1" transform="translate(209 72)"><circle r="10"/><text>1</text></g>
+            <g class="callout lit" data-step="2" transform="translate(449 72)"><circle r="10"/><text>2</text></g>
+            <g class="callout lit" data-step="3" transform="translate(689 72)"><circle r="10"/><text>3</text></g>
+          </svg>
+        </div>
+        <div class="player" hidden>
+          <button type="button" data-go="-1" aria-label="Previous step">← Prev</button>
+          <button type="button" data-play>Play</button>
+          <button type="button" data-go="1" aria-label="Next step">Next →</button>
+          <span class="pos" aria-hidden="true"></span>
+        </div>
+        <p class="capline" aria-live="polite" hidden></p>
+        <ol class="caplist">
+          <li>[Step 1: what happens, with the real value.]</li>
+          <li>[Step 2.]</li>
+          <li>[Step 3.]</li>
+        </ol>
+        <figcaption><span class="fn">Fig. 1</span>[The claim in one sentence.] Step through with the controls (requires JavaScript; without it, the steps are listed above).</figcaption>
+      </figure>
+
+      <div class="note"><span class="chip info">Definition</span><p><strong>[Term].</strong> [Definition in 1-2 sentences.]</p></div>
+    </div>
+  </details>
+
+  <h3 id="background-change">Why this change exists</h3>
+  <div class="measure"><p>[The narrower motivation: the problem before the mechanism. 2-3 short paragraphs.]</p></div>
+</section>
+
+<section id="intuition" class="part" aria-labelledby="h-int">
+  <div class="part-head"><span class="part-n">Part 2</span><h2 id="h-int">Intuition</h2></div>
+  <p class="sub">[The essence of the change in one sentence.]</p>
+
+  <h3 id="intuition-a">[Takeaway as a heading]</h3>
+  <!-- PROPORTION BAR: widths are percentages that sum to 100. -->
+  <figure>
+    <div class="bar" role="img" aria-label="[values in words]"><span class="seg-lock" style="width:60%"></span><span class="seg-cfg" style="width:25%"></span><span class="seg-doc" style="width:10%"></span><span class="seg-code" style="width:5%"></span></div>
+    <ul class="legend"><li><i class="seg-lock"></i><span><b>[N]</b> [part]</span></li><li><i class="seg-cfg"></i><span><b>[N]</b> [part]</span></li><li><i class="seg-doc"></i><span><b>[N]</b> [part]</span></li><li><i class="seg-code"></i><span><b>[N]</b> [part]</span></li></ul>
+    <figcaption><span class="fn">Fig. 2</span>[Claim.]</figcaption>
+  </figure>
+
+  <!-- BEFORE / AFTER: panels may hold a .browser UI mockup or a <pre>. -->
+  <figure>
+    <div class="ba">
+      <div><h4>Before</h4><div class="browser"><div class="bar2"><i></i><i></i><i></i><span>[url]</span></div><div class="page">[old UI, simplified, toy data labelled]</div></div></div>
+      <div class="arrow" aria-hidden="true">→</div>
+      <div><h4>After</h4><div class="browser"><div class="bar2"><i></i><i></i><i></i><span>[url]</span></div><div class="page">[new UI]</div></div></div>
+    </div>
+    <ul class="delta" aria-label="What changed"><li class="rm"><span class="m">−</span><span>[removed]</span></li><li class="kp"><span class="m">+</span>[added]</li><li class="kp"><span class="m">=</span>[kept on purpose]</li></ul>
+    <figcaption><span class="fn">Fig. 3</span>[Claim. Say what is simplified.]</figcaption>
+  </figure>
+
+  <h3 id="intuition-b">[Takeaway as a heading]</h3>
+  <!-- CASE MATRIX: each row is a native <details>; chips carry a symbol plus a word. -->
+  <figure>
+    <div class="matrix">
+      <div class="mrow mhead" aria-hidden="true"><span>[Case]</span><span>[Check A]</span><span>[Check B]</span><span>[Check C]</span></div>
+      <details name="cases" open>
+        <summary class="mrow"><span class="name">[Case 1]</span><span><span class="cellh">[A]</span><span class="chip ok">✓ [word]</span></span><span><span class="cellh">[B]</span><span class="chip risk">✕ [word]</span></span><span><span class="cellh">[C]</span><span class="chip warn">⚠ [word]</span></span></summary>
+        <div class="detail"><pre><code>[input or code]</code></pre><div class="why"><p><strong>[B]:</strong> <code>[exact output]</code></p></div></div>
+      </details>
+      <details name="cases">
+        <summary class="mrow"><span class="name">[Case 2]</span><span><span class="cellh">[A]</span><span class="chip ok">✓ [word]</span></span><span><span class="cellh">[B]</span><span class="chip ok">✓ [word]</span></span><span><span class="cellh">[C]</span><span class="chip none">not run</span></span></summary>
+        <div class="detail"><pre><code>[input or code]</code></pre><div class="why"><p>[Why.]</p></div></div>
+      </details>
+    </div>
+    <figcaption><span class="fn">Fig. 4</span>[Claim.] Rows open with native disclosure controls, which work without JavaScript.</figcaption>
+  </figure>
+  <div class="note"><span class="chip risk">Edge case</span><p>[The surprising implication.]</p></div>
+</section>
+
+<section id="code" class="part" aria-labelledby="h-code">
+  <div class="part-head"><span class="part-n">Part 3</span><h2 id="h-code">Code</h2></div>
+  <p class="sub">[How the groups are ordered: by request path or responsibility.]</p>
+
+  <!-- CODE GROUP CARD: one per responsibility, in causal order. -->
+  <article class="group" id="code-1">
+    <div class="group-head"><span class="num">1</span><h3>[Group]</h3><span class="files">[file · file]</span><span class="chips"><span class="chip acc">[edited]</span><span class="chip info">[unchanged]</span></span></div>
+    <p class="flabel"><a href="[source link pinned to head]">[path]</a></p>
+<pre><code>[selective excerpt, HTML-escaped]</code></pre>
+    <p class="measure">[What it contributes, the boundary or tradeoff, linked back to a figure.]</p>
+    <div class="opts">
+      <div class="opt"><h4>[option or rule]</h4><p>[effect]</p><pre><code>[tiny example]</code></pre></div>
+      <div class="opt"><h4>[option or rule]</h4><p>[effect]</p><pre><code>[tiny example]</code></pre></div>
+    </div>
+    <div class="tip"><span class="chip warn">[Tip]</span><span>[Practical consequence for the reader.]</span></div>
+  </article>
+
+  <h3 id="code-verified">What was checked, and what was not</h3>
+  <div class="checks">
+    <div class="done"><h4>Performed</h4><ul><li>[check and its result]</li></ul></div>
+    <div class="todo"><h4>Not performed</h4><ul><li>[limitation]</li></ul></div>
+  </div>
+</section>
+
+<section id="quiz" class="part" aria-labelledby="h-quiz">
+  <div class="part-head"><span class="part-n">Part 4</span><h2 id="h-quiz">Quiz</h2></div>
+  <p class="sub">Five questions on how the pieces fit together. Choose an answer to see whether it is right and why. Requires JavaScript.</p>
+  <noscript><div class="note"><span class="chip warn">JavaScript needed</span><p>The quiz needs JavaScript. The rest of the page works without it.</p></div></noscript>
+  <div class="quiz-top" id="quiz-top" hidden>
+    <ol class="dots" id="dots" aria-hidden="true"></ol>
+    <span class="score" id="quiz-score" aria-live="polite"></span>
+    <button type="button" class="btn" id="quiz-reset">Reset answers</button>
+  </div>
+  <div id="quiz-root"></div>
+  <!-- QUIZ DATA: exactly 5 items. o = [answer text, feedback]; a = index of the correct option. Vary a. -->
+  <script type="application/json" id="quiz-data">
+  [
+    {"q": "[Question 1]", "a": 1, "o": [["[distractor]", "[why wrong]"], ["[correct]", "[why right]"], ["[distractor]", "[why wrong]"], ["[distractor]", "[why wrong]"]]},
+    {"q": "[Question 2]", "a": 2, "o": [["[distractor]", "[why wrong]"], ["[distractor]", "[why wrong]"], ["[correct]", "[why right]"], ["[distractor]", "[why wrong]"]]},
+    {"q": "[Question 3]", "a": 0, "o": [["[correct]", "[why right]"], ["[distractor]", "[why wrong]"], ["[distractor]", "[why wrong]"], ["[distractor]", "[why wrong]"]]},
+    {"q": "[Question 4]", "a": 3, "o": [["[distractor]", "[why wrong]"], ["[distractor]", "[why wrong]"], ["[distractor]", "[why wrong]"], ["[correct]", "[why right]"]]},
+    {"q": "[Question 5]", "a": 1, "o": [["[distractor]", "[why wrong]"], ["[correct]", "[why right]"], ["[distractor]", "[why wrong]"], ["[distractor]", "[why wrong]"]]}
+  ]
+  </script>
+</section>
+</main>
+</div>
+
+<script>
+(function(){
+  document.documentElement.classList.add('js');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* step-through: every figure.steps */
+  document.querySelectorAll('figure.steps').forEach(function(fig){
+    var player = fig.querySelector('.player'), cap = fig.querySelector('.capline'), pos = fig.querySelector('.pos'), play = fig.querySelector('[data-play]');
+    var caps = Array.prototype.map.call(fig.querySelectorAll('.caplist li'), function(li){ return li.innerHTML; });
+    var parts = fig.querySelectorAll('[data-step]'), N = caps.length, cur = N, timer = null;
+    if (!player || !N) return;
+    player.hidden = false; cap.hidden = false;
+    function show(n){
+      cur = Math.max(1, Math.min(N, n));
+      parts.forEach(function(p){ p.classList.toggle('lit', Number(p.dataset.step) <= cur); });
+      cap.innerHTML = '<strong>' + cur + '.</strong> ' + caps[cur - 1];
+      pos.textContent = cur + ' / ' + N;
+    }
+    function stop(){ if (timer) { clearInterval(timer); timer = null; } play.textContent = 'Play'; }
+    player.addEventListener('click', function(e){
+      var b = e.target.closest('button'); if (!b) return;
+      if (b === play) {
+        if (timer) { stop(); return; }
+        show(1); play.textContent = 'Pause';
+        timer = setInterval(function(){ if (cur >= N) { stop(); return; } show(cur + 1); }, reduce ? 2600 : 1600);
+      } else { stop(); show(cur + Number(b.dataset.go)); }
+    });
+    show(N);
+  });
+
+  /* sidebar: mark the section in view */
+  var links = {};
+  document.querySelectorAll('.toc a').forEach(function(a){ links[a.getAttribute('href').slice(1)] = a; });
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (!en.isIntersecting || !links[en.target.id]) return;
+        Object.keys(links).forEach(function(k){ links[k].classList.remove('on'); links[k].removeAttribute('aria-current'); });
+        links[en.target.id].classList.add('on'); links[en.target.id].setAttribute('aria-current', 'true');
+      });
+    }, { rootMargin: '-15% 0px -75% 0px' });
+    Object.keys(links).forEach(function(id){ var el = document.getElementById(id); if (el) io.observe(el); });
+  }
+
+  /* quiz, rendered from #quiz-data */
+  var Q = JSON.parse(document.getElementById('quiz-data').textContent);
+  var root = document.getElementById('quiz-root'), top = document.getElementById('quiz-top');
+  var dots = document.getElementById('dots'), score = document.getElementById('quiz-score'), answered = {};
+  top.hidden = false;
+  function update(){
+    var keys = Object.keys(answered), right = keys.filter(function(k){ return answered[k]; }).length;
+    score.textContent = keys.length ? (right + ' correct · ' + keys.length + ' of ' + Q.length + ' answered') : ('0 of ' + Q.length + ' answered');
+  }
+  Q.forEach(function(item, i){
+    var d = document.createElement('li'); d.textContent = i + 1; dots.appendChild(d);
+    var fs = document.createElement('fieldset'); fs.className = 'q';
+    var lg = document.createElement('legend'), qn = document.createElement('span');
+    qn.className = 'qn'; qn.textContent = 'Q' + (i + 1);
+    lg.appendChild(qn); lg.appendChild(document.createTextNode(item.q)); fs.appendChild(lg);
+    var list = document.createElement('div'); list.className = 'opts-list';
+    item.o.forEach(function(opt, j){
+      var lab = document.createElement('label'), inp = document.createElement('input'), sp = document.createElement('span');
+      inp.type = 'radio'; inp.name = 'q' + i; inp.value = String(j); sp.textContent = opt[0];
+      lab.appendChild(inp); lab.appendChild(sp); list.appendChild(lab);
+    });
+    fs.appendChild(list);
+    var fb = document.createElement('div'); fb.className = 'fb'; fb.id = 'fb' + i;
+    fb.setAttribute('role', 'status'); fb.setAttribute('aria-live', 'polite'); fs.appendChild(fb);
+    fs.addEventListener('change', function(e){
+      var j = Number(e.target.value), ok = j === item.a;
+      answered[i] = ok;
+      fs.querySelectorAll('label').forEach(function(l, k){ l.classList.remove('is-correct', 'is-wrong'); if (k === j) l.classList.add(ok ? 'is-correct' : 'is-wrong'); });
+      fb.className = 'fb ' + (ok ? 'ok' : 'bad'); fb.textContent = '';
+      var v = document.createElement('span'); v.className = 'verdict'; v.textContent = ok ? '✓ Correct.' : '✕ Not quite.';
+      fb.appendChild(v); fb.appendChild(document.createTextNode(item.o[j][1]));
+      d.className = ok ? 'ok' : 'bad'; d.textContent = ok ? '✓' : '✕';
+      update();
+    });
+    root.appendChild(fs);
+  });
+  update();
+  document.getElementById('quiz-reset').addEventListener('click', function(){
+    answered = {};
+    root.querySelectorAll('input').forEach(function(x){ x.checked = false; });
+    root.querySelectorAll('label').forEach(function(l){ l.classList.remove('is-correct', 'is-wrong'); });
+    root.querySelectorAll('.fb').forEach(function(f){ f.className = 'fb'; f.textContent = ''; });
+    Array.prototype.forEach.call(dots.children, function(li, k){ li.className = ''; li.textContent = k + 1; });
+    update();
+    var first = root.querySelector('input'); if (first) first.focus();
+  });
+})();
+</script>
+</body>
+</html>
