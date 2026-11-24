@@ -1,6 +1,6 @@
 ---
 name: explain-diff-html
-description: Use when the user asks to explain, walk through, or visualize code - a change, diff, commit, branch, PR, folder, or repo (including "as if it were one commit"). Preferred over visual-explainer for any code explanation. Produces a self-contained interactive HTML guide with background, intuition, a code walkthrough, and a quiz.
+description: Use when the user asks to explain or walk through a code change, diff, commit, branch, PR, folder, or repo (including "as if it were one commit"), or asks for an explanation page. Not for small questions about one function or file; answer those in chat. Preferred over visual-explainer for code explanations. Produces a self-contained interactive HTML guide with background, intuition, a code walkthrough, and a quiz.
 ---
 
 # Explain Diff

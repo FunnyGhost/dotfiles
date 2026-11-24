@@ -61,7 +61,8 @@
   next. Nothing more.
 
 ## Skills
-- To explain code (a diff, commit, branch, PR, folder, or repo), use the
-  `explain-diff-html` skill, not `visual-explainer`. Use
-  `visual-explainer` only when I name it or ask for something
-  explain-diff-html doesn't make (slides, video).
+- To explain a change, commit, branch, PR, folder, or repo, or when I
+  ask for an explanation page, use the `explain-diff-html` skill, not
+  `visual-explainer`. Answer small questions (one function, one file)
+  in chat. Use `visual-explainer` only when I name it or ask for
+  slides or video.

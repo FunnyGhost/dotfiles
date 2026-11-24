@@ -34,3 +34,7 @@
 - Optimize for ADHD-friendly scanning: short paragraphs, clear headings, compact bullets, and no walls of text.
 - A small number of useful emoji as visual anchors is welcome, but never add them to code or technical identifiers.
 - End with one or two sentences saying what changed and what is next.
+
+## Skills
+
+- To explain a change, commit, branch, PR, folder, or repo, or when I ask for an explanation page, use the `explain-diff-html` skill, not `visual-explainer`. Answer small questions (one function, one file) in chat. Use `visual-explainer` only when I name it or ask for slides or video.
