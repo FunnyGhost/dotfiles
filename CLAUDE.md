@@ -428,14 +428,20 @@ since tools drop them as literal characters.
   sprints. Idle frames change every few seconds at most, which keeps it cheap.
   Every frame is ASCII art in `plugins/cat_frames.py`, drawn into
   `~/.cache/sketchybar/cat/` and redrawn whenever that file changes.
-- **battery / volume**: Low Power Mode (`pmset powermode`, so macOS asks for
-  your password on each toggle); a volume slider and mute.
-- **bluetooth**: paired headphones and headsets (earbuds like AirPods get
-  their own icon: they report a case), click one to connect or
-  disconnect. `system_profiler` lists them (fast with `-json`); `blueutil`
-  (in the Brewfile) connects, so the first click makes macOS ask whether
-  sketchybar may use Bluetooth. A connection only shows once it holds for
-  three checks a second apart — AirPods often link for a moment and drop.
+- **battery**: Low Power Mode (`pmset powermode`, so macOS asks for your
+  password on each toggle).
+- **sound** (`volume`): volume and Bluetooth headphones in one item. Its icon
+  is the connected pair's (earbuds or headphones), else the speaker by
+  level. The popup has a volume slider, then paired headphones and
+  headsets — click one to connect or disconnect — and the Bluetooth and
+  Sound settings. `plugins/bluetooth.sh` does the Bluetooth part:
+  `system_profiler` lists devices (fast with `-json`), `blueutil` (in the
+  Brewfile) connects, so the first click makes macOS ask whether sketchybar
+  may use Bluetooth. It notes the connected pair in
+  `~/.cache/sketchybar/bt_connected` for `plugins/volume.sh`, so the slider
+  never scans Bluetooth. A connection only shows once it holds for three
+  checks a second apart — AirPods often link for a moment and drop. Earbuds
+  are told apart by their charging case.
 - **recover** (invisible): reloads when the displays really change (it
   compares against the ones the last build recorded), and after wake restarts
   sketchybar via launchd if its windows went missing. Logs to

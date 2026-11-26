@@ -115,7 +115,7 @@ done
 sketchybar --set catpop.cpu icon=cpu --set catpop.mem icon=memory --set catpop.disk icon=disk \
   --add item catpop.pad popup.cat --set catpop.pad "${popup_pad[@]}"
 
-##### System: battery, Bluetooth headphones, volume, date (or next meeting) and time #####
+##### System: battery, sound (volume and headphones), date (or next meeting) and time #####
 # Added right to left, so the clock ends up rightmost. clock.event replaces
 # the date while a meeting is on or starts within 15 minutes
 # (plugins/calendar.sh). Click the clock: today's agenda.
@@ -135,13 +135,8 @@ sketchybar --add item clock.time right \
   --add item volume right \
   --set volume "${value[@]}" icon.font="$FONT:Regular:15.0" icon.color=$DIM \
   label.color=$TEXT label.padding_left=2 padding_right=12 \
-  script="$PLUGIN_DIR/volume.sh" \
-  --subscribe volume volume_change \
-  --add item bluetooth right \
-  --set bluetooth icon.font="$FONT:Regular:15.0" icon.color=$DIM label.drawing=off \
-  padding_right=10 update_freq=30 script="$PLUGIN_DIR/bluetooth.sh" "${popup[@]}" popup.align=right \
-  --subscribe bluetooth mouse.clicked mouse.exited.global system_woke \
-  --add item btpop.header popup.bluetooth --set btpop.header "${popup_header[@]}" label=HEADPHONES \
+  update_freq=30 script="$PLUGIN_DIR/volume.sh" \
+  --subscribe volume volume_change system_woke \
   --add item battery right \
   --set battery "${value[@]}" icon.font="$FONT:Regular:15.0" \
   label.color=$TEXT label.padding_left=2 padding_left=10 padding_right=12 \
@@ -163,7 +158,8 @@ sketchybar --set battery "${popup[@]}" popup.align=right \
   click_script="open 'x-apple.systempreferences:com.apple.Battery-Settings.extension'; sketchybar --set battery popup.drawing=off" \
   --add item batpop.pad popup.battery --set batpop.pad "${popup_pad[@]}"
 
-# Volume popup: a slider, a mute switch, the settings pane
+# Sound popup: a slider, then the headphones and the Bluetooth and
+# Sound settings, which plugins/bluetooth.sh adds below the header
 sketchybar --set volume "${popup[@]}" popup.align=right \
   --subscribe volume mouse.clicked mouse.exited.global \
   --add item volpop.header popup.volume --set volpop.header "${popup_header[@]}" label=SOUND \
@@ -171,18 +167,11 @@ sketchybar --set volume "${popup[@]}" popup.align=right \
   --set volpop.slider padding_left=12 padding_right=12 \
   slider.highlight_color=$PURPLE slider.background.height=6 slider.background.corner_radius=3 \
   slider.background.color=0x33ffffff slider.knob="●" slider.knob.font="$FONT:Regular:16.0" \
-  slider.knob.color=$TEXT script="$PLUGIN_DIR/volume_ctl.sh" \
+  slider.knob.color=$TEXT slider.knob.y_offset=1 script="$PLUGIN_DIR/volume_ctl.sh" \
   --subscribe volpop.slider mouse.clicked \
-  --add item volpop.mute popup.volume \
-  --set volpop.mute "${row[@]}" icon.padding_left=12 label.padding_right=12 \
-  click_script="$PLUGIN_DIR/volume_ctl.sh" \
-  --add item volpop.settings popup.volume \
-  --set volpop.settings "${row[@]}" icon="$(printf '\363\260\222\223')" icon.color=$DIM icon.padding_left=12 \
-  label="Sound settings…" label.color=$DIM label.padding_right=12 \
-  click_script="open 'x-apple.systempreferences:com.apple.Sound-Settings.extension'; sketchybar --set volume popup.drawing=off" \
-  --add item volpop.pad popup.volume --set volpop.pad "${popup_pad[@]}"
+  --add item btpop.header popup.volume --set btpop.header "${popup_header[@]}" label=HEADPHONES
 
-sketchybar --add bracket system.pill battery bluetooth volume clock.event clock.date clock.time \
+sketchybar --add bracket system.pill battery volume clock.event clock.date clock.time \
   --set system.pill "${pill[@]}"
 
 spacer gap.right right 8
