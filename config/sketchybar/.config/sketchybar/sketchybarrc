@@ -115,7 +115,7 @@ done
 sketchybar --set catpop.cpu icon=cpu --set catpop.mem icon=memory --set catpop.disk icon=disk \
   --add item catpop.pad popup.cat --set catpop.pad "${popup_pad[@]}"
 
-##### System: battery, volume, date (or next meeting) and time #####
+##### System: battery, Bluetooth headphones, volume, date (or next meeting) and time #####
 # Added right to left, so the clock ends up rightmost. clock.event replaces
 # the date while a meeting is on or starts within 15 minutes
 # (plugins/calendar.sh). Click the clock: today's agenda.
@@ -137,6 +137,11 @@ sketchybar --add item clock.time right \
   label.color=$TEXT label.padding_left=2 padding_right=12 \
   script="$PLUGIN_DIR/volume.sh" \
   --subscribe volume volume_change \
+  --add item bluetooth right \
+  --set bluetooth icon.font="$FONT:Regular:15.0" icon.color=$DIM label.drawing=off \
+  padding_right=10 update_freq=30 script="$PLUGIN_DIR/bluetooth.sh" "${popup[@]}" popup.align=right \
+  --subscribe bluetooth mouse.clicked mouse.exited.global system_woke \
+  --add item btpop.header popup.bluetooth --set btpop.header "${popup_header[@]}" label=HEADPHONES \
   --add item battery right \
   --set battery "${value[@]}" icon.font="$FONT:Regular:15.0" \
   label.color=$TEXT label.padding_left=2 padding_left=10 padding_right=12 \
@@ -177,7 +182,7 @@ sketchybar --set volume "${popup[@]}" popup.align=right \
   click_script="open 'x-apple.systempreferences:com.apple.Sound-Settings.extension'; sketchybar --set volume popup.drawing=off" \
   --add item volpop.pad popup.volume --set volpop.pad "${popup_pad[@]}"
 
-sketchybar --add bracket system.pill battery volume clock.event clock.date clock.time \
+sketchybar --add bracket system.pill battery bluetooth volume clock.event clock.date clock.time \
   --set system.pill "${pill[@]}"
 
 spacer gap.right right 8

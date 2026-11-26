@@ -430,6 +430,12 @@ since tools drop them as literal characters.
   `~/.cache/sketchybar/cat/` and redrawn whenever that file changes.
 - **battery / volume**: Low Power Mode (`pmset powermode`, so macOS asks for
   your password on each toggle); a volume slider and mute.
+- **bluetooth**: paired headphones and headsets (earbuds like AirPods get
+  their own icon: they report a case), click one to connect or
+  disconnect. `system_profiler` lists them (fast with `-json`); `blueutil`
+  (in the Brewfile) connects, so the first click makes macOS ask whether
+  sketchybar may use Bluetooth. A connection only shows once it holds for
+  three checks a second apart — AirPods often link for a moment and drop.
 - **recover** (invisible): reloads when the displays really change (it
   compares against the ones the last build recorded), and after wake restarts
   sketchybar via launchd if its windows went missing. Logs to
