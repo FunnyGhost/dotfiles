@@ -5,6 +5,8 @@
 # sketchybarrc.
 #
 # save: record the displays the bar was just built for.
+# loops (and every minute): start the background loops that aren't running.
+#   One of them once died without a trace; this brings it back.
 # display_change: reload, but only if the displays really differ from that
 #   record. macOS also sends the event at login and on wake with nothing
 #   changed, and those reloads used to stack on top of the startup build.
@@ -19,6 +21,15 @@ displays() { sketchybar --query displays | jq -c '[.[] | [.UUID, .frame.w, .fram
 
 if [ "$1" = save ]; then
   displays >"$CACHE/displays"
+  exit 0
+fi
+
+if [ "$1" = loops ] || [ "$SENDER" = routine ] || [ "$SENDER" = forced ]; then
+  for loop in rex_watch cat; do
+    pgrep -qf "$CONFIG_DIR/plugins/$loop.sh" && continue
+    [ "$1" = loops ] || log "$loop loop wasn't running → started"
+    CONFIG_DIR="$CONFIG_DIR" "$CONFIG_DIR/plugins/$loop.sh" >/dev/null 2>&1 &
+  done
   exit 0
 fi
 

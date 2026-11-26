@@ -8,7 +8,8 @@ CONFIG_DIR="$HOME/.config/sketchybar"
 update_space_icons() {
   local sid=$1
   local apps icons=""
-  apps=$(aerospace list-windows --workspace "$sid" | awk -F'|' '{gsub(/^ *| *$/, "", $2); print $2}')
+  # one icon per app, however many windows it has open there
+  apps=$(aerospace list-windows --workspace "$sid" | awk -F'|' '{gsub(/^ *| *$/, "", $2); if (!seen[$2]++) print $2}')
 
   if [ -n "$apps" ]; then
     while read -r app; do

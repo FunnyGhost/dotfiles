@@ -431,9 +431,11 @@ since tools drop them as literal characters.
 - **battery / volume**: Low Power Mode (`pmset powermode`, so macOS asks for
   your password on each toggle); a volume slider and mute.
 - **recover** (invisible): reloads when the displays really change (it
-  compares against the ones the last build recorded), and after wake
-  restarts sketchybar via launchd if its windows went missing. Logs to
-  `~/.cache/sketchybar/recover.log`.
+  compares against the ones the last build recorded), and after wake restarts
+  sketchybar via launchd if its windows went missing. Logs to
+  `~/.cache/sketchybar/recover.log`. Every minute it also restarts a
+  background loop (cat, Rex watcher) that stopped; one once died without a
+  trace.
 
 The background loops and the compiled helper live outside the repo
 (`~/.cache/sketchybar/`), so nothing the bar writes lands here.

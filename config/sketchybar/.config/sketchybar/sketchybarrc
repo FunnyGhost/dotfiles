@@ -238,17 +238,17 @@ sketchybar --set codexpop.5h icon=5h --set codexpop.wk icon=week \
   --add item codexpop.pad popup.codex --set codexpop.pad "${popup_pad[@]}"
 
 ##### Recovery #####
-# Reload on display changes; restart if the bar vanished after sleep
+# Reload on display changes; restart if the bar vanished after sleep; every
+# minute, restart a background loop (cat, Rex watcher) that died
 
-sketchybar --add item recover left --set recover drawing=off script="$PLUGIN_DIR/recover.sh" \
-  --subscribe recover display_change system_woke
+sketchybar --add item recover left --set recover drawing=off update_freq=60 \
+  script="$PLUGIN_DIR/recover.sh" --subscribe recover display_change system_woke
 
 ##### Background loops #####
+# Stop the old ones so a reload runs the current code; recover.sh starts them
 
-for loop in rex_watch cat; do
-  pkill -f "$PLUGIN_DIR/$loop.sh"
-  CONFIG_DIR="$CONFIG_DIR" "$PLUGIN_DIR/$loop.sh" >/dev/null 2>&1 &
-done
+for loop in rex_watch cat; do pkill -f "$PLUGIN_DIR/$loop.sh"; done
+"$PLUGIN_DIR/recover.sh" loops
 
 # the displays this build is for; recover.sh rebuilds only when they change
 "$PLUGIN_DIR/recover.sh" save
