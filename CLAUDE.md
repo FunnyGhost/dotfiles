@@ -413,7 +413,9 @@ since tools drop them as literal characters.
 - **calendar**, folded into the clock: while an event is on or starts within
   15 minutes, `clock.event` replaces the date; clicking the clock lists the
   rest of today, and a row opens its meeting link (Zoom, Meet, Teams, Webex)
-  or the event. Reads Calendar.app, so only calendars added there show.
+  or MyCal, the calendar app in use (it has no link to a single event). Reads
+  the macOS calendar store (EventKit): the calendars on this Mac, which MyCal
+  shows too — accounts connected only inside MyCal don’t reach the bar.
   `helper/events.swift` reads EventKit; `plugins/calendar.sh` compiles it on
   first use (and whenever it changes) into `~/.cache/sketchybar/events`, with
   `helper/Info.plist` embedded — macOS won't ask for Calendar access without

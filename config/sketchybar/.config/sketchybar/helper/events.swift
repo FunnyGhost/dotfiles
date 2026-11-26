@@ -1,9 +1,8 @@
-// Today's remaining timed events from Calendar.app (EventKit), from every
-// calendar in it, skipping all-day events and ones you declined.
-// One line each, by start:
-//   start epoch<TAB>end epoch<TAB>title<TAB>meeting URL<TAB>event URL
-// The meeting URL (Zoom, Meet, Teams, Webex) is empty for non-meetings; the
-// event URL opens the event in Calendar.app.
+// Today's remaining timed events from the macOS calendar store (EventKit),
+// the calendars MyCal and Calendar.app show, skipping all-day events and
+// ones you declined. One line each, by start:
+//   start epoch<TAB>end epoch<TAB>title<TAB>meeting URL
+// The meeting URL (Zoom, Meet, Teams, Webex) is empty for non-meetings.
 // Exits 2 when Calendar access isn't granted.
 //
 // Built on first use by plugins/calendar.sh, with Info.plist embedded:
@@ -31,12 +30,6 @@ func meetingURL(_ e: EKEvent) -> String {
   return ""
 }
 
-// Undocumented, but what Calendar.app itself answers to
-func eventURL(_ e: EKEvent) -> String {
-  let id = e.eventIdentifier.addingPercentEncoding(withAllowedCharacters: .alphanumerics) ?? ""
-  return "ical://ekevent/\(id)?method=show&options=more"
-}
-
 func clean(_ s: String) -> String {
   s.components(separatedBy: .newlines).joined(separator: " ").replacingOccurrences(of: "\t", with: " ")
 }
@@ -53,7 +46,7 @@ let events = store.events(matching: store.predicateForEvents(withStart: start, e
 for e in events {
   let fields = [
     String(Int(e.startDate.timeIntervalSince1970)), String(Int(e.endDate.timeIntervalSince1970)),
-    clean(e.title ?? ""), meetingURL(e), eventURL(e),
+    clean(e.title ?? ""), meetingURL(e),
   ]
   print(fields.joined(separator: "\t"))
 }

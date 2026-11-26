@@ -4,8 +4,9 @@
 # starts within 15 minutes (yellow, "in 8m"), clock.event shows it in place of
 # the date; otherwise it's just date and time. The clock's popup lists the
 # rest of today: meetings get a camera and open their call, other events open
-# in Calendar.app. Reads Calendar.app, so it needs Calendar access (System
-# Settings › Privacy & Security › Calendars › sketchybar).
+# MyCal (it has no link to a single event). Reads the macOS calendar store,
+# the calendars MyCal shows from this Mac, so it needs Calendar access
+# (System Settings › Privacy & Security › Calendars › sketchybar).
 #
 # Demo: touch ~/.cache/sketchybar/calendar.demo to show made-up events
 # instead (rm it to go back). Nothing is written to your calendars.
@@ -34,7 +35,7 @@ if [ -f "$CACHE/calendar.demo" ]; then
   events=$(
     while IFS='|' read -r offset length title url; do
       start=$((now + offset * 60))
-      printf '%s\t%s\t%s\t%s\t\n' "$start" "$((start + length * 60))" "$title" "$url"
+      printf '%s\t%s\t%s\t%s\n' "$start" "$((start + length * 60))" "$title" "$url"
     done <<'EOF'
 -10|30|Design sync|https://meet.google.com/abc-defg-hij
 8|25|1:1 with Alex|https://zoom.us/j/123456789
@@ -69,27 +70,25 @@ if [ -z "$events" ]; then
   exit 0
 fi
 
-# What a click runs: open the call if there is one, else the event, else
-# just Calendar.app (demo events have no event link)
+# What a click runs: open the call if there is one, else MyCal
 open_cmd() {
-  local url=${1:-$2}
-  if [ -n "$url" ]; then echo "open '${url//\'/}'"; else echo "open -a Calendar"; fi
+  if [ -n "$1" ]; then echo "open '${1//\'/}'"; else echo "open -a MyCal"; fi
 }
 
 i=0
-while IFS=$'\t' read -r start _ title meet event; do
+while IFS=$'\t' read -r start _ title meet; do
   if [ "$start" -le "$now" ]; then color=$CYAN; else color=$TEXT; fi
   if [ -n "$meet" ]; then glyph=$CAMERA; else glyph=$CALENDAR; fi
   args+=(--add item "calpop.row.$i" popup.clock.time
     --set "calpop.row.$i" "${row[@]}" icon="$(date -r "$start" '+%H:%M')" icon.color="$color"
     icon.font="$FONT:Bold:12.0" icon.width=56 icon.padding_left=12
     label="$glyph  ${title:0:40}" label.font="$FONT:Regular:12.0" label.padding_right=12
-    click_script="$(open_cmd "$meet" "$event"); sketchybar --set clock.time popup.drawing=off")
+    click_script="$(open_cmd "$meet"); sketchybar --set clock.time popup.drawing=off")
   i=$((i + 1))
 done <<<"$events"
 args+=(--add item calpop.row.pad popup.clock.time --set calpop.row.pad "${popup_pad[@]}")
 
-IFS=$'\t' read -r start _ title meet _ <<<"$(head -1 <<<"$events")"
+IFS=$'\t' read -r start _ title meet <<<"$(head -1 <<<"$events")"
 mins=$(((start - now + 59) / 60))
 if [ "$start" -le "$now" ]; then
   when="now" color=$CYAN

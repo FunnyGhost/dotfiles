@@ -17,7 +17,7 @@ function icon_map() {
   "Mail" | "Mailspring" | "MailMate" | "Superhuman" | "Spark" | "邮件")
     icon_result="󰇮"
     ;;
-  "Calendar" | "日历" | "Fantastical" | "Cron" | "Amie" | "Calendrier" | "Notion Calendar")
+  "MyCal" | "Calendar" | "日历" | "Fantastical" | "Cron" | "Amie" | "Calendrier" | "Notion Calendar")
     icon_result="󰃭"
     ;;
   "Dia")
